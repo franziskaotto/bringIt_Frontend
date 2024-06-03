@@ -1,18 +1,19 @@
-import { useState } from 'react'
+
 
 import './App.css'
+
+import Ellipses from './Components/Ellipses';
+
 
 function App() {
 
 
   return (
     <>
-     
-      <p>
-       initial commit
-      </p>
+      <Ellipses />
+      <p>initial commit</p>
     </>
-  )
+  );
 }
 
 export default App
