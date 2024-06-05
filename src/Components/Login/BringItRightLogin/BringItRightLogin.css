@@ -1,0 +1,23 @@
+/* Card */
+.card {
+  position: absolute;
+ height: 855px;
+  width: 642px;
+}
+
+
+.logo{
+  
+  display: flex;
+  background-image: url("../../../../public/Images/bring_it_logo.png");
+}
+
+
+.singIn-Form{
+
+  position: absolute;
+  width: 428px;
+  height: 349.03px;
+  left: 1090px;
+  top: 587px;
+}
