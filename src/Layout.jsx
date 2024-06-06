@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./App.css";
+import "./Layout.css";
 import { Outlet, Link } from "react-router-dom";
 
 import Ellipses from "./Components/Ellipses";
@@ -13,18 +13,19 @@ function Layout() {
   return (
     <>
       <Ellipses />
+      <Navbar />
       {isLoggedIn ? (
         <Outlet />
       ) : (
-        <div>
+        <>
           <BringItLeftContent />
-          <BringItRightLogin />
-        </div>
+          <BringItRightLogin isLoggedIn={isLoggedIn}/>
+        </>
       )}
 
-      <Navbar />
+      
 
-      <Outlet />
+      <Outlet /> 
     </>
   );
 }
