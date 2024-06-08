@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import "./BringItRightLogin.css";
+import { Link } from "react-router-dom";
 
 const BringItRightLogin = ({ setIsLoggedIn }) => {
   const [userName, setUserName] = useState("");
@@ -14,8 +15,7 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
 
     // if(loginStatus) { // überprüfung, ob login erfolgreich
     // }
-  setIsLoggedIn(true);
-
+    setIsLoggedIn(true);
   };
 
   return (
@@ -26,20 +26,43 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
 
       <form className="singIn-Form" onSubmit={handleLogin}>
         <div className="input-Container">
-          <input className="input-Field"
-            type="text"
-            value={userName}
-            placeholder="Username"
-            onChange={(e) => setUserName(e.target.value)}
-          />
-          <input className="password-Field"
+          <div className="input-with-icon">
+            <img
+              className="icon-user"
+              src="../../../../public/Images/userSymbol.png"
+            ></img>
+            <input
+              className="input-Field"
+              type="text"
+              value={userName}
+              placeholder="Username"
+              onChange={(e) => setUserName(e.target.value)}
+            />
+          </div>
+          <input
+            className="password-Field"
             type="password"
             value={password}
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button type="submit">LOGIN</button>
+          <button className="Login-Button" type="submit">
+            LOGIN
+          </button>
+        </div>
+
+        <div className="links">
+          <div className="register">
+            <Link to={"/register"}>
+              <p>Register</p>
+            </Link>
+          </div>
+          <div className="forgotPW">
+            <Link to={"/forgotPassword"}>
+              <p>Forgot Password?</p>
+            </Link>
+          </div>
         </div>
       </form>
     </div>

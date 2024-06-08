@@ -1,8 +1,19 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+-neuer user anlegen:
+
+erst neue adresse 
+
+2x post request
+
+ich bekom eine id zuruck, damit erstell ichd en neuien user
+
+--> noch mal quatschen
+
+--> error handling
+
+
+1 mal einen Adress post request, um zu schauen ob die adresse schon da ist.
