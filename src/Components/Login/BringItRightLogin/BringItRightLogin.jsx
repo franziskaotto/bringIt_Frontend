@@ -2,14 +2,20 @@ import React, { useEffect, useState } from "react";
 
 import "./BringItRightLogin.css";
 
-const BringItRightLogin = () => {
+const BringItRightLogin = ({ setIsLoggedIn }) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [loginStatus, setLoginStatus] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
     setUserName("");
     setPassword("");
+
+    // if(loginStatus) { // überprüfung, ob login erfolgreich
+    // }
+  setIsLoggedIn(true);
+
   };
 
   return (
@@ -33,7 +39,7 @@ const BringItRightLogin = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button type="submit">Login</button>
+          <button type="submit">LOGIN</button>
         </div>
       </form>
     </div>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Layout.css";
 import { Outlet, Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import Ellipses from "./Components/Ellipses";
 import BringItLeftContent from "./Components/Login/bringItLeftLogin";
@@ -9,23 +10,24 @@ import BringItRightLogin from "./Components/Login/BringItRightLogin";
 
 function Layout() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  console.log(isLoggedIn);
 
   return (
     <>
       <Ellipses />
-      <Navbar />
+
       {isLoggedIn ? (
-        <Outlet />
+        <>
+          
+          <Navbar />
+          <Outlet />
+        </>
       ) : (
         <>
-          <BringItLeftContent />
-          <BringItRightLogin isLoggedIn={isLoggedIn}/>
+          <BringItLeftContent setIsLoggedIn={setIsLoggedIn} />
+          <BringItRightLogin setIsLoggedIn={setIsLoggedIn} />
         </>
       )}
-
-      
-
-      <Outlet /> 
     </>
   );
 }

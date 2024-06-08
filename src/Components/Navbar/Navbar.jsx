@@ -2,9 +2,10 @@ import React from 'react'
 import { Outlet, Link } from "react-router-dom";
 
 const Navbar = () => {
+
+
   return (
     <div>
-      
       <nav>
         <Link to="/">
           <button>BringItLogo</button>
@@ -19,6 +20,6 @@ const Navbar = () => {
       </nav>
     </div>
   );
-}
+};
 
 export default Navbar

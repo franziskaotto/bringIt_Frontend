@@ -23,8 +23,7 @@
   position: absolute;
   left: 0%;
   margin: 0;
-  /* right: 3.07%; */
-  /* top: 0%; */
+
   bottom: 38.04%;
   font-style: normal;
   font-weight: 500;
@@ -50,10 +49,10 @@
 
 
 
-/* Auto layout */
+
 .read-more-btn{
   /* Rectangle */
-
+  cursor: pointer;
   position: absolute;
   left: 0%;
   right: 55.52%;
@@ -62,7 +61,7 @@
 
 
   position: absolute;
-  width: 274px;
+  width: 215px;
   height: 40px;
 
 
@@ -72,6 +71,7 @@
  
   color: #dfe4f0;
   letter-spacing: 5px;
+  font-size: 15px;
 
 }
 
