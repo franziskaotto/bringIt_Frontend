@@ -20,13 +20,15 @@ const BringItRightLogin = () => {
 
       <form className="singIn-Form" onSubmit={handleLogin}>
         <div className="input-Container">
-          <input
+          <input className="input-Field"
             type="text"
+            value={userName}
             placeholder="Username"
             onChange={(e) => setUserName(e.target.value)}
           />
-          <input
+          <input className="password-Field"
             type="password"
+            value={password}
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
