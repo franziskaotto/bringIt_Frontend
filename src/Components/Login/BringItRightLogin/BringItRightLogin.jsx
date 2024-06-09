@@ -13,34 +13,39 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    checkIfUserExists()
     setUserName("");
     setPassword("");
 
     // if(loginStatus) { // überprüfung, ob login erfolgreich
     // }
-    setIsLoggedIn(true);
+    // setIsLoggedIn(true);
   };
 
-  // useEffect(() => {
-  //   const fetchAllUsersForLogin = async () => {
-  //     try {
-  //       const response = await fetch("http://127.0.0.1:8081/api/users/")
-  //       if (!response.ok) {
-  //         throw new Error(`Status: ${response.status}`);
-  //       }
-  //       const data = await response.json();
-  //       console.log(data)
-  //       setAllUsers(data);
-  //     } catch (error) {
-  //       console.error("Error fetching all users", error);
-  //     }
-  //   }
+  const checkIfUserExists = () => {
+    console.log(userName)
+    console.log(password)
+    
+  }
+  useEffect(() => {
+    const fetchAllUsersForLogin = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8081/api/users/")
+        if (!response.ok) {
+          throw new Error(`Status: ${response.status}`);
+        }
+        const data = await response.json();
+        setAllUsers(data);
+      } catch (error) {
+        console.error("Error fetching all users", error);
+      }
+    }
 
-  //   fetchAllUsersForLogin()
-  // }, [])
+    fetchAllUsersForLogin()
+  }, [])
 
-  console.log("Username: " + userName)
-  console.log("Password: " + password)
+  // console.log("Username: " + userName)
+  // console.log("Password: " + password)
 
   return (
     <div className="card">
