@@ -53,12 +53,13 @@ html, body {
 }
 
 .text{
+  /* overflow-y: scroll; */
   flex: 2; /* Takes up two parts of the space */
   overflow-y: auto; /* Allows scrolling if the text overflows */
   padding: 40px 40px 20px 50px;
 }
 
-p{
+.text p {
   margin-top: 10px;
   font-size:28px;
 }
