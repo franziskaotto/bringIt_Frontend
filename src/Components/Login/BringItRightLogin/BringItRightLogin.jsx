@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import "./BringItRightLogin.css";
 import { Link } from "react-router-dom";
+import Logo from "../../Logo/Logo";
+
 
 const BringItRightLogin = ({ setIsLoggedIn }) => {
+  const [allUsers, setAllUsers] = useState([]);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState(false);
@@ -18,11 +21,30 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
     setIsLoggedIn(true);
   };
 
+  // useEffect(() => {
+  //   const fetchAllUsersForLogin = async () => {
+  //     try {
+  //       const response = await fetch("http://127.0.0.1:8081/api/users/")
+  //       if (!response.ok) {
+  //         throw new Error(`Status: ${response.status}`);
+  //       }
+  //       const data = await response.json();
+  //       console.log(data)
+  //       setAllUsers(data);
+  //     } catch (error) {
+  //       console.error("Error fetching all users", error);
+  //     }
+  //   }
+
+  //   fetchAllUsersForLogin()
+  // }, [])
+
+  console.log("Username: " + userName)
+  console.log("Password: " + password)
+
   return (
     <div className="card">
-      <div className="logo">
-        <img src="../../../../public/Images/bring_it_logo.png"></img>
-      </div>
+      <Logo />
 
       <form className="singIn-Form" onSubmit={handleLogin}>
         <div className="input-Container">

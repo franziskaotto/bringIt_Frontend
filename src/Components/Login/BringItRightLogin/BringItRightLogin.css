@@ -20,11 +20,6 @@
   border-color: #eef1f8; 
 }
 
-.logo img {
-  max-width: 100%;
-  height: auto;
-}
-
 .signIn-Form {
   width: 100%;
   display: flex;
@@ -50,8 +45,8 @@
 .input-Field, .password-Field {
   background: none;
   border-radius: 40px;
-  border-width: 2px;     /* Specifies the width of the border */
-  border-style: solid;   /* Specifies the style of the border */
+  border-width: 2px;   
+  border-style: solid; 
   border-color: #eef1f8;
   outline: none;
   background: none;
@@ -113,8 +108,5 @@
 }
 
 
-/* Rectangle */
-
-box-sizing: border-box;
 
 

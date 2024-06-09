@@ -18,9 +18,8 @@ function Layout() {
 
       {isLoggedIn ? (
         <>
-          
           <Navbar />
-          <Outlet />
+          <Outlet context={{ setIsLoggedIn }} />
         </>
       ) : (
         <>
