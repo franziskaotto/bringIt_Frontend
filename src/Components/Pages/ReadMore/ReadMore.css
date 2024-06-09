@@ -32,57 +32,33 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: flex-start; /* Align items to the left */
+  align-items: center;
 }
 
 .login-div {
-  margin-top: 30px;
+  margin-top: 300px;
 }
 
 .Login-Button {
-  padding: 10px 20px;
-  align-items: center;
-
-  border: none;
- 
+  width: 200px;
+  height:50px;
+  font-size: 20px;
+  padding: 10px;
   cursor: pointer;
-  font-size: 16px;
+  background: #03045E;
+  color: #eef1f8;
+  border-radius: 40px;
+  border: none;
+  letter-spacing: 5px;
 }
 
 .text{
   flex: 2; /* Takes up two parts of the space */
   overflow-y: auto; /* Allows scrolling if the text overflows */
-  padding-left: 20px; /* Space between columns */
+  padding: 40px 40px 20px 50px;
 }
 
-/* .read-more-container{
-  
-  position: absolute;
-  align-items: center;
-  right: 15%;
-  top: 10%;
-  bottom: 10%;
-  box-sizing: border-box;
-  width: 1500px;
-  height: 900px;
-  background-blend-mode: overlay, normal;
-  backdrop-filter: blur(40px);
-  border: 2px solid #eef1f8;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-
-  border-radius: 40px;
-  border-width: 2px;    
-  border-style: solid;
-  border-color: #eef1f8; 
+p{
+  margin-top: 10px;
+  font-size:28px;
 }
-
-.logo-und-button{
-  margin-top: 30px;
-  position: absolute;
-  left:10%
-}
-
-.login-div{
-  margin-top:300px
-} */
