@@ -7,9 +7,16 @@ import Ellipses from "./Components/Ellipses";
 import BringItLeftContent from "./Components/Login/bringItLeftLogin";
 import Navbar from "./Components/Navbar";
 import BringItRightLogin from "./Components/Login/BringItRightLogin";
+import { useLocation } from "react-router-dom";
 
 function Layout() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const noNavbarRoutes = ["/", "/register", "/readMore"];
+  const showNavbar = !noNavbarRoutes.includes(location.pathname);
+
+
+
   console.log(isLoggedIn);
 
   return (
@@ -18,7 +25,8 @@ function Layout() {
 
       {isLoggedIn ? (
         <>
-          <Navbar />
+          {showNavbar && <Navbar />}
+        
           <Outlet context={{ setIsLoggedIn }} />
         </>
       ) : (
@@ -32,3 +40,5 @@ function Layout() {
 }
 
 export default Layout;
+
+
