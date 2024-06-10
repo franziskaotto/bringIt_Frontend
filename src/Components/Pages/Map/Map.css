@@ -1,0 +1,50 @@
+/* Tabulator - Menu */
+
+.left-side-content-map{
+  margin-top: 65px;
+  padding-top:10px
+}
+
+.tabs {
+  display: flex;
+}
+
+.tab-nav {
+  flex: 0 0 200px; /* Adjust based on your layout */
+}
+
+.tab-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column; /* For vertical orientation */
+}
+
+.tab-list li {
+  margin-bottom: 10px; /* Spacing between tabs */
+}
+
+.tab-btn {
+  width: 100%;
+  padding: 10px;
+  background: none;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.tab-btn--active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.tab-panel {
+  display: none; /* Hide all panels by default */
+  padding: 20px;
+  border: 1px solid #ccc;
+  flex: 1;
+}
+
+.tab-panel--active {
+  display: block; 
+}

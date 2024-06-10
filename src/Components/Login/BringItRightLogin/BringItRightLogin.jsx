@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import "./BringItRightLogin.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import "./BringItRightLogin.css";
 import Logo from "../../Logo/Logo";
 
 
@@ -10,6 +12,8 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
   const [loginUserName, setLoginUserName] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAllUsersForLogin = async () => {
@@ -32,12 +36,6 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
   const handleLogin = (e) => {
     e.preventDefault();
     checkIfUserExists()
-    
-    
-
-    // if(loginStatus) { // überprüfung, ob login erfolgreich
-    // }
-    // setIsLoggedIn(true);
   };
 
   const checkIfUserExists = () => {
@@ -58,6 +56,7 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
         setLoginUserName("");
         setLoginPassword("");
         setIsLoggedIn(true);
+        navigate("/map");
         break;
       } else {
         console.log("Not matching")

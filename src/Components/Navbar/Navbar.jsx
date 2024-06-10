@@ -1,26 +1,33 @@
-import React from 'react'
+import React from "react";
 import { Outlet, Link } from "react-router-dom";
-
+import "./Navbar.css";
+import Logo from "../Logo/Logo";
 
 const Navbar = () => {
-
-
   return (
-    <div>
-      <nav>
-        <Link to="/">
-          <button>BringItLogo</button>
-        </Link>
-        <Link to="/User">
-          <button type="button">User</button>
-        </Link>
+    <div className="navbar-container">
+      <nav className="navbar">
+        <div className="logo-btn">
+          <Link to="/map">
+            <Logo />
+          </Link>
+        </div>
 
-        <Link to="/Settings">
-          <button type="button">Settings</button>
-        </Link>
+        <div className="right-buttons">
+          <div className="profil-btn">
+            <Link to="/profil">
+              <img src="public/Images/Profil-btn.png" alt="Profile" />
+            </Link>
+          </div>
+          <div className="settings-btn">
+            <Link to="/settings">
+              <img src="public/Images/Setting-btn.png" alt="Settings" />
+            </Link>
+          </div>
+        </div>
       </nav>
     </div>
   );
 };
 
-export default Navbar
+export default Navbar;

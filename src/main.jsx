@@ -4,10 +4,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./Layout";
 import ErrorPage from "./Components/Pages/ErrorPage";
 import ReadMore from "./Components/Pages/ReadMore";
-import User from "./Components/Pages/User";
 import SettingsPage from "./Components/Pages/SettingPage";
 import LandingPage from "./Components/Pages/LandingPage";
 import Map from "./Components/Pages/Map/Map";
+import Profil from "./Components/Pages/Profil";
 
 const router = createBrowserRouter([
   {
@@ -28,8 +28,8 @@ const router = createBrowserRouter([
         element: <Map />,
       },
       {
-        path: "user",
-        element: <User />,
+        path: "profil",
+        element: <Profil />,
       },
       {
         path: "settings",
