@@ -7,26 +7,10 @@ import Logo from "../../Logo/Logo";
 
 const BringItRightLogin = ({ setIsLoggedIn }) => {
   const [allUsers, setAllUsers] = useState([]);
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  const [loginUserName, setLoginUserName] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState(false);
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    checkIfUserExists()
-    setUserName("");
-    setPassword("");
-
-    // if(loginStatus) { // überprüfung, ob login erfolgreich
-    // }
-    // setIsLoggedIn(true);
-  };
-
-  const checkIfUserExists = () => {
-    console.log(userName)
-    console.log(password)
-    
-  }
   useEffect(() => {
     const fetchAllUsersForLogin = async () => {
       try {
@@ -44,6 +28,44 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
     fetchAllUsersForLogin()
   }, [])
 
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    checkIfUserExists()
+    
+    
+
+    // if(loginStatus) { // überprüfung, ob login erfolgreich
+    // }
+    // setIsLoggedIn(true);
+  };
+
+  const checkIfUserExists = () => {
+    console.log(loginUserName)
+    console.log(loginPassword)
+    console.log(allUsers)
+
+
+    for (let user of allUsers) {
+      
+      const userNameDB = user.username;
+      console.log(userNameDB + "----usernameDB")
+      const passwordDB = user.password;
+      console.log(passwordDB + "----passwordDB");
+
+      if (loginUserName === userNameDB && loginPassword === passwordDB) {
+        console.log(loginPassword + "     LoginPassword")
+        setLoginUserName("");
+        setLoginPassword("");
+        setIsLoggedIn(true);
+        break;
+      } else {
+        console.log("Not matching")
+      }
+    }
+    
+  }
+
  
 
   return (
@@ -60,17 +82,17 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
             <input
               className="input-Field"
               type="text"
-              value={userName}
+              value={loginUserName}
               placeholder="Username"
-              onChange={(e) => setUserName(e.target.value)}
+              onChange={(e) => setLoginUserName(e.target.value)}
             />
           </div>
           <input
             className="password-Field"
             type="password"
-            value={password}
+            value={loginPassword}
             placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setLoginPassword(e.target.value)}
           />
 
           <button className="Login-Button" type="submit">

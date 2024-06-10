@@ -7,6 +7,7 @@ import ReadMore from "./Components/Pages/ReadMore";
 import User from "./Components/Pages/User";
 import SettingsPage from "./Components/Pages/SettingPage";
 import LandingPage from "./Components/Pages/LandingPage";
+import Map from "./Components/Pages/Map/Map";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
       },
       {
         path: "map",
-        element: < />,
+        element: <Map />,
       },
       {
         path: "user",
