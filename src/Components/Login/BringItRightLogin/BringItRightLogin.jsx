@@ -44,8 +44,7 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
     fetchAllUsersForLogin()
   }, [])
 
-  // console.log("Username: " + userName)
-  // console.log("Password: " + password)
+ 
 
   return (
     <div className="card">

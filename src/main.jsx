@@ -23,6 +23,10 @@ const router = createBrowserRouter([
         element: <ReadMore />,
       },
       {
+        path: "map",
+        element: < />,
+      },
+      {
         path: "user",
         element: <User />,
       },
