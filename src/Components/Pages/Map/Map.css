@@ -7,10 +7,11 @@
 
 .tabs {
   display: flex;
+  flex-direction: row;
 }
 
 .tab-nav {
-  flex: 0 0 200px; /* Adjust based on your layout */
+  flex: 0 0 200px;
 }
 
 .tab-list {
@@ -18,14 +19,13 @@
   padding: 0;
   margin: 0;
   display: flex;
-  flex-direction: column; /* For vertical orientation */
+  
 }
 
-.tab-list li {
-  margin-bottom: 10px; /* Spacing between tabs */
-}
+
 
 .tab-btn {
+
   width: 100%;
   padding: 10px;
   background: none;
