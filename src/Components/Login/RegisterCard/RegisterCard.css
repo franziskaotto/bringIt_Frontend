@@ -1,0 +1,30 @@
+.register-button {
+  margin-top: 10px;
+  width: 95%;
+  padding: 10px;
+  height: 58.36px;
+  cursor: pointer;
+  background: #03045E;
+  color: #eef1f8;
+  border-radius: 40px;
+  border: none;
+  font-size: 20px;
+  letter-spacing: 5px;
+}
+
+.input-Field::placeholder {
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-weight: normal;
+  color: #eef1f8;
+
+}
+
+
+.input-with-icon img{
+  position: absolute;
+  left: 90px;
+  height: 20px;
+  width: 20px;
+  color: #eef1f8;
+}

@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import "./BringItRightLogin.css";
 import Logo from "../../Logo/Logo";
 
-
 const BringItRightLogin = ({ setIsLoggedIn }) => {
   const [allUsers, setAllUsers] = useState([]);
   const [loginUserName, setLoginUserName] = useState("");
@@ -18,7 +17,7 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
   useEffect(() => {
     const fetchAllUsersForLogin = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8081/api/users/")
+        const response = await fetch("http://127.0.0.1:8081/api/users/");
         if (!response.ok) {
           throw new Error(`Status: ${response.status}`);
         }
@@ -27,45 +26,43 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
       } catch (error) {
         console.error("Error fetching all users", error);
       }
-    }
+    };
 
-    fetchAllUsersForLogin()
-  }, [])
-
+    fetchAllUsersForLogin();
+  }, []);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    checkIfUserExists()
+    checkIfUserExists();
   };
 
   const checkIfUserExists = () => {
-    console.log(loginUserName)
-    console.log(loginPassword)
-    console.log(allUsers)
-
+    console.log(loginUserName);
+    console.log(loginPassword);
+    console.log(allUsers);
 
     for (let user of allUsers) {
-      
       const userNameDB = user.username;
-      console.log(userNameDB + "----usernameDB")
+      console.log(userNameDB + "----usernameDB");
       const passwordDB = user.password;
       console.log(passwordDB + "----passwordDB");
 
       if (loginUserName === userNameDB && loginPassword === passwordDB) {
-        console.log(loginPassword + "     LoginPassword")
+        console.log(loginPassword + "     LoginPassword");
         setLoginUserName("");
         setLoginPassword("");
         setIsLoggedIn(true);
         navigate("/map");
         break;
       } else {
-        console.log("Not matching")
+        console.log("Not matching");
       }
     }
-    
-  }
+  };
 
- 
+  const handleRegister = () => {
+    setIsLoggedIn(true);
+  };
 
   return (
     <div className="card">
@@ -76,7 +73,7 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
           <div className="input-with-icon">
             <img
               className="icon-user"
-              src="../../../../public/Images/userSymbol.png"
+              src="../../../../public/Images/user.png"
             ></img>
             <input
               className="input-Field"
@@ -86,13 +83,19 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
               onChange={(e) => setLoginUserName(e.target.value)}
             />
           </div>
-          <input
-            className="password-Field"
-            type="password"
-            value={loginPassword}
-            placeholder="Password"
-            onChange={(e) => setLoginPassword(e.target.value)}
-          />
+          <div className="input-with-icon">
+            <img
+              className="icon-user"
+              src="../../../../public/Images/password.png"
+            ></img>
+            <input
+              className="input-Field"
+              type="password"
+              value={loginPassword}
+              placeholder="Password"
+              onChange={(e) => setLoginPassword(e.target.value)}
+            />
+          </div>
 
           <button className="Login-Button" type="submit">
             LOGIN
@@ -101,7 +104,7 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
 
         <div className="links">
           <div className="register">
-            <Link to={"/register"}>
+            <Link to={"/register"} onClick={handleRegister}>
               <p>Register</p>
             </Link>
           </div>
