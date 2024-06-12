@@ -1,17 +1,71 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./RegisterCard.css"
-//Info r = register
+
+
+
+
+const postNewUser = async (userData) => {
+  try {
+    const response = await fetch("http://localhost:8081/api/user/", {
+      method:'POST',
+      headers: {
+         'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+    })
+     if (response.ok) {
+       console.log("User registered successfully");
+     } else {
+       console.error("Failed to register user");
+     }
+  } catch (error) {
+    console.error("error: ", error)
+  }
+    
+
+}
 
 const RegisterCard = () => {
-  const [rUserName, setRUserName] = useState("");
-  const [rEmail, setREmail] = useState("");
-  const [rStreet, setRStreet] = useState("");
-  const [rPLZ, setRPLZ] = useState("");
-  const [rCity, setRCity] = useState("");
-  const [rPassword, setRPassword] = useState("");
+  const [streetNumber, setStreetNumber] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [city, setCity] = useState("");
+  const [username, setUsername] = useState("");
+  const [password,setPassword] = useState("");
+  const [fistName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
 
-  const handleRegister = () => {};
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    const userData = {
+      address: {
+        streetNumber: streetNumber,
+        postalCode: postalCode,
+        city: city,
+      },
+      username: username,
+      password: password,
+      fistName: fistName,
+      lastName: lastName,
+      dateOfBirth: dateOfBirth,
+      email: email,
+      phone: phone,
+    };
+
+    postNewUser(userData)
+
+
+  };
+
+
+
+    
+
+  
 
   return (
     <div className="card">
@@ -21,14 +75,45 @@ const RegisterCard = () => {
           <div className="input-with-icon">
             <img
               className="icon"
+              src="../../../../public/Images/Draw.png"
+            ></img>
+            <input
+              className="input-Field"
+              name="userName"
+              type="text"
+              value={username}
+              placeholder="Username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          {/* __________________________________________________________________ */}
+          <div className="input-with-icon">
+            <img
+              className="icon"
               src="../../../../public/Images/user.png"
             ></img>
             <input
               className="input-Field"
+              name="firstName"
               type="text"
-              value={rUserName}
-              placeholder="Username"
-              onChange={(e) => setRUserName(e.target.value)}
+              value={fistName}
+              placeholder="First Name"
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </div>
+          {/* __________________________________________________________________ */}
+          <div className="input-with-icon">
+            <img
+              className="icon"
+              src="../../../../public/Images/user.png"
+            ></img>
+            <input
+              className="input-Field"
+              name="LastName"
+              type="text"
+              value={lastName}
+              placeholder="Last Name"
+              onChange={(e) => setLastName(e.target.value)}
             />
           </div>
           {/* __________________________________________________________________ */}
@@ -40,37 +125,62 @@ const RegisterCard = () => {
             <input
               className="input-Field"
               type="text"
-              value={rEmail}
-              placeholder="Email-Adress"
-              onChange={(e) => setREmail(e.target.value)}
+              name="email"
+              value={email}
+              placeholder="Email-Address"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           {/* __________________________________________________________________ */}
           <div className="input-with-icon">
             <img
               className="icon"
-              src="../../../../public/Images/Street.png"
+              src="../../../../public/Images/calender.png"
+            ></img>
+            <input
+              className="input-Field"
+              type="date"
+              name="dateOfBirth"
+              value={dateOfBirth}
+              placeholder="Date of Birth"
+              onChange={(e) => setDateOfBirth(e.target.value)}
+            />
+          </div>
+          <div className="input-with-icon">
+            <img
+              className="icon"
+              src="../../../../public/Images/phone.png"
             ></img>
             <input
               className="input-Field"
               type="text"
-              value={rStreet}
-              placeholder="Street"
-              onChange={(e) => setRStreet(e.target.value)}
+              name="phone"
+              value={phone}
+              placeholder="Phone number"
+              onChange={(e) => setPhone(e.target.value)}
             />
           </div>
           {/* __________________________________________________________________ */}
           <div className="input-with-icon">
-            <img
-              className="icon"
-              src="../../../../public/Images/PLZ.png"
-            ></img>
+            <img className="icon" src="../../../../public/Images/PLZ.png"></img>
             <input
               className="input-Field"
               type="text"
-              value={rPLZ}
-              placeholder="PLZ"
-              onChange={(e) => setRPLZ(e.target.value)}
+              name="streetNumber"
+              value={streetNumber}
+              placeholder="Address"
+              onChange={(e) => setStreetNumber(e.target.value)}
+            />
+          </div>
+          <div className="input-with-icon">
+            <img className="icon" src="../../../../public/Images/PLZ.png"></img>
+            <input
+              className="input-Field"
+              type="text"
+              name="postalCode"
+              value={postalCode}
+              placeholder="postal Code"
+              onChange={(e) => setPostalCode(e.target.value)}
             />
           </div>
           {/* __________________________________________________________________ */}
@@ -82,9 +192,10 @@ const RegisterCard = () => {
             <input
               className="input-Field"
               type="text"
-              value={rCity}
+              name="city"
+              value={city}
               placeholder="City"
-              onChange={(e) => setRCity(e.target.value)}
+              onChange={(e) => setCity(e.target.value)}
             />
           </div>
           {/* __________________________________________________________________ */}
@@ -96,11 +207,11 @@ const RegisterCard = () => {
             />
             <input
               className="input-Field"
-              type="text"
-              value={rPassword}
+              type="password"
+              name="password"
+              value={password}
               placeholder="Password"
-              onChange={(e) => setRPassword(e.target.value)}
-              style={{ color: "red" }}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <button className="register-button" type="submit">

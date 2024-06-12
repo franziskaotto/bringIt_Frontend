@@ -1,8 +1,7 @@
 .card {
   position: absolute;
   right: 15%;
-  top: 20%;
-  bottom: 30%;
+  margin-top: 20px;
   box-sizing: border-box;
   width: 450px;
   height: 650px;
@@ -34,15 +33,20 @@
   align-items: center;
 }
 
-.input-With-Icon {
-  width: 100%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+
+
+.icon-user {
+  position: absolute;
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: auto;
+  padding-top: 17px;
+  left: 90px;
+  height: 20px;
+  width: 20px;
 }
 
-.input-Field, .password-Field {
+.input-Field {
   background: none;
   border-radius: 40px;
   border-width: 2px;   
@@ -52,11 +56,10 @@
   background: none;
   color: inherit;
   margin: 10px;
-
   width: 300px;
   height: 58.36px;
   margin-bottom: 10px;
-  padding: 10px 10px 10px 40px;
+  padding: 10px 10px 10px 50px;
   box-sizing: border-box;
   cursor: pointer;
   color: #eef1f8;
@@ -70,13 +73,6 @@
 
 }
 
-.icon-user{
-  position: absolute;
-  left: 90px;
-  height: 20px;
-  width: 20px;
-  color: #eef1f8;
-}
 
 .Login-Button {
   
