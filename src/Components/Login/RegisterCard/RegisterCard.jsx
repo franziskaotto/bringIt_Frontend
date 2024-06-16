@@ -68,7 +68,7 @@ const RegisterCard = () => {
   
 
   return (
-    <div className="card">
+    <div className="register-card">
       <form className="singIn-Form" onSubmit={handleRegister}>
         <div className="input-Container">
           {/* __________________________________________________________________ */}

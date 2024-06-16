@@ -5,7 +5,7 @@ import RegisterCard from '../../Login/RegisterCard'
 const RegisterPage = () => {
   return (
     <> 
-      <BringItLeftContent />
+      {/* <BringItLeftContent /> */}
       <RegisterCard />
     
     

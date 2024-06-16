@@ -1,3 +1,23 @@
+
+.register-card{
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  background-blend-mode: overlay, normal;
+  backdrop-filter: blur(40px);
+  border: 2px solid #eef1f8;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  border-radius: 40px;
+}
+
+
+
 .register-button {
   margin-top: 10px;
   width: 95%;
