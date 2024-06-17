@@ -65,7 +65,7 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
   };
 
   return (
-    <div className="card">
+    <div className="login-card">
       <Logo />
 
       <form className="singIn-Form" onSubmit={handleLogin}>
