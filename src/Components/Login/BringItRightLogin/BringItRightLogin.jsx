@@ -23,6 +23,7 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
         }
         const data = await response.json();
         setAllUsers(data);
+        console.log(allUsers)
       } catch (error) {
         console.error("Error fetching all users", error);
       }
