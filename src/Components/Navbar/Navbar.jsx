@@ -2,8 +2,10 @@ import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import "./Navbar.css";
 import Logo from "../Logo/Logo";
+import handleLogout from "../Logout/LogoutUser";
 
 const Navbar = () => {
+
   return (
     <div className="navbar-container">
       <nav className="navbar">
@@ -23,6 +25,13 @@ const Navbar = () => {
             <Link to="/settings">
               <img src="public/Images/Setting-btn.png" alt="Settings" />
             </Link>
+          </div>
+            <div className="logout-btn">
+            <div onClick={handleLogout}>
+            <Link to="/login">
+              <img src="public/Images/logout-btn.png" alt="Logout" />
+            </Link>
+            </div>
           </div>
         </div>
       </nav>
