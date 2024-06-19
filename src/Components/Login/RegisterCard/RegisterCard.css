@@ -2,29 +2,77 @@
 .register-card{
   position: absolute;
   width: 80%;
-  height: 80%;
+  height: auto;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   box-sizing: border-box;
   background-blend-mode: overlay, normal;
   backdrop-filter: blur(40px);
-  border: 2px solid #eef1f8;
   padding: 20px;
   display: flex;
   flex-direction: row;
+  justify-content: center; 
+  transition: height 0.3s ease-in-out;
+
   border-radius: 40px;
+  border: 2px solid #eef1f8;
 }
 
 
 
+
+.input-Container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 15px;
+  margin-bottom: 15px;
+  justify-content: center;
+}
+
+.input-with-icon {
+  
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.icons {
+  width: 24px; 
+  height: 24px;
+}
+
+
+
+.input-Field {
+  flex: 1;
+  padding: 10px 10px 10px 60px;
+  border-radius: 40px;
+  border-width: 2px;   
+  border-style: solid; 
+  border-color: #eef1f8;
+  outline: none;
+}
+
+.input-Field::placeholder {
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-weight: normal;
+  color: #eef1f8;
+
+}
+
 .register-button {
   margin-top: 10px;
   width: 95%;
-  padding: 10px;
+  text-align: center;
+  margin: 15px;
+  padding-left: 30px;
+  padding-right: 30px;
   height: 58.36px;
   cursor: pointer;
-  background: #03045E;
+  background: #03045e;
   color: #eef1f8;
   border-radius: 40px;
   border: none;
@@ -32,3 +80,29 @@
   letter-spacing: 5px;
 }
 
+
+@media (max-width: 963px) {
+  .input-Container {
+    grid-template-columns: 1fr; /* Stack inputs vertically */
+  }
+
+  .input-group {
+    flex-direction: column; /* Stack grouped inputs vertically */
+  }
+
+  .input-Container .input-with-icon {
+    grid-column: span 1; /* Ensure each input takes full width */
+  }
+
+  .button-container {
+    justify-content: center; /* Center button */
+    grid-column: span 1; /* Ensure button takes full width */
+  }
+
+  .register-button{
+    text-align: center;
+    margin: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}

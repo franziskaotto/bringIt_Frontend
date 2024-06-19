@@ -70,30 +70,30 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
       <Logo />
 
       <form className="singIn-Form" onSubmit={handleLogin}>
-        <div className="input-Container">
-          <div className="input-with-icon">
+        <div className="input-Container-login">
+          <div className="input-with-icon-login">
             <img
               className="icon-user"
               src="../../../../public/Images/user.png"
             ></img>
             <input
-              className="input-Field"
+              className="input-Field-login"
               type="text"
               value={loginUserName}
-              placeholder="Username"
+              placeholder="Nutzername"
               onChange={(e) => setLoginUserName(e.target.value)}
             />
           </div>
-          <div className="input-with-icon">
+          <div className="input-with-icon-login">
             <img
               className="icon-user"
               src="../../../../public/Images/password.png"
             ></img>
             <input
-              className="input-Field"
+              className="input-Field-login"
               type="password"
               value={loginPassword}
-              placeholder="Password"
+              placeholder="Passwort"
               onChange={(e) => setLoginPassword(e.target.value)}
             />
           </div>
@@ -106,12 +106,12 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
         <div className="links">
           <div className="register">
             <Link to={"/register"} onClick={handleRegister}>
-              <p>Register</p>
+              <p>Registrieren</p>
             </Link>
           </div>
           <div className="forgotPW">
             <Link to={"/forgotPassword"}>
-              <p>Forgot Password?</p>
+              <p>Passwort vergessen?</p>
             </Link>
           </div>
         </div>

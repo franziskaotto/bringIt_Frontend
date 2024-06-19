@@ -12,7 +12,7 @@ const BringItLeftContent = ({ setIsLoggedIn }) => {
       <h1 className="bringIt-headline">bring it</h1>
       <h2 className="bringIt-h2">step up your neighbourhood</h2>
       <Link to={'/readMore'}>
-        <button className="read-more-btn" type="button" onClick={() => setIsLoggedIn(true)}>READ MORE</button>
+        <button className="read-more-btn" type="button" onClick={() => setIsLoggedIn(true)}>INFO</button>
       </Link>
       
     </div>
