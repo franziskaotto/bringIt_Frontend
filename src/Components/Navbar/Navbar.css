@@ -30,7 +30,8 @@
 }
 
 .profil-btn,
-.settings-btn {
+.settings-btn, 
+.logout-btn {
   margin-top: 10px;
   margin-left: 20px;
 }
@@ -48,6 +49,11 @@
 .settings-btn img {
  height: 43px;
   width: 53px;
+}
+
+.logout-btn img {
+  height: 45px;
+  width: 50px;
 }
 
 

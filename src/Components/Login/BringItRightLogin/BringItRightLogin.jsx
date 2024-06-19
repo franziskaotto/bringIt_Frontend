@@ -1,65 +1,61 @@
-import React, { useEffect, useState } from "react";
-
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-
+import { useState } from "react";
+import PropTypes from "prop-types";
+import { Link, useNavigate } from "react-router-dom";
 import "./BringItRightLogin.css";
 import Logo from "../../Logo/Logo";
 
-const BringItRightLogin = ({ setIsLoggedIn }) => {
-  const [allUsers, setAllUsers] = useState([]);
-  const [loginUserName, setLoginUserName] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
-  const [loginStatus, setLoginStatus] = useState(false);
 
+// handles user login and stores the JWT token in local storage
+const BringItRightLogin = ({ setIsLoggedIn }) => {
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: ""
+  });
+
+  // hook to navigate to different routes
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchAllUsersForLogin = async () => {
-      try {
-        const response = await fetch("http://127.0.0.1:8081/api/users/");
-        if (!response.ok) {
-          throw new Error(`Status: ${response.status}`);
-        }
-        const data = await response.json();
-        setAllUsers(data);
-        console.log(allUsers)
-      } catch (error) {
-        console.error("Error fetching all users", error);
-      }
-    };
-
-    fetchAllUsersForLogin();
-  }, []);
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    checkIfUserExists();
+  // Function to handle changes in the input fields and update the credentials state
+  const handleChange = (e) => {
+    setCredentials({
+      ...credentials,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const checkIfUserExists = () => {
-    console.log(loginUserName);
-    console.log(loginPassword);
-    console.log(allUsers);
-
-    for (let user of allUsers) {
-      const userNameDB = user.username;
-      console.log(userNameDB + "----usernameDB");
-      const passwordDB = user.password;
-      console.log(passwordDB + "----passwordDB");
-
-      if (loginUserName === userNameDB && loginPassword === passwordDB) {
-        console.log(loginPassword + "     LoginPassword");
-        setLoginUserName("");
-        setLoginPassword("");
+  // Function to handle the login form submission
+  const handleLogin = async (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+    const authoHeader = btoa(credentials.username + ":" + credentials.password); // Create a basic authHeader
+    console.log(authoHeader);
+  
+    try {
+      // Send a POST request to the login endpoint with the user's credentials
+      const response = await fetch("http://localhost:8081/api/user/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Basic " + authoHeader // Include the basic authHeader
+        },
+        body: JSON.stringify(credentials),
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        console.log(result);
+        // Store the token in local storage
+        localStorage.setItem("token", result.token);
         setIsLoggedIn(true);
         navigate("/map");
-        break;
       } else {
-        console.log("Not matching");
+        console.error("Login failed", result);
       }
+    } catch (error) {
+      console.error("Error during login", error);
     }
   };
+  
 
   const handleRegister = () => {
     setIsLoggedIn(true);
@@ -75,26 +71,30 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
             <img
               className="icon-user"
               src="../../../../public/Images/user.png"
-            ></img>
+              alt="user icon"
+            />
             <input
               className="input-Field-login"
               type="text"
-              value={loginUserName}
-              placeholder="Nutzername"
-              onChange={(e) => setLoginUserName(e.target.value)}
+              name="username"
+              value={credentials.username}
+              placeholder="Username"
+              onChange={handleChange}
             />
           </div>
           <div className="input-with-icon-login">
             <img
               className="icon-user"
-              src="../../../../public/Images/password.png"
-            ></img>
+              src="/Images/password.png"
+              alt="password icon"
+            />
             <input
               className="input-Field-login"
               type="password"
-              value={loginPassword}
-              placeholder="Passwort"
-              onChange={(e) => setLoginPassword(e.target.value)}
+              name="password"
+              value={credentials.password}
+              placeholder="Password"
+              onChange={handleChange}
             />
           </div>
 
@@ -118,6 +118,10 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
       </form>
     </div>
   );
+};
+
+BringItRightLogin.propTypes = {
+  setIsLoggedIn: PropTypes.func.isRequired,
 };
 
 export default BringItRightLogin;

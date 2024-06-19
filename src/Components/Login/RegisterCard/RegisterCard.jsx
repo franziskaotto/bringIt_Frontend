@@ -4,10 +4,9 @@ import "./RegisterCard.css"
 
 
 
-
 const postNewUser = async (userData) => {
   try {
-    const response = await fetch("http://localhost:8081/api/user/", {
+    const response = await fetch("http://localhost:8081/api/user/signup", {
       method:'POST',
       headers: {
          'Content-Type': 'application/json',
@@ -32,7 +31,7 @@ const RegisterCard = () => {
   const [city, setCity] = useState("");
   const [username, setUsername] = useState("");
   const [password,setPassword] = useState("");
-  const [fistName, setFirstName] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [email, setEmail] = useState("");
@@ -49,7 +48,7 @@ const RegisterCard = () => {
       },
       username: username,
       password: password,
-      fistName: fistName,
+      firstName: firstName,
       lastName: lastName,
       dateOfBirth: dateOfBirth,
       email: email,
@@ -111,8 +110,8 @@ const RegisterCard = () => {
               className="input-Field"
               name="firstName"
               type="text"
-              value={fistName}
-              placeholder="Vorname"
+              value={firstName}
+              placeholder="First Name"
               onChange={(e) => setFirstName(e.target.value)}
             />
           </div>
