@@ -14,7 +14,7 @@ const ReadMore = () => {
   return (
     <>
       <div className="read-more-container">
-        <div className="left-content">
+        <div className="left-content-register">
           <div className="logo-und-button">
             <Logo />
             <div className="login-div">

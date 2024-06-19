@@ -30,12 +30,8 @@ function Layout() {
         </>
       ) : (
         <div className="major-container">
-          <div className="left-container">
             <BringItLeftContent setIsLoggedIn={setIsLoggedIn} />
-          </div>
-          <div className="right-container">
             <BringItRightLogin setIsLoggedIn={setIsLoggedIn} />
-          </div>
         </div>
       )}
     </>

@@ -1,16 +1,15 @@
 .container-left-content {
-  /* Your existing styles for left content */
-  position: absolute;
+  
+  position: relative;
+  margin: 0 auto;
   left: 10%;
   top: 50%;
-  width: 616px; /* Fixed width */
-  height: 277px;
-  transform: translateY(-50%); /* Fixed height */
-  /* Other styles */
+  /* width: 616px; 
+  height: 277px; */
+  /* transform: translateY(-50%); */
+  
 }
 .bringIt-headline {
- 
-
   bottom: 38.04%;
   font-style: normal;
   font-weight: 500;
@@ -30,29 +29,28 @@
 .read-more-btn{
   /* Rectangle */
   cursor: pointer;
-    background: #03045E;
+  background: #03045E;
   border-radius: 40px;
   border-style: none;
  
   color: #dfe4f0;
   letter-spacing: 5px;
   font-size: 15px;
-   width: 215px;
+  width: 215px;
   height: 40px;
 }
 
-@media (max-width: 1280px) {
-  .container-left-content {
+/* @media (max-width: 1280px) {
+.container-left-content {
     position: relative;
     left: auto;
     top: auto;
-    margin: 0 auto; /* Center horizontally */
-    width: 100%; /* Take full width */
+    margin: 0 auto;
+    width: 100%;
     height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  .container-left-content {
-    margin-bottom: 20px; /* Add space between left and right content */
-  }
-
  
-}
+} */
