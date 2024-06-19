@@ -23,23 +23,26 @@ body {
   z-index: -1;
 }
 
-.container {
+.major-container {
   display: flex;
-  flex-wrap: wrap; 
+  flex-direction: column; /* Stack containers vertically on small screens */
+  padding: 20px;
 }
 
 .left-container,
 .right-container {
-  width: 50%;
+  width: 100%; /* Take full width initially */
+  max-width: 50%; /* Restrict maximum width to 50% */
 }
 
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column; 
+@media (min-width: 768px) {
+  .major-container {
+    flex-direction: row; /* Arrange containers side by side on larger screens */
   }
 
   .left-container,
   .right-container {
-    width: 100%; 
+    width: 50%; /* Each container takes 50% width on larger screens */
+    max-width: none; /* Remove maximum width restriction */
   }
 }
