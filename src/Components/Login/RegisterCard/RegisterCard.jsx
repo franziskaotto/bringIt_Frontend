@@ -81,8 +81,23 @@ const RegisterCard = () => {
               name="userName"
               type="text"
               value={username}
-              placeholder="Username"
+              placeholder="Benutzername"
               onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          {/* __________________________________________________________________ */}
+          <div className="input-with-icon">
+            <img
+              className="icons"
+              src="../../../../public/Images/email.png"
+            ></img>
+            <input
+              className="input-Field"
+              type="text"
+              name="email"
+              value={email}
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           {/* __________________________________________________________________ */}
@@ -111,23 +126,8 @@ const RegisterCard = () => {
               name="LastName"
               type="text"
               value={lastName}
-              placeholder="Last Name"
+              placeholder="Nachname"
               onChange={(e) => setLastName(e.target.value)}
-            />
-          </div>
-          {/* __________________________________________________________________ */}
-          <div className="input-with-icon">
-            <img
-              className="icon"
-              src="../../../../public/Images/email.png"
-            ></img>
-            <input
-              className="input-Field"
-              type="text"
-              name="email"
-              value={email}
-              placeholder="Email-Address"
-              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           {/* __________________________________________________________________ */}
@@ -141,7 +141,7 @@ const RegisterCard = () => {
               type="date"
               name="dateOfBirth"
               value={dateOfBirth}
-              placeholder="Date of Birth"
+              placeholder="Geburtstag"
               onChange={(e) => setDateOfBirth(e.target.value)}
             />
           </div>
@@ -155,7 +155,7 @@ const RegisterCard = () => {
               type="text"
               name="phone"
               value={phone}
-              placeholder="Phone number"
+              placeholder="Telefonnummer"
               onChange={(e) => setPhone(e.target.value)}
             />
           </div>
@@ -167,7 +167,7 @@ const RegisterCard = () => {
               type="text"
               name="streetNumber"
               value={streetNumber}
-              placeholder="Address"
+              placeholder="Straße & Nr."
               onChange={(e) => setStreetNumber(e.target.value)}
             />
           </div>
@@ -178,7 +178,7 @@ const RegisterCard = () => {
               type="text"
               name="postalCode"
               value={postalCode}
-              placeholder="postal Code"
+              placeholder="Postleitzahl"
               onChange={(e) => setPostalCode(e.target.value)}
             />
           </div>
@@ -193,7 +193,7 @@ const RegisterCard = () => {
               type="text"
               name="city"
               value={city}
-              placeholder="City"
+              placeholder="Ort"
               onChange={(e) => setCity(e.target.value)}
             />
           </div>
@@ -209,13 +209,15 @@ const RegisterCard = () => {
               type="password"
               name="password"
               value={password}
-              placeholder="Password"
+              placeholder="Passwort"
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button className="register-button" type="submit">
-            REGISTER
-          </button>
+          <div className="button-container">
+            <button className="register-button" type="submit">
+              REGISTRIEREN
+            </button>
+          </div>
         </div>
       </form>
     </div>

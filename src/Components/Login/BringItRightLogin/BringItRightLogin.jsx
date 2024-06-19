@@ -66,15 +66,15 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
       <Logo />
 
       <form className="singIn-Form" onSubmit={handleLogin}>
-        <div className="input-Container">
-          <div className="input-with-icon">
+        <div className="input-Container-login">
+          <div className="input-with-icon-login">
             <img
               className="icon-user"
               src="../../../../public/Images/user.png"
               alt="user icon"
             />
             <input
-              className="input-Field"
+              className="input-Field-login"
               type="text"
               name="username"
               value={credentials.username}
@@ -82,14 +82,14 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
               onChange={handleChange}
             />
           </div>
-          <div className="input-with-icon">
+          <div className="input-with-icon-login">
             <img
               className="icon-user"
               src="/Images/password.png"
               alt="password icon"
             />
             <input
-              className="input-Field"
+              className="input-Field-login"
               type="password"
               name="password"
               value={credentials.password}
@@ -106,12 +106,12 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
         <div className="links">
           <div className="register">
             <Link to={"/register"} onClick={handleRegister}>
-              <p>Register</p>
+              <p>Registrieren</p>
             </Link>
           </div>
           <div className="forgotPW">
             <Link to={"/forgotPassword"}>
-              <p>Forgot Password?</p>
+              <p>Passwort vergessen?</p>
             </Link>
           </div>
         </div>

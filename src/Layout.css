@@ -1,27 +1,19 @@
-
-
 #root {
   font-family: Inter, sans-serif;
   font-feature-settings: "liga" 1, "calt" 1;
   color: #eef1f8;
 }
 
-/* Login Page */
-body{
+body {
   position: relative;
-
-  
-
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-
   background: linear-gradient(180deg, #48CAE4 0%, #03045E 100%);
- 
-
+  min-height: 100vh; 
 } 
 
-#elipses{
+#elipses { 
   position: absolute;
   width: 596px;
   height: 637px;
@@ -31,6 +23,26 @@ body{
   z-index: -1;
 }
 
+.major-container {
+  display: flex;
+  flex-direction: column; /* Stack containers vertically on small screens */
+  padding: 20px;
+}
 
+.left-container,
+.right-container {
+  width: 100%; /* Take full width initially */
+  max-width: 50%; /* Restrict maximum width to 50% */
+}
 
+@media (min-width: 768px) {
+  .major-container {
+    flex-direction: row; /* Arrange containers side by side on larger screens */
+  }
 
+  .left-container,
+  .right-container {
+    width: 50%; /* Each container takes 50% width on larger screens */
+    max-width: none; /* Remove maximum width restriction */
+  }
+}

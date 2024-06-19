@@ -5,6 +5,7 @@ import "./Map.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import TomTomMap from "../../TomTomMap";
 
 const Map = () => {
   const [key, setKey] = useState("map");
@@ -19,7 +20,7 @@ const Map = () => {
           className="mb-3"
         >
           <Tab eventKey="map" title="Map">
-            Tab content for Home
+            <TomTomMap />
           </Tab>
           <Tab eventKey="profile" title="Profile">
             Tab content for Profile
