@@ -1,9 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from 'react'
+import "./GoogleMaps.css"
+import { APIProvider,Map, AdvancedMarker, Pin } from "@vis.gl/react-google-maps";
+
+const googleMapsAPIKey = "AIzaSyBacQv7qzQpvVYWkP9woi9FHEMJrFBN3Jk";
+const mapsId = "df621f6bd5a413fd";
 
 
-import { APIProvider,Map } from "@vis.gl/react-google-maps";
+
 
 const GoogleMaps = () => {
   const [longitude, setLongitude] = useState(null);
@@ -40,12 +45,20 @@ const GoogleMaps = () => {
   return (
     <>
       <APIProvider
-        apiKey={"AIzaSyBacQv7qzQpvVYWkP9woi9FHEMJrFBN3Jk"}
+        apiKey={googleMapsAPIKey}
         onLoad={() => console.log("Maps API has loaded.")}
       >
-        <div style={{ height: "500px", width: "50%" }}>
+        <div className="map-container">
           {latitude !== null && longitude !== null ? (
-            <Map zoom={15} center={{ lat: latitude, lng: longitude }}></Map>
+            <Map
+              zoom={15}
+              center={{ lat: latitude, lng: longitude }}
+              mapId={mapsId}
+            >
+              <AdvancedMarker
+                position={{ lat: latitude, lng: longitude }}
+              ></AdvancedMarker>
+            </Map>
           ) : (
             <p>Loading...</p>
           )}

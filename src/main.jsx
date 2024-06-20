@@ -12,6 +12,7 @@ import Map from "./Components/Pages/Map/Map";
 import Profil from "./Components/Pages/Profil";
 import RegisterPage from "./Components/Pages/RegisterPage";
 
+
 const router = createBrowserRouter([
   {
     path: "/",
