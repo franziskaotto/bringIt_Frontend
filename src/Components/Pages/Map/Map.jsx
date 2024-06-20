@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import TomTomMap from "../../TomTomMap";
+import GoogleMaps from "../../GoogleMaps";
 
 const Map = () => {
   const [key, setKey] = useState("map");
@@ -20,7 +21,7 @@ const Map = () => {
           className="mb-3"
         >
           <Tab eventKey="map" title="Map">
-            <TomTomMap />
+            <GoogleMaps />
           </Tab>
           <Tab eventKey="profile" title="Profile">
             Tab content for Profile
