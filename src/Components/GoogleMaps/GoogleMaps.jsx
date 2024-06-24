@@ -2,7 +2,16 @@
 
 import React, { useEffect, useState } from 'react'
 import "./GoogleMaps.css"
-import { APIProvider,Map, AdvancedMarker, Pin } from "@vis.gl/react-google-maps";
+import {createRoot} from "react-dom/client";
+
+import {
+  APIProvider,
+  Map,
+  AdvancedMarker,
+  useMapsLibrary,
+  ControlPosition,
+} from "@vis.gl/react-google-maps";
+
 
 const googleMapsAPIKey = "AIzaSyBacQv7qzQpvVYWkP9woi9FHEMJrFBN3Jk";
 const mapsId = "df621f6bd5a413fd";
@@ -54,11 +63,14 @@ const GoogleMaps = () => {
               defaultZoom={15}
               defaultCenter={{ lat: latitude, lng: longitude }}
               mapId={mapsId}
+              gestureHandling={"greedy"} // handles gestures with handx, greey = all touch gestures, scrolling, zoom
+              // disableDefaultUI={true} //nur wenn wir was eigenes erstellen wollen
             >
               <AdvancedMarker
                 position={{ lat: latitude, lng: longitude }}
-                background={"grey"}
               ></AdvancedMarker>
+
+              <Geocoding />
             </Map>
           ) : (
             <p>Loading...</p>
@@ -68,7 +80,18 @@ const GoogleMaps = () => {
     </>
   );
 }
+//the <APIProvider needs to wrap everything 
+
+// neues Component erstellen, wenn machbar?
+
+const Geocoding = () => {
+  const geocodingLibrary = useMapsLibrary("geocoding");
+  useEffect(() => {
+    if (!geocodingLibrary) return;
+
+    const geocoder = new geocodingLibrary.Geocoder();
+    // ...
+  }, [geocodingLibrary]);
+}
 
 export default GoogleMaps;
-
-//the <APIProvider needs to wrap everything 
