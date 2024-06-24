@@ -1,227 +1,145 @@
 import React, { useState } from "react";
-
+import { Link} from "react-router-dom";
+import {useFormik} from "formik";
+import * as Yup from "yup";
+import get from "lodash.get"; // for accessing the nested fields using get
 import "./RegisterPage.css";
-import { useNavigate } from "react-router-dom";
 
+// Define the validation schema using Yup
+const validationSchema = Yup.object({
+  // Define the validations for address
+  address: Yup.object({
+    streetNumber: Yup.string().required("Street number is required."),
+    postalCode: Yup.string()
+      .length(4, "Postal Code must be exactly 4 characters long.")
+      .required("Postal Code is required."),
+    city: Yup.string().required("City is required."),
+  }),
+  // Define the validations for user
+  username: Yup.string().required("Username is required."),
+  password: Yup.string().required("Password is required."),
+  firstName: Yup.string()
+    .matches(/^[a-zA-Z\s'-]+$/, "First name can only contain letters, spaces, hyphens, and apostrophes.")
+    .required("First name is required."),
+  lastName: Yup.string()
+    .matches(/^[a-zA-Z\s'-]+$/, "Last name can only contain letters, spaces, hyphens, and apostrophes.")
+    .required("Last name is required."),
+  dateOfBirth: Yup.date() // must be a valid date
+    .required("Date of Birth is required.") 
+    // .test is a custom validation, taking 3 parameters
+    // a unique name "age", an error message, a valdation function
+    .test("age", "You must be at least 12 years old", function (value) {  // value current value of date field
+      return value && new Date().getFullYear() - value.getFullYear() >= 12; // calc difference current year /birth year
+    }),
+  email: Yup.string().email("Please enter a valid email address.").required("Email address is required."),
+  phone: Yup.string().required("Phone number is required."),
+});
+
+// Function to handle POST to register new user
 const postNewUser = async (userData) => {
   try {
     const response = await fetch("http://localhost:8081/api/user/signup", {
-      method: "POST",
+      method:'POST',
       headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    });
-    if (response.ok) {
-      console.log("User registered successfully");
-    } else {
-      console.error("Failed to register user");
-    }
+         'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData), 
+               
+    })
+     if (response.ok) {
+
+       console.log("User registered successfully");
+     } else {
+       console.error("Failed to register user");
+       console.log("Response status:", response.status);
+
+       console.log("userdata:", userData)
+       console.log("userData: " + JSON.stringify(userData));
+     }
+
   } catch (error) {
-    console.error("error: ", error);
+    console.error("error: ", error)
   }
-};
+}
 
-const RegisterPage = ({ setIsLoggedIn }) => {
-  const [streetNumber, setStreetNumber] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  const [city, setCity] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-
-  const navigate = useNavigate();
-
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    const userData = {
+const RegisterCard = () => {
+ 
+  // Use formik hook to manage form state, validation and submission
+  const formik = useFormik({
+    initialValues:{
       address: {
-        streetNumber: streetNumber,
-        postalCode: postalCode,
-        city: city,
+        streetNumber:"",
+        postalCode:"",
+        city:"",
       },
-      username: username,
-      password: password,
-      firstName: firstName,
-      lastName: lastName,
-      dateOfBirth: dateOfBirth,
-      email: email,
-      phone: phone,
-    };
-
-    postNewUser(userData);
-  };
-
-  const handleCancel = () => {
-    setIsLoggedIn(false);
-    console.log("Navigating to /");
-    navigate("/");
-  };
-
+      username:"",
+      password:"",
+      firstName:"",
+      lastName:"",
+      dateOfBirth:"",
+      email:"",
+      phone:""
+    },
+    // Apply validation schema defined above
+    validationSchema: validationSchema,
+    // Function to handle form submission
+    onSubmit: async (values) => {
+      await postNewUser(values); // Call function to POST data to the server
+    },
+  });
+  
+ 
   return (
     <div className="register-card">
-      <form className="singIn-Form" onSubmit={handleRegister}>
-        <div className="input-container-register">
-          {/* __________________________________________________________________ */}
-          <div className="input-with-icon">
-            <img
-              className="icon"
-              src="../../../../public/Images/Draw.png"
-            ></img>
-            <input
-              className="input-Field"
-              name="userName"
-              type="text"
-              value={username}
-              placeholder="Benutzername"
-              onChange={(e) => setUsername(e.target.value)}
-            />
+      {/* Form component with onSubmit handler */}
+      <form className="singIn-Form" onSubmit={formik.handleSubmit}>
+        <div className="input-Container">
+          {/* Map over form fields and render inputs */}
+          {[
+            { name: "username", type: "text", placeholder: "Benutzername", icon: "Draw.png" },
+            { name: "password", type: "password", placeholder: "Passwort", icon: "password.png" },
+            { name: "email", type: "text", placeholder: "Email", icon: "email.png" },
+            { name: "firstName", type: "text", placeholder: "Vorname", icon: "user.png" },
+            { name: "lastName", type: "text", placeholder: "Nachname", icon: "user.png" },
+            { name: "dateOfBirth", type: "date", placeholder: "Geburtstag", icon: "calender.png" },
+            { name: "phone", type: "text", placeholder: "Telefonnummer", icon: "phone.png" },
+            { name: "address.streetNumber", type: "text", placeholder: "Straße & Nr.", icon: "PLZ.png" },
+            { name: "address.postalCode", type: "text", placeholder: "Postleitzahl", icon: "PLZ.png" },
+            { name: "address.city", type: "text", placeholder: "Ort", icon: "city.png" },
+          ].map(({ name, type, placeholder, icon }) => { // mapping over array of form fields to render inputs dynamically
+            const fieldName = name;
+            const fieldError = get(formik.errors, fieldName); // accessing nested values using lodash.get
+            const fieldTouched = get(formik.touched, fieldName); // accessing nested values using lodash.get
+
+            return (
+              <div key={name} className="input-with-icon">
+                <img className="icon" src={`../../../../public/Images/${icon}`} alt={`${name} icon`} />
+                {/* Input field with attributes */}
+                <input
+                  className="input-Field"
+                  name={name} // Use the nested path directly in name attribute
+                  type={type}
+                  placeholder={placeholder}
+                  value={get(formik.values, name)} // Access nested values correctly using get for nested fields
+                  onChange={formik.handleChange} // Updates formik.values with the current input value as the user types
+                  onBlur={formik.handleBlur} // Marks the field as touched when the user moves away after interacting
+                />
+                {/* Display validation error message if field is touched and has error */}
+                {fieldTouched && fieldError ? (
+                  <div className="error">{fieldError}</div>
+                ) : null}
+              </div>
+            );
+          })}
+           <div className="button-container">
+            <button className="register-button" type="submit">
+              REGISTRIEREN
+            </button>
           </div>
-          {/* __________________________________________________________________ */}
-          <div className="input-with-icon">
-            <img
-              className="icons"
-              src="../../../../public/Images/email.png"
-            ></img>
-            <input
-              className="input-Field"
-              type="text"
-              name="email"
-              value={email}
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          {/* __________________________________________________________________ */}
-          <div className="input-with-icon">
-            <img
-              className="icon"
-              src="../../../../public/Images/user.png"
-            ></img>
-            <input
-              className="input-Field"
-              name="firstName"
-              type="text"
-              value={firstName}
-              placeholder="First Name"
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-          </div>
-          {/* __________________________________________________________________ */}
-          <div className="input-with-icon">
-            <img
-              className="icon"
-              src="../../../../public/Images/user.png"
-            ></img>
-            <input
-              className="input-Field"
-              name="LastName"
-              type="text"
-              value={lastName}
-              placeholder="Nachname"
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </div>
-          {/* __________________________________________________________________ */}
-          <div className="input-with-icon">
-            <img
-              className="icon"
-              src="../../../../public/Images/calender.png"
-            ></img>
-            <input
-              className="input-Field"
-              type="date"
-              name="dateOfBirth"
-              value={dateOfBirth}
-              placeholder="Geburtstag"
-              onChange={(e) => setDateOfBirth(e.target.value)}
-            />
-          </div>
-          <div className="input-with-icon">
-            <img
-              className="icon"
-              src="../../../../public/Images/phone.png"
-            ></img>
-            <input
-              className="input-Field"
-              type="text"
-              name="phone"
-              value={phone}
-              placeholder="Telefonnummer"
-              onChange={(e) => setPhone(e.target.value)}
-            />
-          </div>
-          {/* __________________________________________________________________ */}
-          <div className="input-with-icon">
-            <img className="icon" src="../../../../public/Images/PLZ.png"></img>
-            <input
-              className="input-Field"
-              type="text"
-              name="streetNumber"
-              value={streetNumber}
-              placeholder="Straße & Nr."
-              onChange={(e) => setStreetNumber(e.target.value)}
-            />
-          </div>
-          <div className="input-with-icon">
-            <img className="icon" src="../../../../public/Images/PLZ.png"></img>
-            <input
-              className="input-Field"
-              type="text"
-              name="postalCode"
-              value={postalCode}
-              placeholder="Postleitzahl"
-              onChange={(e) => setPostalCode(e.target.value)}
-            />
-          </div>
-          {/* __________________________________________________________________ */}
-          <div className="input-with-icon">
-            <img
-              className="icon"
-              src="../../../../public/Images/city.png"
-            ></img>
-            <input
-              className="input-Field"
-              type="text"
-              name="city"
-              value={city}
-              placeholder="Ort"
-              onChange={(e) => setCity(e.target.value)}
-            />
-          </div>
-          {/* __________________________________________________________________ */}
-          <div className="input-with-icon">
-            <img
-              className="icon"
-              src="../../../../public/Images/password.png"
-              alt="User Icon"
-            />
-            <input
-              className="input-Field"
-              type="password"
-              name="password"
-              value={password}
-              placeholder="Passwort"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <button
-            className="register-button"
-            type="button"
-            onClick={handleCancel}
-          >
-            ZURÜCK
-          </button>
-          <button className="register-button" type="submit">
-            REGISTRIEREN
-          </button>
         </div>
       </form>
     </div>
   );
 };
-export default RegisterPage;
+
+export default RegisterCard;
