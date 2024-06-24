@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Link} from "react-router-dom";
-import {useFormik} from "formik";
+import { Outlet, Link } from "react-router-dom";
+
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import get from "lodash.get"; // for accessing the nested fields using get
 import "./RegisterPage.css";
@@ -19,19 +20,28 @@ const validationSchema = Yup.object({
   username: Yup.string().required("Username is required."),
   password: Yup.string().required("Password is required."),
   firstName: Yup.string()
-    .matches(/^[a-zA-Z\s'-]+$/, "First name can only contain letters, spaces, hyphens, and apostrophes.")
+    .matches(
+      /^[a-zA-Z\s'-]+$/,
+      "First name can only contain letters, spaces, hyphens, and apostrophes."
+    )
     .required("First name is required."),
   lastName: Yup.string()
-    .matches(/^[a-zA-Z\s'-]+$/, "Last name can only contain letters, spaces, hyphens, and apostrophes.")
+    .matches(
+      /^[a-zA-Z\s'-]+$/,
+      "Last name can only contain letters, spaces, hyphens, and apostrophes."
+    )
     .required("Last name is required."),
   dateOfBirth: Yup.date() // must be a valid date
-    .required("Date of Birth is required.") 
+    .required("Date of Birth is required.")
     // .test is a custom validation, taking 3 parameters
     // a unique name "age", an error message, a valdation function
-    .test("age", "You must be at least 12 years old", function (value) {  // value current value of date field
+    .test("age", "You must be at least 12 years old", function (value) {
+      // value current value of date field
       return value && new Date().getFullYear() - value.getFullYear() >= 12; // calc difference current year /birth year
     }),
-  email: Yup.string().email("Please enter a valid email address.").required("Email address is required."),
+  email: Yup.string()
+    .email("Please enter a valid email address.")
+    .required("Email address is required."),
   phone: Yup.string().required("Phone number is required."),
 });
 
@@ -39,46 +49,42 @@ const validationSchema = Yup.object({
 const postNewUser = async (userData) => {
   try {
     const response = await fetch("http://localhost:8081/api/user/signup", {
-      method:'POST',
+      method: "POST",
       headers: {
-         'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData), 
-               
-    })
-     if (response.ok) {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+    if (response.ok) {
+      console.log("User registered successfully");
+    } else {
+      console.error("Failed to register user");
+      console.log("Response status:", response.status);
 
-       console.log("User registered successfully");
-     } else {
-       console.error("Failed to register user");
-       console.log("Response status:", response.status);
-
-       console.log("userdata:", userData)
-       console.log("userData: " + JSON.stringify(userData));
-     }
-
+      console.log("userdata:", userData);
+      console.log("userData: " + JSON.stringify(userData));
+    }
   } catch (error) {
-    console.error("error: ", error)
+    console.error("error: ", error);
   }
-}
+};
 
 const RegisterCard = () => {
- 
   // Use formik hook to manage form state, validation and submission
   const formik = useFormik({
-    initialValues:{
+    initialValues: {
       address: {
-        streetNumber:"",
-        postalCode:"",
-        city:"",
+        streetNumber: "",
+        postalCode: "",
+        city: "",
       },
-      username:"",
-      password:"",
-      firstName:"",
-      lastName:"",
-      dateOfBirth:"",
-      email:"",
-      phone:""
+      username: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      dateOfBirth: "",
+      email: "",
+      phone: "",
     },
     // Apply validation schema defined above
     validationSchema: validationSchema,
@@ -87,8 +93,11 @@ const RegisterCard = () => {
       await postNewUser(values); // Call function to POST data to the server
     },
   });
-  
- 
+
+  const handleBackButton = () => {
+    window.location.href = "http://localhost:5173/";
+  }
+
   return (
     <div className="register-card">
       {/* Form component with onSubmit handler */}
@@ -184,11 +193,15 @@ const RegisterCard = () => {
               </div>
             );
           })}
-          <div className="button-container">
+          <>
+            <button className="register-button" onClick={handleBackButton}>
+              ZURÜCK
+            </button>
+
             <button className="register-button" type="submit">
               REGISTRIEREN
             </button>
-          </div>
+          </>
         </div>
       </form>
     </div>
