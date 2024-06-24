@@ -2,11 +2,7 @@
   
   position: relative;
   margin: 0 auto;
-  left: 10%;
-  top: 50%;
-  /* width: 616px; 
-  height: 277px; */
-  /* transform: translateY(-50%); */
+
   
 }
 .bringIt-headline {
@@ -40,17 +36,13 @@
   height: 40px;
 }
 
-/* @media (max-width: 1280px) {
-.container-left-content {
-    position: relative;
-    left: auto;
-    top: auto;
-    margin: 0 auto;
-    width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+@media (max-width: 1370px) {
+  .container-left-content{
+    margin-top: 5%;
+    
   }
- 
-} */
+  
+
+  
+}

@@ -1,10 +1,13 @@
 .login-card {
-  position: relative; /* Change position to relative */
-  margin-top: 20px;
- 
+  
+  position: relative;
+  margin: 0 auto;
+  /* margin-left: 50px;
+  margin-right: 15%; */
+  position: relative; 
   box-sizing: border-box;
-  width: 100%; /* Adjust to take full width */
-  max-width: 450px; /* Add max-width for better responsiveness */
+  width: 100%; 
+  max-width: 450px; 
   background-blend-mode: overlay, normal;
   backdrop-filter: blur(40px);
   border: 2px solid #eef1f8;
@@ -14,9 +17,6 @@
   flex-direction: column;
   align-items: center;
   border-radius: 40px;
-
-  /* right: 5vw; Adjust right position relative to viewport width */
-  top: 10vh;
 }
 
 .signIn-Form {
@@ -110,4 +110,12 @@
 
 
 
+@media (max-width: 1370px) {
+  .login-card {
+    margin-top: 5%;
+    margin-bottom: 20%;
+  }
 
+
+  
+}
