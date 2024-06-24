@@ -51,8 +51,8 @@ const GoogleMaps = () => {
         <div className="map-container">
           {latitude !== null && longitude !== null ? (
             <Map
-              zoom={15}
-              center={{ lat: latitude, lng: longitude }}
+              defaultZoom={15}
+              defaultCenter={{ lat: latitude, lng: longitude }}
               mapId={mapsId}
             >
               <AdvancedMarker

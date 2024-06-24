@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@googlemaps/markerclusterer": "^2.5.1",
+    "@googlemaps/react-wrapper": "^1.1.35",
     "@tomtom-international/web-sdk-maps": "^6.25.0",
     "@tomtom-international/web-sdk-services": "^6.25.0",
     "@vis.gl/react-google-maps": "^1.1.0",
