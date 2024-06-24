@@ -4,12 +4,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 
 import Layout from "./Layout";
-import ErrorPage from "./Components/Pages/ErrorPage";
-import ReadMore from "./Components/Pages/ReadMore";
-import SettingsPage from "./Components/Pages/SettingPage";
-import Map from "./Components/Pages/Map/Map";
-import Profil from "./Components/Pages/Profil";
-import RegisterPage from "./Components/Pages/RegisterPage";
+import ErrorPage from "./Pages/ErrorPage";
+import ReadMore from "./Pages/ReadMore";
+import SettingsPage from "./Pages/SettingPage";
+import Map from "./Pages/Map/Map";
+import Profil from "./Pages/Profil";
+import RegisterPage from "./Pages/RegisterPage";
 
 
 const router = createBrowserRouter([

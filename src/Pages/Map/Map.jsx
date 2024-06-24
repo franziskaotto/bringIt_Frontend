@@ -5,8 +5,7 @@ import "./Map.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import TomTomMap from "../../TomTomMap";
-import GoogleMaps from "../../GoogleMaps";
+import GoogleMaps from "../../Components/GoogleMaps/GoogleMaps";
 
 const Map = () => {
   const [key, setKey] = useState("map");

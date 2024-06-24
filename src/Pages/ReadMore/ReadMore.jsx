@@ -1,8 +1,8 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
-import Logo from "../../Logo/Logo";
 import "./ReadMore.css";
+import Logo from "../../Components/Logo/Logo";
 
 const ReadMore = () => {
   const { setIsLoggedIn } = useOutletContext();
