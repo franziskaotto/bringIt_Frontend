@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import "./RegisterPage.css";
+import { useNavigate } from "react-router-dom";
 
 const postNewUser = async (userData) => {
   try {
@@ -21,7 +22,7 @@ const postNewUser = async (userData) => {
   }
 };
 
-const RegisterPage = () => {
+const RegisterPage = ({ setIsLoggedIn }) => {
   const [streetNumber, setStreetNumber] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [city, setCity] = useState("");
@@ -32,6 +33,8 @@ const RegisterPage = () => {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+
+  const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -51,6 +54,12 @@ const RegisterPage = () => {
     };
 
     postNewUser(userData);
+  };
+
+  const handleCancel = () => {
+    setIsLoggedIn(false);
+    console.log("Navigating to /");
+    navigate("/");
   };
 
   return (
@@ -200,10 +209,17 @@ const RegisterPage = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          <button
+            className="register-button"
+            type="button"
+            onClick={handleCancel}
+          >
+            ZURÜCK
+          </button>
+          <button className="register-button" type="submit">
+            REGISTRIEREN
+          </button>
         </div>
-        <button className="register-button" type="submit">
-          REGISTRIEREN
-        </button>
       </form>
     </div>
   );

@@ -57,6 +57,7 @@ const GoogleMaps = () => {
             >
               <AdvancedMarker
                 position={{ lat: latitude, lng: longitude }}
+                background={"grey"}
               ></AdvancedMarker>
             </Map>
           ) : (
