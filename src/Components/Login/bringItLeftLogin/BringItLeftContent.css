@@ -1,9 +1,6 @@
 .container-left-content {
-  
   position: relative;
   margin: 0 auto;
-
-  
 }
 .bringIt-headline {
   bottom: 38.04%;
@@ -14,7 +11,7 @@
   text-align: left;
 }
 
-.bringIt-h2{
+.bringIt-h2 {
   /* step up your neighbourhood */
   font-style: normal;
   font-weight: 500;
@@ -22,13 +19,13 @@
   line-height: 41px;
   text-align: left;
 }
-.read-more-btn{
+.read-more-btn {
   /* Rectangle */
   cursor: pointer;
-  background: #03045E;
+  background: #03045e;
   border-radius: 40px;
   border-style: none;
- 
+
   color: #dfe4f0;
   letter-spacing: 5px;
   font-size: 15px;
@@ -36,13 +33,17 @@
   height: 40px;
 }
 
-
 @media (max-width: 1370px) {
-  .container-left-content{
+  .container-left-content {
     margin-top: 5%;
-    
-  }
-  
+    backdrop-filter: blur(40px);
+    padding-bottom: 20px;
+    border-radius: 40px;
 
-  
+  }
+
+  .container-left-content button {
+    justify-content: center;
+  }
+
 }
