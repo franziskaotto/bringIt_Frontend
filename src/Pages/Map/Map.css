@@ -2,8 +2,32 @@
 
 .left-side-content-map{
   margin-top: 100px;
-  padding-top:10px
+  padding-top: 10px;
+
+
 }
+
+.map-and-filter-container{
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+@media (min-width: 1370px) {
+  .map-and-filter-container {
+    align-items: center;
+    height: 100%;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  
+}
+
 
 .tabs {
   display: flex;
