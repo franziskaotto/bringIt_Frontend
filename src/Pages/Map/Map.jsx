@@ -1,19 +1,15 @@
 import React, { useState } from "react";
 import "./Map.css";
 
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import TomTomMap from "../../TomTomMap";
-import GoogleMaps from "../../GoogleMaps";
-import OpenTodos from "../../Todo/CreateTodo";
-import CreateTodo from "../../Todo/CreateTodo";
-import MyTodos from "../../Todo/MyTodos";
+import GoogleMaps from "../../Components/GoogleMaps/GoogleMaps";
+import TodoFilter from "../../Components/TodoFilter";
 
 const Map = () => {
   const [key, setKey] = useState("map");
- 
+
   return (
     <>
       <div className="left-side-content-map">
@@ -24,13 +20,10 @@ const Map = () => {
           className="mb-3"
         >
           <Tab eventKey="map" title="Map">
-            <GoogleMaps />
-          </Tab>
-          <Tab eventKey="todo" title="Todo erstellen">
-            <CreateTodo />
-          </Tab>
-          <Tab eventKey="mytodo" title="Meine todos">
-            <MyTodos />
+            <div className="map-and-filter-container">
+              <GoogleMaps />
+              <TodoFilter />
+            </div>
           </Tab>
           <Tab eventKey="profile" title="Profile">
             Tab content for Profile

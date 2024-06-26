@@ -1,12 +1,24 @@
 "use client";
 
+
 import React, { useEffect, useState } from 'react'
 import "./GoogleMaps.css"
-import { APIProvider,Map, AdvancedMarker, Pin } from "@vis.gl/react-google-maps";
+import {createRoot} from "react-dom/client";
+
+import {
+  APIProvider,
+  Map,
+  Pin,
+  AdvancedMarker,
+  useMapsLibrary,
+} from "@vis.gl/react-google-maps";
+import Directions from './Directions';
+
 
 const googleMapsAPIKey = "AIzaSyBacQv7qzQpvVYWkP9woi9FHEMJrFBN3Jk";
 const mapsId = "df621f6bd5a413fd";
-
+// const googleMapsAPIKey = process.env.NEXT_GOOGLE_MAPS_KEY;
+// const mapsId = process.env.NEXT_MAPS_ID;
 
 
 
@@ -51,14 +63,23 @@ const GoogleMaps = () => {
         <div className="map-container">
           {latitude !== null && longitude !== null ? (
             <Map
-              zoom={15}
-              center={{ lat: latitude, lng: longitude }}
+              defaultZoom={15}
+              defaultCenter={{ lat: latitude, lng: longitude }}
               mapId={mapsId}
+              gestureHandling={"greedy"} // handles gestures with handx, greey = all touch gestures, scrolling, zoom
+              // disableDefaultUI={true} //nur wenn wir was eigenes erstellen wollen
             >
-              <AdvancedMarker
-                position={{ lat: latitude, lng: longitude }}
-                background={"grey"}
-              ></AdvancedMarker>
+              <AdvancedMarker position={{ lat: latitude, lng: longitude }}>
+                <Pin
+               
+                  background={"#eef1f8"} // can also use image
+                  borderColor={"#03045e"}
+                  glyphColor={"#03045e"} //dot in the middle
+                ></Pin>
+              </AdvancedMarker>
+
+              <Directions />
+              
             </Map>
           ) : (
             <p>Loading...</p>
@@ -69,6 +90,23 @@ const GoogleMaps = () => {
   );
 }
 
+
+
+
 export default GoogleMaps;
 
-//the <APIProvider needs to wrap everything 
+
+//Info für uns: 
+/*
+<APIProvider />
+ - needs to wrap everything, 
+ - it loads all of the different libraries combined with our API KEY
+
+
+
+
+
+
+
+
+*/
