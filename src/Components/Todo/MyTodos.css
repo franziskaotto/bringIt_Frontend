@@ -1,0 +1,95 @@
+.my-todos {
+    padding: 20px;
+  }
+  
+  .my-todos h2 {
+    margin-bottom: 20px;
+    color: white;
+  }
+  
+  .my-todos ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .my-todos li {
+    background: #023E8A;
+    margin-bottom: 10px;
+    padding: 20px;
+    border-radius: 40px;
+  }
+  
+  .my-todos li h3 {
+    margin: 0 0 10px;
+    color: white;
+  }
+  
+  .my-todos li p {
+    color: white; /* General color for all p elements within li */
+  }
+  
+  .my-todos li p.userOfferedId,
+  .my-todos li p.addInfo,
+  .my-todos li p.uploadPath,
+  .my-todos li p.expiresAt {
+    color: darkgray;
+  }
+  
+  .my-todos li p.description {
+    color: white;
+  }
+  
+  .my-todos li p.location {
+    color: white;
+  }
+  
+  .todo-item {
+    margin-bottom: 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .todo-summary {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .todo-summary h3 {
+    margin: 5px 0 0 0;
+  }
+  
+  .todo-summary .todo-id {
+    font-size: 14px;
+    margin: 0;
+    color: white;
+  }
+  
+  .todo-summary .arrow {
+    font-size: 18px;
+    align-self: flex-end;
+  }
+  
+  .todo-details {
+    margin-top: 10px;
+    transition: max-height 0.3s ease;
+  }
+  
+  .collapsed .todo-details {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+  }
+  
+  .expanded .todo-details {
+    max-height: 500px; /* Adjust as needed */
+    overflow: hidden;
+  }
+  
+  .todo-details p {
+    margin: 5px 0;
+  }
+  

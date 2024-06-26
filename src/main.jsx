@@ -10,6 +10,9 @@ import SettingsPage from "./Components/Pages/SettingPage";
 import Map from "./Components/Pages/Map/Map";
 import Profil from "./Components/Pages/Profil";
 import RegisterPage from "./Components/Pages/RegisterPage";
+import { element } from "prop-types";
+import CreateTodo from "./Components/Todo/CreateTodo";
+import MyTodos from "./Components/Todo/MyTodos";
 
 
 const router = createBrowserRouter([
@@ -30,6 +33,14 @@ const router = createBrowserRouter([
       {
         path: "map",
         element: <Map />,
+      },
+      {
+        path: "createTodo",
+        element: <CreateTodo />,
+      },
+      {
+        path: "myTodos",
+        element: <MyTodos />
       },
       {
         path: "profil",

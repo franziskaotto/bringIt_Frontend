@@ -17,7 +17,9 @@ const validationSchema = Yup.object({
   }),
   // Define the validations for user
   username: Yup.string().required("Username is required."),
-  password: Yup.string().required("Password is required."),
+  password: Yup.string()
+    .required("Password is required.")
+    .min(8, "Must be at least 8 characters long."),
   firstName: Yup.string()
     .matches(/^[a-zA-Z\s'-]+$/, "First name can only contain letters, spaces, hyphens, and apostrophes.")
     .required("First name is required."),
@@ -62,7 +64,7 @@ const postNewUser = async (userData) => {
   }
 }
 
-const RegisterCard = () => {
+const RegisterPage = () => {
  
   // Use formik hook to manage form state, validation and submission
   const formik = useFormik({
@@ -94,97 +96,44 @@ const RegisterCard = () => {
       {/* Form component with onSubmit handler */}
       <form className="singIn-Form" onSubmit={formik.handleSubmit}>
         <div className="input-container-register">
+          {/* Map over form fields and render inputs */}
           {[
-            {
-              name: "username",
-              type: "text",
-              placeholder: "Benutzername",
-              icon: "Draw.png",
-            },
-            {
-              name: "password",
-              type: "password",
-              placeholder: "Passwort",
-              icon: "password.png",
-            },
-            {
-              name: "email",
-              type: "text",
-              placeholder: "Email",
-              icon: "email.png",
-            },
-            {
-              name: "firstName",
-              type: "text",
-              placeholder: "Vorname",
-              icon: "user.png",
-            },
-            {
-              name: "lastName",
-              type: "text",
-              placeholder: "Nachname",
-              icon: "user.png",
-            },
-            {
-              name: "dateOfBirth",
-              type: "date",
-              placeholder: "Geburtstag",
-              icon: "calender.png",
-            },
-            {
-              name: "phone",
-              type: "text",
-              placeholder: "Telefonnummer",
-              icon: "phone.png",
-            },
-            {
-              name: "address.streetNumber",
-              type: "text",
-              placeholder: "Straße & Nr.",
-              icon: "PLZ.png",
-            },
-            {
-              name: "address.postalCode",
-              type: "text",
-              placeholder: "Postleitzahl",
-              icon: "PLZ.png",
-            },
-            {
-              name: "address.city",
-              type: "text",
-              placeholder: "Ort",
-              icon: "city.png",
-            },
-          ].map(({ name, type, placeholder, icon }) => {
+            { name: "username", type: "text", placeholder: "Benutzername", icon: "Draw.png" },
+            { name: "password", type: "password", placeholder: "Passwort", icon: "password.png" },
+            { name: "email", type: "text", placeholder: "Email", icon: "email.png" },
+            { name: "firstName", type: "text", placeholder: "Vorname", icon: "user.png" },
+            { name: "lastName", type: "text", placeholder: "Nachname", icon: "user.png" },
+            { name: "dateOfBirth", type: "date", placeholder: "Geburtstag", icon: "calender.png" },
+            { name: "phone", type: "text", placeholder: "Telefonnummer", icon: "phone.png" },
+            { name: "address.streetNumber", type: "text", placeholder: "Straße & Nr.", icon: "PLZ.png" },
+            { name: "address.postalCode", type: "text", placeholder: "Postleitzahl", icon: "PLZ.png" },
+            { name: "address.city", type: "text", placeholder: "Ort", icon: "city.png" },
+          ].map(({ name, type, placeholder, icon }) => { // mapping over array of form fields to render inputs dynamically
             const fieldName = name;
-            const fieldError = get(formik.errors, fieldName);
-            const fieldTouched = get(formik.touched, fieldName);
+            const fieldError = get(formik.errors, fieldName); // accessing nested values using lodash.get
+            const fieldTouched = get(formik.touched, fieldName); // accessing nested values using lodash.get
 
             return (
               <div key={name} className="input-with-icon">
-                <img
-                  className="icon"
-                  src={`../../../../public/Images/${icon}`}
-                  alt={`${name} icon`}
-                />
-
+                <img className="icon" src={`../../../../public/Images/${icon}`} alt={`${name} icon`} />
+                {/* Input field with attributes */}
                 <input
                   className="input-Field"
-                  name={name}
+                  name={name} // Use the nested path directly in name attribute
                   type={type}
                   placeholder={placeholder}
-                  value={get(formik.values, name)}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
+                  value={get(formik.values, name)} // Access nested values correctly using get for nested fields
+                  onChange={formik.handleChange} // Updates formik.values with the current input value as the user types
+                  onBlur={formik.handleBlur} // Marks the field as touched when the user moves away after interacting
                 />
-
+                {/* Display validation error message if field is touched and has error */}
                 {fieldTouched && fieldError ? (
                   <div className="error">{fieldError}</div>
                 ) : null}
               </div>
             );
           })}
-          <div className="button-container">
+           <div className="button-container">
             <button className="register-button" type="submit">
               REGISTRIEREN
             </button>
@@ -195,4 +144,4 @@ const RegisterCard = () => {
   );
 };
 
-export default RegisterCard;
+export default RegisterPage;

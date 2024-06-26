@@ -41,12 +41,18 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
       });
   
       const result = await response.json();
-  
+      console.log("Response from login:", result); // Log the result object to see its structure
+
       if (response.ok) {
         console.log(result);
         // Store the token in local storage
         localStorage.setItem("token", result.token);
         setIsLoggedIn(true);
+        // save username to localstorage
+        localStorage.setItem("username", credentials.username) 
+        console.log(credentials.username)
+
+        // to get username for creating todos
         navigate("/map");
       } else {
         console.error("Login failed", result);
