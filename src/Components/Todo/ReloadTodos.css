@@ -1,0 +1,20 @@
+.reload-todos-btn {
+    position: absolute; /* Position the button absolutely within the container */
+    top: 180px; /* Distance from the top edge of the container */
+    right: 10px; /* Distance from the right edge of the container */
+    padding: 10px 30px;
+    cursor: pointer;
+    color: #eef1f8;
+    border-radius: 40px;
+    border: none;
+    font-size: 20px;
+    letter-spacing: 5px;
+    width: 240px;
+    background: #0077B6;
+  }
+
+  .reload-todos-btn:hover {
+     /* Changes background color on hover */
+    background: #03045e;
+
+  }

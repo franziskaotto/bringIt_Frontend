@@ -21,6 +21,17 @@ const validationSchema = Yup.object({
   uploadPath: Yup.string()
     .max(50, "Pfad darf 50 Zeichen nicht überschreiten."),
   expiresAt: Yup.date()
+    .required()
+    .test(
+      "is-future-date",
+      "Das Datum muss mindestens 2 Stunden in der Zukunft liegen.",
+      (value) => {
+        if (!value) return false;
+        const now = new Date();
+        const futureDate = new Date(now.getTime() + 2 * 60 * 60 * 1000); // 2 hours from now
+        return value >= futureDate;
+      }
+    )
 });
 
 // Function to handle POST to register new todo
@@ -79,7 +90,7 @@ const CreateTodo = () => {
   });
 
   if (isSubmitted) {
-    return <div>Todo erfolgreich erstellt!</div>;
+    return <div className="todo-saved">Todo erfolgreich erstellt!</div>;
   }
 
   return (

@@ -68,12 +68,32 @@
   padding-right: 30px;
   height: 58.36px;
   cursor: pointer;
-  background: #03045e;
+  background: #0077B6;
   color: #eef1f8;
   border-radius: 40px;
   border: none;
   font-size: 20px;
   letter-spacing: 5px;
+}
+
+.todo-saved {
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px 30px;
+  color: #eef1f8;
+  border-radius: 40px;
+  border: none;
+  font-size: 20px;
+  letter-spacing: 5px;
+  width: 440px;
+  background: #0077B6;
+
+}
+
+.saveTodo-button:hover {
+  /* Changes background color on hover */
+ background: #03045e;
+
 }
 
 @media (max-width: 1280px) {
