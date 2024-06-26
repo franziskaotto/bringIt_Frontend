@@ -34,7 +34,7 @@ const TodoFilter = () => {
         const cityArray = todo.userOffered.address.city.split(",").map((city) => city.trim())
         cityArray.forEach((city) => {
           setCity((prevCities) =>  new Set([...prevCities, city]))
-        }) 
+        })
       }
     })
 
@@ -50,25 +50,28 @@ const TodoFilter = () => {
       // })
   }
     
-    const getAllPickUpStations = (data) => {
-      data.forEach((todo) => {
-        if (todo.location) {
-          const pickUpStationsArray = todo.location
-            .split(",")
-            .map((loc) => loc.trim());
-          pickUpStationsArray.forEach((pickUpStation) => {
-            setPickUpStation(
-              (prevPickUpStations) => new Set([...prevPickUpStations, pickUpStation])
-            );
-          });
-        }
-      });
-    };
+  const getAllPickUpStations = (data) => {
+    data.forEach((todo) => {
+      if (todo.location) {
+        const pickUpStationsArray = todo.location
+          .split(",")
+          .map((loc) => loc.trim());
+        pickUpStationsArray.forEach((pickUpStation) => {
+          setPickUpStation(
+            (prevPickUpStations) => new Set([...prevPickUpStations, pickUpStation])
+          );
+        });
+      }
+    });
+  };
 
 
   const fetchValidTodos = async () => {
     try {
       const localToken = localStorage.getItem("token");
+      // const localUser = localStorage.getItem(credentials.username);
+
+      // console.log(localUser)
       const response = await fetch("http://localhost:8081/api/todo", {
         method: "GET",
         headers: {

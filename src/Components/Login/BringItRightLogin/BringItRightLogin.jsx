@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
 import "./BringItRightLogin.css";
 import Logo from "../../Logo/Logo";
+import TodoFilter from "../../TodoFilter/TodoFilter";
 
 
 // handles user login and stores the JWT token in local storage
@@ -22,7 +23,7 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
       [e.target.name]: e.target.value,
     });
   };
-
+  console.log(credentials);
   // Function to handle the login form submission
   const handleLogin = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
