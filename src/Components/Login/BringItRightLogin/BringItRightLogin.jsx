@@ -48,8 +48,9 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
         // Store the token in local storage
         localStorage.setItem("token", result.token);
         setIsLoggedIn(true);
-        // save username to localstorage
-        localStorage.setItem("username", credentials.username) 
+        localStorage.setItem("userId", result.userId.toString());
+        //localStorage.setItem("username", result.username)
+        localStorage.setItem("username", credentials.username) // save username to localstorage
         console.log(credentials.username)
 
         // to get username for creating todos

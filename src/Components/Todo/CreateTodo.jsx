@@ -44,7 +44,7 @@ const postNewTodo = async (todoData) => {
       console.error("Todo konnte nicht erstellt werden.");
       console.log("Response status:", response.status);
       console.log("todoData:", todoData);
-      //console.log("userId:", userOfferedId);
+      console.log("userId:", userOfferedId);
       console.log("todoData: " + JSON.stringify(todoData));
       return false;
     }

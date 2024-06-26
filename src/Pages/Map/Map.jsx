@@ -6,6 +6,8 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import GoogleMaps from "../../Components/GoogleMaps/GoogleMaps";
 import TodoFilter from "../../Components/TodoFilter";
+import CreateTodo from "../../Components/Todo/CreateTodo";
+import MyTodos from "../../Components/Todo/MyTodos";
 
 const Map = () => {
   const [key, setKey] = useState("map");
@@ -24,6 +26,12 @@ const Map = () => {
               <GoogleMaps />
               <TodoFilter />
             </div>
+          </Tab>
+          <Tab eventKey="createTodo" title="Todo erstellen">
+            <CreateTodo />
+          </Tab>
+          <Tab eventKey="myTodos" title="Meine Todos">
+            <MyTodos />
           </Tab>
           <Tab eventKey="profile" title="Profile">
             Tab content for Profile

@@ -1,15 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-
 import Layout from "./Layout";
-import ErrorPage from "./Components/Pages/ErrorPage";
-import ReadMore from "./Components/Pages/ReadMore";
-import SettingsPage from "./Components/Pages/SettingPage";
-import Map from "./Components/Pages/Map/Map";
-import Profil from "./Components/Pages/Profil";
-import RegisterPage from "./Components/Pages/RegisterPage";
+import ErrorPage from "./Pages/ErrorPage";
+import ReadMore from "./Pages/ReadMore";
+import SettingsPage from "./Pages/SettingPage";
+import Map from "./Pages/Map/Map";
+import Profil from "./Pages/Profil";
+import RegisterPage from "./Pages/RegisterPage";
 import { element } from "prop-types";
 import CreateTodo from "./Components/Todo/CreateTodo";
 import MyTodos from "./Components/Todo/MyTodos";
