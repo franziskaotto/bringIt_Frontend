@@ -22,12 +22,14 @@
   .my-todos li h3 {
     margin: 0 0 10px;
     color: white;
+    font-size: 30px;
   }
   
   .my-todos li p {
     color: white; /* General color for all p elements within li */
   }
   
+  /* Specific p elements color overrides */
   .my-todos li p.userOfferedId,
   .my-todos li p.addInfo,
   .my-todos li p.uploadPath,
@@ -36,7 +38,7 @@
   }
   
   .my-todos li p.description {
-    color: white;
+    color: #0096C7;
   }
   
   .my-todos li p.location {
@@ -89,7 +91,54 @@
     overflow: hidden;
   }
   
-  .todo-details p {
+ /* General styles for the todo details */
+.todo-details p {
     margin: 5px 0;
+    color: white;
   }
+  
+  /* Styles for the labels */
+  .todo-details .label {
+    font-size: 0.8em; /* Smaller font size for the labels */
+    color: #cccccc; /* Optional: change color to distinguish from value */
+    font-weight: bold; /* Optional: make labels bold */
+  }
+  
+  /* Styles for the values */
+  .todo-details .value {
+    font-size: 1.2em; /* Adjust the font size for the values */
+    color: white; /* You can set a different color if needed */
+  }
+  
+  /* Specific styles for the location and description values */
+  .todo-details .location .value {
+    font-size: 1.1em; /* Specific font size for location */
+    color: #0096C7; /* Specific color for location */
+  }
+  
+  .todo-details .description .value {
+    font-size: 1.1em; /* Specific font size for description */
+    color: #0096C7; /* Specific color for description */
+  }
+
+  .action-btn {
+    padding: 10px 30px;
+    cursor: pointer;
+    color: #eef1f8;
+    border-radius: 40px;
+    border: none;
+    font-size: 20px;
+    letter-spacing: 5px;
+    width: 240px;
+    background: #0077B6;
+  }
+
+  .action-btn:hover {
+  background: #03045e;
+}
+
+
+
+
+
   

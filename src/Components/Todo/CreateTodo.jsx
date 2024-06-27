@@ -90,8 +90,17 @@ const CreateTodo = () => {
   });
 
   if (isSubmitted) {
-    return <div className="todo-saved">Todo erfolgreich erstellt!</div>;
+    return (
+      <div className="todo-saved">
+        <p>Todo erfolgreich erstellt!</p>
+        <div className="close-button" onClick={() => {
+          setIsSubmitted(false);
+          formik.resetForm(); // Reset form values to default
+        }}>X</div>
+      </div>
+    );
   }
+  
 
   return (
     <div className="todo-card">

@@ -85,16 +85,29 @@
   border: none;
   font-size: 20px;
   letter-spacing: 5px;
-  width: 440px;
+  width: 460px;
   background: #0077B6;
-
+  position: relative;
 }
 
 .saveTodo-button:hover {
   /* Changes background color on hover */
  background: #03045e;
-
 }
+
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px; /* Position 10px from the right */
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+
+
 
 @media (max-width: 1280px) {
   .input-container-todo {
