@@ -28,7 +28,9 @@ const Navbar = () => {
           </div>
             <div className="logout-btn">
             <div onClick={handleLogout}>
+              <Link to="/">
               <img src="public/Images/logout-btn.png" alt="Logout" />
+              </Link>
             </div>
           </div>
         </div>

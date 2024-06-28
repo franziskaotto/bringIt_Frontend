@@ -70,6 +70,7 @@ const postNewUser = async (userData) => {
 };
 
 const RegisterCard = () => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
   // Use formik hook to manage form state, validation and submission
   const formik = useFormik({
     initialValues: {
@@ -91,11 +92,25 @@ const RegisterCard = () => {
     // Function to handle form submission
     onSubmit: async (values) => {
       await postNewUser(values); // Call function to POST data to the server
+      setIsSubmitted(true) // update state to show message
     },
   });
 
   const handleBackButton = () => {
     window.location.href = "http://localhost:5173/";
+  }
+
+  if (isSubmitted) {
+    return (
+      <div className="registration-saved">
+        <p>Du hast dich erfolgreich registriert!</p>
+        <div className="close-button" onClick={() => {
+          setIsSubmitted(false);
+          window.location.href = "http://localhost:5173/"; // to get to login page
+          formik.resetForm(); // Reset form values to default
+        }}>X</div>
+      </div>
+    );
   }
 
   return (

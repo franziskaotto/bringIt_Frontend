@@ -11,7 +11,7 @@
   padding: 20px;
   display: flex;
   flex-direction: row;
-  justify-content: center; 
+  justify-content: center;
   transition: height 0.3s ease-in-out;
   border-radius: 40px;
   border: 2px solid #eef1f8;
@@ -19,7 +19,7 @@
 
 .input-container-todo {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); 
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   margin-bottom: 15px;
   margin-top: 40px;
@@ -27,25 +27,32 @@
 }
 
 .input-with-icon {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
+  margin-bottom: 15px;
 }
 
-.icons {
-  width: 24px; 
-  height: 24px;
+.icon {
+  position: absolute;
+  left: 15px;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
 }
 
 .input-Field {
   flex: 1;
-  padding: 10px 10px 10px 60px;
+  width: 100%; /* Ensure the input field takes up all available space */
+  padding: 10px 50px 10px 50px; /* Adjust padding to make space for the icon */
   border-radius: 40px;
-  border-width: 2px;   
-  border-style: solid; 
+  border-width: 2px;
+  border-style: solid;
   border-color: #eef1f8;
   outline: none;
   background: transparent;
+  font-size: 16px; /* Adjust font size as needed */
+  color: #eef1f8; /* Adjust text color */
 }
 
 .input-Field::placeholder {
@@ -53,10 +60,6 @@
   letter-spacing: 4px;
   font-weight: normal;
   color: #eef1f8;
-}
-
-.input-Field[type="textarea"] {
-  resize: none; /* Prevent resizing */
 }
 
 .saveTodo-button {
@@ -68,7 +71,7 @@
   padding-right: 30px;
   height: 58.36px;
   cursor: pointer;
-  background: #0077B6;
+  background: #03045e;
   color: #eef1f8;
   border-radius: 40px;
   border: none;
@@ -78,6 +81,7 @@
 
 .todo-saved {
   margin: 0 auto;
+  top: 100px;
   text-align: center;
   padding: 20px 30px;
   color: #eef1f8;
@@ -86,41 +90,49 @@
   font-size: 20px;
   letter-spacing: 5px;
   width: 460px;
-  background: #0077B6;
+  background: #0077b6;
   position: relative;
 }
 
-.saveTodo-button:hover {
-  /* Changes background color on hover */
- background: #03045e;
-}
-
 .close-button {
-  position: absolute;
-  top: 20px;
-  right: 20px; /* Position 10px from the right */
-  background-color: transparent;
-  border: none;
-  font-size: 20px;
-  font-weight: bold;
-  color: white;
   cursor: pointer;
 }
 
-
-
-@media (max-width: 1280px) {
-  .input-container-todo {
-    background: transparent;
-    grid-template-columns: 1fr; /* Stack inputs vertically */
-  }
-
-  .input-group {
-    flex-direction: column; /* Stack grouped inputs vertically */
-  }
-
-  .input-container-todo.input-with-icon {
-    grid-column: span 1; /* Ensure each input takes full width */
+@media (max-width: 767px) {
+  .todo-card {
+    width: 90%; /* Adjust width for smaller screens */
+    top: 60%; /* Adjusted top position for smartphones */
+    transform: translate(-50%, -50%); /* Ensure it remains centered horizontally */
+    padding: 10px; /* Reduce padding for smaller screens */
+    max-height: none; /* Ensure the card does not exceed the screen height */
   }
 }
 
+@media (max-width: 963px) {
+  .todo-card {
+    width: 90%;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 10px;
+    max-height: none;
+  }
+
+  .input-container-todo {
+    grid-template-columns: 1fr;
+    margin-top: 20px;
+  }
+
+  .input-container-todo .input-with-icon {
+    grid-column: span 1;
+  }
+
+  .input-Field {
+    padding: 10px 15px; /* Adjust padding for smaller screens */
+  }
+
+  .todo-saved {
+    width: 90%;
+  
+  }
+}

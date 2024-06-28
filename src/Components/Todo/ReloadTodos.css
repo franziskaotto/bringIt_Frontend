@@ -16,5 +16,15 @@
   .reload-todos-btn:hover {
      /* Changes background color on hover */
     background: #03045e;
-
   }
+
+      @media (max-width: 767px) {
+        .reload-todos-btn {
+          padding: 8px 20px; /* Adjusted padding for smaller screens */
+          font-size: 12px; /* Reduced font size for smaller screens */
+          width: 170px; /* Adjusted width for smaller screens */
+          top: 210px; /* Adjusted top position for smaller screens */
+        }
+      }
+      
+
