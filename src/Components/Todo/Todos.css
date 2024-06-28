@@ -1,0 +1,121 @@
+.my-todos {
+  padding: 20px;
+}
+
+.my-todos h2 {
+  margin-bottom: 20px;
+  color: white;
+}
+
+.my-todos ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.my-todos li {
+  background: #023e8a;
+  margin-bottom: 10px;
+  padding: 20px;
+  border-radius: 40px;
+}
+
+.my-todos li h3 {
+  margin: 0 0 10px;
+  color: white;
+  font-size: 30px;
+}
+
+.my-todos li p {
+  color: white;
+}
+
+.todo-item {
+  margin-bottom: 10px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.todo-summary {
+  display: flex;
+  flex-direction: column;
+}
+
+.todo-summary h3 {
+  margin: 0;
+  color: white;
+  font-size: 24px;
+}
+
+.todo-summary .todo-id {
+  font-size: 14px;
+  color: white;
+  margin: 0;
+}
+
+.todo-user-arrow {
+  display: flex;
+  align-items: center;
+}
+
+.todo-summary .todo-username {
+  font-size: 14px;
+  color: white;
+  margin-right: 10px;
+}
+
+.todo-summary .arrow {
+  font-size: 18px;
+  color: white;
+  margin-left: auto;
+}
+
+.todo-details {
+  margin-top: 10px;
+  transition: max-height 0.3s ease;
+}
+
+.collapsed .todo-details {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.expanded .todo-details {
+  max-height: 500px; /* Adjust as needed */
+  overflow: hidden;
+}
+
+.todo-details p {
+  margin: 5px 0;
+  color: white;
+}
+
+.todo-details .label {
+  font-size: 0.8em;
+  color: #cccccc;
+  font-weight: bold;
+}
+
+.todo-details .value {
+  font-size: 1.2em;
+  color: white;
+}
+
+.action-btn {
+  padding: 10px 30px;
+  cursor: pointer;
+  color: #eef1f8;
+  border-radius: 40px;
+  border: none;
+  font-size: 20px;
+  letter-spacing: 5px;
+  width: 240px;
+  background: #0077b6;
+}
+
+.action-btn:hover {
+  background: #03045e;
+}

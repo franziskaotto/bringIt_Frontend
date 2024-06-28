@@ -8,6 +8,7 @@ import GoogleMaps from "../../Components/GoogleMaps/GoogleMaps";
 import TodoFilter from "../../Components/TodoFilter";
 import CreateTodo from "../../Components/Todo/CreateTodo";
 import MyTodos from "../../Components/Todo/MyTodos";
+import OpenTodos from "../OpenTodos";
 
 const Map = () => {
   const [key, setKey] = useState("map");
@@ -32,6 +33,9 @@ const Map = () => {
           </Tab>
           <Tab eventKey="myTodos" title="Meine Todos">
             <MyTodos />
+          </Tab>
+          <Tab eventKey="openTodos" title="Offene Todos">
+            <OpenTodos />
           </Tab>
           <Tab eventKey="profile" title="Profile">
             Tab content for Profile
