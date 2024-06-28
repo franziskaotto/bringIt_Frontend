@@ -8,7 +8,7 @@ const OpenTodos = () => {
   const username = localStorage.getItem("username");
   const userId = parseInt(localStorage.getItem("userId"), 10);
 
-  // funtion: fetch OpenTodos
+  // funtion: fetch Todos by User Offered:
   const fetchTodos = async () => {
     const token = localStorage.getItem("token");
 
@@ -41,11 +41,7 @@ const OpenTodos = () => {
     setExpandedTodo(expandedTodo === todoId ? null : todoId);
   };
 
-  const handleEdit = (todoId) => {
-    console.log(`Editing todo with id: ${todoId}`);
-  };
-
-  // Update Todo Status to 'In Arbeit':
+  // update TodoStatus to 'In Arbeit':
   const handleAccept = async (todoId) => {
     const token = localStorage.getItem("token");
     const openTodoId = todoId;
@@ -78,8 +74,8 @@ const OpenTodos = () => {
         fetchTodos();
       } else {
         const errorData = await response.json(); // Parse the error response
-        console.error(`Failed to update TodoStatus: ${errorData.message}`);
-        setErrorMessage(errorData.message); // Set the error message to state
+        console.error(`Failed to update TodoStatus: ${errorData.errorMessage}`);
+        setErrorMessage(errorData.errorMessage); // Set the error message to state
       }
     } catch (error) {
       console.error(
@@ -90,10 +86,9 @@ const OpenTodos = () => {
     }
   };
 
+  // populate:
   return (
     <div className="my-todos">
-      <h2>offene Todos</h2>
-
       {/* Button to reload todos */}
       {/* <ReloadTodos fetchTodos={fetchTodos} /> */}
 
@@ -167,14 +162,12 @@ const OpenTodos = () => {
                     </p>
 
                     <div className="todo-actions">
-                      {/* {todo.userOffered.userId !== userId && ( // Conditional rendering */}
                       <button
                         onClick={() => handleAccept(todo.todoId)}
                         className="action-btn"
                       >
                         Annehmen
                       </button>
-                      {/* )} */}
                     </div>
                   </div>
                 )}
