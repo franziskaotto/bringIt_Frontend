@@ -12,6 +12,7 @@ import RegisterPage from "./Pages/RegisterPage";
 import { element } from "prop-types";
 import CreateTodo from "./Components/Todo/CreateTodo";
 import MyTodos from "./Components/Todo/MyTodos";
+import AcceptedTodos from "./Pages/AcceptedTodos";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "openTodos",
         element: <OpenTodos />,
+      },
+      {
+        path: "acceptedTodos",
+        element: <AcceptedTodos />,
       },
       {
         path: "profil",

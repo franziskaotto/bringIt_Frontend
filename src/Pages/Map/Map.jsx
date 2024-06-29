@@ -17,12 +17,7 @@ const Map = () => {
   return (
     <>
       <div className="left-side-content-map">
-        <Tabs
-          id="uncontrolled-tab-example"
-          activeKey={key}
-          onSelect={(k) => setKey(k)}
-          className="mb-3"
-        >
+        <Tabs id="uncontrolled-tab-example" activeKey={key} onSelect={(k) => setKey(k)} className="mb-3">
           <Tab eventKey="map" title="Map">
             <div className="map-and-filter-container">
               <GoogleMaps />
@@ -40,12 +35,6 @@ const Map = () => {
           </Tab>
           <Tab eventKey="acceptedTodos" title="angenommene Todos">
             <AcceptedTodos />
-          </Tab>
-          <Tab eventKey="profile" title="Profile">
-            Tab content for Profile
-          </Tab>
-          <Tab eventKey="contact" title="Contact">
-            Tab content for Contact
           </Tab>
         </Tabs>
       </div>

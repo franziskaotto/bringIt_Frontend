@@ -68,9 +68,7 @@ const OpenTodos = () => {
       });
 
       if (response.ok) {
-        console.log(
-          `Todo with id ${openTodoId} has been accepted by user with id ${userId}`
-        );
+        console.log(`Todo with id ${openTodoId} has been accepted by user with id ${userId}`);
         fetchTodos();
       } else {
         const errorData = await response.json(); // Parse the error response
@@ -78,10 +76,7 @@ const OpenTodos = () => {
         setErrorMessage(errorData.errorMessage); // Set the error message to state
       }
     } catch (error) {
-      console.error(
-        `Error updating TodoStatus to 'In Arbeit' for todo ${openTodoId} and userTaken ${userId}: `,
-        error
-      );
+      console.error(`Error updating TodoStatus to 'In Arbeit' for todo ${openTodoId} and userTaken ${userId}: `, error);
       setErrorMessage(`${errorData.message}`);
     }
   };
@@ -105,25 +100,13 @@ const OpenTodos = () => {
           {todos
             .filter((todo) => todo.userOffered.userId !== userId) // Filter todos based on userId
             .map((todo) => (
-              <li
-                key={todo.todoId}
-                className={`todo-item ${
-                  expandedTodo === todo.todoId ? "expanded" : "collapsed"
-                }`}
-              >
-                <div
-                  className="todo-summary"
-                  onClick={() => handleToggle(todo.todoId)}
-                >
+              <li key={todo.todoId} className={`todo-item ${expandedTodo === todo.todoId ? "expanded" : "collapsed"}`}>
+                <div className="todo-summary" onClick={() => handleToggle(todo.todoId)}>
                   <p className="todo-id">Todo Nr: {todo.todoId}</p>
                   <h3>{todo.title}</h3>
                   <div className="todo-user-arrow">
-                    <p className="todo-username">
-                      User: {todo.userOffered.username}
-                    </p>
-                    <span className="arrow">
-                      {expandedTodo === todo.todoId ? "▲" : "▼"}
-                    </span>
+                    <p className="todo-username">User: {todo.userOffered.username}</p>
+                    <span className="arrow">{expandedTodo === todo.todoId ? "▲" : "▼"}</span>
                   </div>
                 </div>
                 {expandedTodo === todo.todoId && (
@@ -151,9 +134,7 @@ const OpenTodos = () => {
                     <p className="expiresAt">
                       <span className="label">Verfallsdatum:</span>
                       <br />
-                      <span className="value">
-                        {new Date(todo.expiresAt).toLocaleString()}
-                      </span>
+                      <span className="value">{new Date(todo.expiresAt).toLocaleString()}</span>
                     </p>
                     <p className="status">
                       <span className="label">Status:</span>
@@ -162,10 +143,7 @@ const OpenTodos = () => {
                     </p>
 
                     <div className="todo-actions">
-                      <button
-                        onClick={() => handleAccept(todo.todoId)}
-                        className="action-btn"
-                      >
+                      <button onClick={() => handleAccept(todo.todoId)} className="action-btn">
                         Annehmen
                       </button>
                     </div>
