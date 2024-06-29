@@ -1,13 +1,15 @@
-// import React from "react";
-// import "./Todos.css";
+import TodoTemplateButton from "./TodoTemplateButton";
 
-const TodoListTemplate = () => {
-  // populate:
+const TodoListTemplate = ({ todo, handleAccept, }) => {
+  const [expandedTodo, setExpandedTodo] = useState(null);
+
+  
+  // handle expand or not
+  const handleToggle = (todoId) => {
+    setExpandedTodo(expandedTodo === todoId ? null : todoId);
+  };
   return (
-    <ul>
-      {todos
-        .filter((todo) => todo.userOffered.userId !== userId) // Filter todos based on userId
-        .map((todo) => (
+      
           <li key={todo.todoId} className={`todo-item ${expandedTodo === todo.todoId ? "expanded" : "collapsed"}`}>
             <div className="todo-summary" onClick={() => handleToggle(todo.todoId)}>
               <p className="todo-id">Todo Nr: {todo.todoId}</p>
@@ -51,6 +53,7 @@ const TodoListTemplate = () => {
                 </p>
 
                 <div className="todo-actions">
+
                   <button onClick={() => handleAccept(todo.todoId)} className="action-btn">
                     Annehmen
                   </button>
@@ -58,9 +61,6 @@ const TodoListTemplate = () => {
               </div>
             )}
           </li>
-        ))}
-    </ul>
   );
 };
-
 export default TodoListTemplate;

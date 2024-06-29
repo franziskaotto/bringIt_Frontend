@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "../../Components/Todo/Todos.css";
+import TodoListTemplate from "../../Components/Todo/TodoListTemplate";
 
 const OpenTodos = () => {
   const [todos, setTodos] = useState([]);
-  const [expandedTodo, setExpandedTodo] = useState(null);
+  
   const [errorMessage, setErrorMessage] = useState(""); // State to store error message
   const username = localStorage.getItem("username");
   const userId = parseInt(localStorage.getItem("userId"), 10);
@@ -36,10 +37,10 @@ const OpenTodos = () => {
     fetchTodos();
   }, []);
 
-  // handle expand or not
-  const handleToggle = (todoId) => {
-    setExpandedTodo(expandedTodo === todoId ? null : todoId);
-  };
+  // // handle expand or not
+  // const handleToggle = (todoId) => {
+  //   setExpandedTodo(expandedTodo === todoId ? null : todoId);
+  // };
 
   // update TodoStatus to 'In Arbeit':
   const handleAccept = async (todoId) => {
@@ -81,12 +82,9 @@ const OpenTodos = () => {
     }
   };
 
-  // populate:
+  
   return (
     <div className="my-todos">
-      {/* Button to reload todos */}
-      {/* <ReloadTodos fetchTodos={fetchTodos} /> */}
-
       {errorMessage && (
         <div className="error-message">
           <p>{errorMessage}</p>
@@ -99,57 +97,7 @@ const OpenTodos = () => {
         <ul>
           {todos
             .filter((todo) => todo.userOffered.userId !== userId) // Filter todos based on userId
-            .map((todo) => (
-              <li key={todo.todoId} className={`todo-item ${expandedTodo === todo.todoId ? "expanded" : "collapsed"}`}>
-                <div className="todo-summary" onClick={() => handleToggle(todo.todoId)}>
-                  <p className="todo-id">Todo Nr: {todo.todoId}</p>
-                  <h3>{todo.title}</h3>
-                  <div className="todo-user-arrow">
-                    <p className="todo-username">User: {todo.userOffered.username}</p>
-                    <span className="arrow">{expandedTodo === todo.todoId ? "▲" : "▼"}</span>
-                  </div>
-                </div>
-                {expandedTodo === todo.todoId && (
-                  <div className="todo-details">
-                    <p className="location">
-                      <span className="label">Abholort:</span>
-                      <br />
-                      <span className="value">{todo.location}</span>
-                    </p>
-                    <p className="description">
-                      <span className="label">Beschreibung:</span>
-                      <br />
-                      <span className="value">{todo.description}</span>
-                    </p>
-                    <p className="addInfo">
-                      <span className="label">Zusatzinformation:</span>
-                      <br />
-                      <span className="value">{todo.addInfo}</span>
-                    </p>
-                    <p className="uploadPath">
-                      <span className="label">Upload:</span>
-                      <br />
-                      <span className="value">{todo.uploadPath}</span>
-                    </p>
-                    <p className="expiresAt">
-                      <span className="label">Verfallsdatum:</span>
-                      <br />
-                      <span className="value">{new Date(todo.expiresAt).toLocaleString()}</span>
-                    </p>
-                    <p className="status">
-                      <span className="label">Status:</span>
-                      <br />
-                      <span className="value">{todo.status}</span>
-                    </p>
-
-                    <div className="todo-actions">
-                      <button onClick={() => handleAccept(todo.todoId)} className="action-btn">
-                        Annehmen
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </li>
+            .map((todo) => (<TodoListTemplate todo={todo} handleAccept={handleAccept} />
             ))}
         </ul>
       )}

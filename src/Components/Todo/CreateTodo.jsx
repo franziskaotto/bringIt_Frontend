@@ -65,8 +65,10 @@ const postNewTodo = async (todoData) => {
   }
 }
 
-const CreateTodo = () => {
+const CreateTodo = ({ activeTab }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  console.log("activeTab: " + activeTab);
 
   const formik = useFormik({
     initialValues: {
