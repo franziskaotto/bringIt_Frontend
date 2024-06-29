@@ -7,12 +7,12 @@ import ReadMore from "./Pages/ReadMore";
 import SettingsPage from "./Pages/SettingPage";
 import Map from "./Pages/Map/Map";
 import Profil from "./Pages/Profil";
-import OpenTodos from "./Pages/OpenTodos";
 import RegisterPage from "./Pages/RegisterPage";
 import { element } from "prop-types";
 import CreateTodo from "./Components/Todo/CreateTodo";
 import MyTodos from "./Components/Todo/MyTodos";
-import AcceptedTodos from "./Pages/AcceptedTodos";
+import AcceptedTodos from "./Components/Todo/AcceptedTodos";
+import OpenTodos from "./Components/Todo/OpenTodos";
 
 const router = createBrowserRouter([
   {

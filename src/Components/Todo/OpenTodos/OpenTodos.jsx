@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "../../Components/Todo/Todos.css";
-import TodoListTemplate from "../../Components/Todo/TodoListTemplate";
+import "../Todos.css";
+import TodoListTemplate from "../TodoListTemplate";
 
 const OpenTodos = () => {
   const [todos, setTodos] = useState([]);

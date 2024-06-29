@@ -36,11 +36,13 @@ const TodoListTemplate = ({ todo, activeTab, handleStatusChange }) => {
             <br />
             <span className="value">{todo.addInfo}</span>
           </p>
+          {/* 
           <p className="uploadPath">
             <span className="label">Upload:</span>
             <br />
             <span className="value">{todo.uploadPath}</span>
-          </p>
+          </p> */}
+
           <p className="expiresAt">
             <span className="label">Verfallsdatum:</span>
             <br />

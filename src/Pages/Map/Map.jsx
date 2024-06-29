@@ -6,10 +6,10 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import GoogleMaps from "../../Components/GoogleMaps/GoogleMaps";
 import TodoFilter from "../../Components/TodoFilter";
-import CreateTodo from "../../Components/Todo/CreateTodo";
-import MyTodos from "../../Components/Todo/MyTodos";
-import OpenTodos from "../OpenTodos";
-import AcceptedTodos from "../AcceptedTodos";
+import CreateTodo from "../../Components/Todo/CreateTodo/CreateTodo";
+import MyTodos from "../../Components/Todo/MyTodos/MyTodos";
+import OpenTodos from "../../Components/Todo/OpenTodos";
+import AcceptedTodos from "../../Components/Todo/AcceptedTodos";
 
 const Map = () => {
   const [key, setKey] = useState("map");
