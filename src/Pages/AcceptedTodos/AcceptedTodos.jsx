@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "../../Components/Todo/Todos.css";
+import TodoListTemplate from "../../Components/Todo/TodoListTemplate";
 
 const AcceptedTodos = () => {
   const [todos, setTodos] = useState([]);
-  const [expandedTodo, setExpandedTodo] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(""); // State to store error message
-  const username = localStorage.getItem("username");
+  const [errorMessage, setErrorMessage] = useState("");
+  const activeTab = "acceptedTodos";
+  const userId = parseInt(localStorage.getItem("userId"), 10);
 
-  // function: fetch Todos by User Taken:
+  // fetch Todos by User Taken (Accepted Todos):
   const fetchTodos = async () => {
-    const id = localStorage.getItem("userId");
+    // const id = localStorage.getItem("userId");
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(`http://localhost:8081/api/todo/takenByUser/${id}`, {
+      const response = await fetch(`http://localhost:8081/api/todo/takenByUser/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -23,35 +24,28 @@ const AcceptedTodos = () => {
         setTodos(data);
       } else {
         console.error("Failed to fetch todos");
-        console.log(response);
-        console.log(username);
+        setErrorMessage("Failed to fetch todos");
       }
     } catch (error) {
       console.error("Error fetching todos: ", error);
+      setErrorMessage("Error fetching todos");
     }
   };
 
-  // fetch todos on component mount
+  // fetch totdos on component mount
   useEffect(() => {
     fetchTodos();
   }, []);
 
-  // handle expand or not
-  const handleToggle = (todoId) => {
-    setExpandedTodo(expandedTodo === todoId ? null : todoId);
-  };
-
-  // Update TodoStatus:
-  const handleStatusChange = async (todoId, statusChange) => {
+  // Update Todo Status
+  const handleStatusChange = async (todoId, makeStatus) => {
     const token = localStorage.getItem("token");
-    const acceptedTodoId = todoId;
-    const userId = parseInt(localStorage.getItem("userId"), 10);
 
     try {
       console.log("Sending PATCH request with: ", {
-        todoId: acceptedTodoId,
+        todoId: todoId,
         userTakenId: userId,
-        status: statusChange,
+        status: makeStatus,
       });
 
       const response = await fetch(`http://localhost:8081/api/todo/status`, {
@@ -61,27 +55,26 @@ const AcceptedTodos = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          todoId: acceptedTodoId,
+          todoId,
           userTakenId: userId,
-          status: statusChange,
+          status: makeStatus,
         }),
       });
 
       if (response.ok) {
-        console.log(`Status of Todo ${acceptedTodoId} by userTaken ${userId} has been set to ${statusChange}`);
+        console.log(`Status of Todo ${todoId} updated to ${makeStatus}`);
         fetchTodos();
       } else {
-        const errorData = await response.json(); // Parse the error respons from Responsebody
+        const errorData = await response.json();
         console.error(`Failed to update TodoStatus: ${errorData.errorMessage}`);
-        setErrorMessage(errorData.errorMessage); // Set the errorMessage to state
+        setErrorMessage(errorData.errorMessage);
       }
     } catch (error) {
-      console.error(`Error updating TodoStatus to ${statusChange} for todo ${acceptedTodoId} and userTaken ${userId}: `, error);
-      setErrorMessage(`${errorData.errorMessage}`);
+      console.error(`Error updating TodoStatus: `, error);
+      setErrorMessage("Error updating TodoStatus");
     }
   };
 
-  // populate:
   return (
     <div className="my-todos">
       {errorMessage && (
@@ -95,64 +88,9 @@ const AcceptedTodos = () => {
       ) : (
         <ul>
           {todos
-            .filter((todo) => todo.status === "In Arbeit") // Filter todos based on status
+            .filter((todo) => todo.userOffered.userId !== userId)
             .map((todo) => (
-              <li key={todo.todoId} className={`todo-item ${expandedTodo === todo.todoId ? "expanded" : "collapsed"}`}>
-                <div className="todo-summary" onClick={() => handleToggle(todo.todoId)}>
-                  <p className="todo-id">Todo Nr: {todo.todoId}</p>
-                  <h3>{todo.title}</h3>
-                  <div className="todo-user-arrow">
-                    <p className="todo-username">User: {todo.userOffered.username}</p>
-                    <span className="arrow">{expandedTodo === todo.todoId ? "▲" : "▼"}</span>
-                  </div>
-                </div>
-                {expandedTodo === todo.todoId && (
-                  <div className="todo-details">
-                    <p className="location">
-                      <span className="label">Abholort:</span>
-                      <br />
-                      <span className="value">{todo.location}</span>
-                    </p>
-                    <p className="description">
-                      <span className="label">Beschreibung:</span>
-                      <br />
-                      <span className="value">{todo.description}</span>
-                    </p>
-                    <p className="addInfo">
-                      <span className="label">Zusatzinformation:</span>
-                      <br />
-                      <span className="value">{todo.addInfo}</span>
-                    </p>
-                    <p className="uploadPath">
-                      <span className="label">Upload:</span>
-                      <br />
-                      <span className="value">{todo.uploadPath}</span>
-                    </p>
-                    <p className="expiresAt">
-                      <span className="label">Verfallsdatum:</span>
-                      <br />
-                      <span className="value">{new Date(todo.expiresAt).toLocaleString()}</span>
-                    </p>
-                    <p className="status">
-                      <span className="label">Status:</span>
-                      <br />
-                      <span className="value">{todo.status}</span>
-                    </p>
-
-                    <div className="todo-actions">
-                      {/* {todo.userOffered.userId !== userId && ( // Conditional rendering */}
-                      <button onClick={() => handleStatusChange(todo.todoId, "Erledigt")} className="action-btn">
-                        Erledigt
-                      </button>
-                      <button onClick={() => handleStatusChange(todo.todoId, "Offen")} className="action-btn">
-                        Stornieren
-                      </button>
-
-                      {/* )} */}
-                    </div>
-                  </div>
-                )}
-              </li>
+              <TodoListTemplate key={todo.todoId} todo={todo} activeTab={activeTab} handleStatusChange={handleStatusChange} />
             ))}
         </ul>
       )}
