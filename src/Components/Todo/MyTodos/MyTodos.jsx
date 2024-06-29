@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./MyTodos.css";
-import ReloadTodos from "./ReloadTodos";
+import ReloadTodos from "../ReloadTodos/ReloadTodos";
 
 const MyTodos = () => {
   const [todos, setTodos] = useState([]);
