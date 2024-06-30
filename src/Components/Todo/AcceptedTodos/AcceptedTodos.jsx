@@ -2,15 +2,13 @@ import React, { useEffect, useState } from "react";
 import "../Todos.css";
 import TodoListTemplate from "../TodoListTemplate";
 
-const AcceptedTodos = () => {
+const AcceptedTodos = ({ activeTab, setExpandedTodo, expandedTodo }) => {
   const [todos, setTodos] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const activeTab = "acceptedTodos";
   const userId = parseInt(localStorage.getItem("userId"), 10);
 
   // fetch Todos by User Taken (Accepted Todos):
   const fetchTodos = async () => {
-    // const id = localStorage.getItem("userId");
     const token = localStorage.getItem("token");
 
     try {
@@ -75,6 +73,13 @@ const AcceptedTodos = () => {
     }
   };
 
+  // Sort todos with "In Arbeit" before "Erledigt"
+  const sortedTodos = todos.sort((a, b) => {
+    if (a.status === "In Arbeit" && b.status !== "In Arbeit") return -1;
+    if (a.status !== "In Arbeit" && b.status === "In Arbeit") return 1;
+    return 0;
+  });
+
   return (
     <div className="my-todos">
       {errorMessage && (
@@ -83,14 +88,21 @@ const AcceptedTodos = () => {
         </div>
       )}
 
-      {todos.length === 0 ? (
+      {sortedTodos.length === 0 ? (
         <p>Sie haben derzeit keine angenommenen Todos</p>
       ) : (
         <ul>
-          {todos
+          {sortedTodos
             .filter((todo) => todo.userOffered.userId !== userId)
             .map((todo) => (
-              <TodoListTemplate key={todo.todoId} todo={todo} activeTab={activeTab} handleStatusChange={handleStatusChange} />
+              <TodoListTemplate
+                key={todo.todoId}
+                todo={todo}
+                activeTab={activeTab}
+                handleStatusChange={handleStatusChange}
+                setExpandedTodo={setExpandedTodo}
+                expandedTodo={expandedTodo}
+              />
             ))}
         </ul>
       )}

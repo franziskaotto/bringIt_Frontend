@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./MyTodos.css";
 import ReloadTodos from "../ReloadTodos/ReloadTodos";
 
-const MyTodos = () => {
+const MyTodos = ({ activeTab }) => {
   const [todos, setTodos] = useState([]);
   const [expandedTodo, setExpandedTodo] = useState(null);
   const username = localStorage.getItem("username"); // Retrieve the username from localStorage

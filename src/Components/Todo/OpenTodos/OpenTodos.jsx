@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import "../Todos.css";
 import TodoListTemplate from "../TodoListTemplate";
 
-const OpenTodos = () => {
+const OpenTodos = ({ activeTab, setExpandedTodo, expandedTodo }) => {
   const [todos, setTodos] = useState([]);
   const [errorMessage, setErrorMessage] = useState(""); // State to store error message
-  const activeTab = "openTodos";
   const userId = parseInt(localStorage.getItem("userId"), 10);
 
   // fetch All not expired Todos with Status "Offen":
@@ -90,7 +89,14 @@ const OpenTodos = () => {
           {todos
             .filter((todo) => todo.userOffered.userId !== userId) // Filter todos based on userId
             .map((todo) => (
-              <TodoListTemplate key={todo.todoId} todo={todo} activeTab={activeTab} handleStatusChange={handleStatusChange} />
+              <TodoListTemplate
+                key={todo.todoId}
+                todo={todo}
+                activeTab={activeTab}
+                handleStatusChange={handleStatusChange}
+                setExpandedTodo={setExpandedTodo}
+                expandedTodo={expandedTodo}
+              />
             ))}
         </ul>
       )}

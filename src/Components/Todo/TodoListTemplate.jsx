@@ -1,9 +1,7 @@
 import { useState } from "react";
 import TodoTemplateButton from "./TodoTemplateButton";
 
-const TodoListTemplate = ({ todo, activeTab, handleStatusChange }) => {
-  const [expandedTodo, setExpandedTodo] = useState(null);
-
+const TodoListTemplate = ({ todo, activeTab, handleStatusChange, setExpandedTodo, expandedTodo }) => {
   // handle expand or not
   const handleToggle = (todoId) => {
     setExpandedTodo(expandedTodo === todoId ? null : todoId);
@@ -20,7 +18,7 @@ const TodoListTemplate = ({ todo, activeTab, handleStatusChange }) => {
         </div>
       </div>
       {expandedTodo === todo.todoId && (
-        <div className="todo-details">
+        <div className="todo-details" onClick={() => handleToggle(todo.todoId)}>
           <p className="location">
             <span className="label">Abholort:</span>
             <br />
@@ -53,7 +51,7 @@ const TodoListTemplate = ({ todo, activeTab, handleStatusChange }) => {
             <br />
             <span className="value">{todo.status}</span>
           </p>
-          {activeTab === "acceptedTodos" && (
+          {activeTab === "acceptedTodos" && todo.status === "In Arbeit" && (
             <div className="todo-actions">
               <TodoTemplateButton handleStatusChange={handleStatusChange} buttonText={"Erledigt"} makeStatus={"Erledigt"} todoId={todo.todoId} />
               <TodoTemplateButton handleStatusChange={handleStatusChange} buttonText={"Stornieren"} makeStatus={"Offen"} todoId={todo.todoId} />
@@ -64,11 +62,6 @@ const TodoListTemplate = ({ todo, activeTab, handleStatusChange }) => {
               <TodoTemplateButton handleStatusChange={handleStatusChange} buttonText={"Annehmen"} makeStatus={"In Arbeit"} todoId={todo.todoId} />
             </div>
           )}
-          {/* <div className="todo-actions">
-            <button onClick={() => handleAccept(todo.todoId)} className="action-btn">
-              Annehmen
-            </button>
-            </div> */}
         </div>
       )}
     </li>

@@ -13,6 +13,9 @@ import AcceptedTodos from "../../Components/Todo/AcceptedTodos";
 
 const Map = () => {
   const [key, setKey] = useState("map");
+  const [expandedTodo, setExpandedTodo] = useState(null);
+
+  console.log("key: " + key);
 
   return (
     <>
@@ -28,13 +31,13 @@ const Map = () => {
             <CreateTodo />
           </Tab>
           <Tab eventKey="myTodos" title="Meine Todos">
-            <MyTodos />
+            <MyTodos activeTab={key} />
           </Tab>
           <Tab eventKey="openTodos" title="Offene Todos">
-            <OpenTodos />
+            <OpenTodos activeTab={key} setExpandedTodo={setExpandedTodo} expandedTodo={expandedTodo} />
           </Tab>
           <Tab eventKey="acceptedTodos" title="angenommene Todos">
-            <AcceptedTodos />
+            <AcceptedTodos activeTab={key} setExpandedTodo={setExpandedTodo} expandedTodo={expandedTodo} />
           </Tab>
         </Tabs>
       </div>
