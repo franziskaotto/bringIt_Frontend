@@ -33,9 +33,30 @@
   margin-bottom: 10px;
   border: 2px solid #ccc;
   border-radius: 4px;
+  border-width: 3px;
   padding: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.border-red {
+  border-color: red;
+}
+
+.border-yellow {
+  border-color: yellow;
+}
+
+.border-green {
+  border-color: rgb(39, 201, 39);
+}
+
+.border-blue {
+  border-color: blue;
+}
+
+.border-white {
+  border-color: white;
 }
 
 .todo-summary {

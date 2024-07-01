@@ -3,12 +3,12 @@ import TodoTemplateButton from "./TodoTemplateButton";
 
 const TodoListTemplate = ({ todo, activeTab, setExpandedTodo, expandedTodo, fetchMyTodos, fetchOpenTodos, fetchAcceptedTodos, setErrorMessage }) => {
   const userId = parseInt(localStorage.getItem("userId"), 10);
-
+ 
   // handle expand or not
   const handleToggle = (todoId) => {
     setExpandedTodo(expandedTodo === todoId ? null : todoId);
   };
-
+ 
   // Update Todo Status
   const handleStatusChange = async (todoId, makeStatus) => {
     const token = localStorage.getItem("token");
@@ -125,13 +125,27 @@ const TodoListTemplate = ({ todo, activeTab, setExpandedTodo, expandedTodo, fetc
     }
   };
 
+  // get border-color by status
+  const getBorderColorByStatus = (todoStatus) => {
+    if (todoStatus === "Offen") {return "border-red"}
+    else if (todoStatus === "In Arbeit") {return "border-yellow"}
+    else if (todoStatus === "Erledigt") {return "border-green"}
+    else if (todoStatus === "Abgelaufen") {return "border-blue"}
+    else return "border-white"
+  }
+
+ //  ${getBorderColorByStatus(todo.status)}
+
   return (
-    <li key={todo.todoId} className={`todo-item ${expandedTodo === todo.todoId ? "expanded" : "collapsed"}`}>
+    <li key={todo.todoId} className={`todo-item 
+        ${expandedTodo === todo.todoId ? "expanded" : "collapsed"}
+        ${getBorderColorByStatus(todo.status)}
+        `}>
       <div className="todo-summary" onClick={() => handleToggle(todo.todoId)}>
         <p className="todo-id">Todo Nr: {todo.todoId}</p>
         <h3>{todo.title}</h3>
         <div className="todo-user-arrow">
-          <p className="todo-username">User: {todo.userOffered.username}</p>
+          <p className="todo-username">by User: {todo.userOffered.username}</p>
           <span className="arrow">{expandedTodo === todo.todoId ? "▲" : "▼"}</span>
         </div>
       </div>
