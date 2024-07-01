@@ -23,6 +23,7 @@ const Map = () => {
 
   console.log("key: " + key);
 
+  // fetch todos onChange of activeKey according to specific key.
   useEffect(() => {
     if (key === "myTodos") {
       fetchMyTodos();
