@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import "./Map.css";
+import "./Tabulators.css";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import GoogleMaps from "../../Components/GoogleMaps/GoogleMaps";
+import GoogleMaps from "../../Components/GoogleMaps";
 import TodoFilter from "../../Components/TodoFilter";
-import CreateTodo from "../../Components/Todo/CreateTodo/CreateTodo";
-import MyTodos from "../../Components/Todo/MyTodos/MyTodos";
+import CreateTodo from "../../Components/Todo/CreateTodo";
+import MyTodos from "../../Components/Todo/MyTodos";
 import OpenTodos from "../../Components/Todo/OpenTodos";
 import AcceptedTodos from "../../Components/Todo/AcceptedTodos";
 
-const Map = () => {
+const Tabulators = () => {
   const [key, setKey] = useState("map");
   const [expandedTodo, setExpandedTodo] = useState(null);
   const [openTodos, setOpenTodos] = useState([]);
@@ -111,7 +111,7 @@ const Map = () => {
             </div>
           </Tab>
           <Tab eventKey="createTodo" title="Todo erstellen">
-            <CreateTodo fetchMyTodos={fetchMyTodos} fetchOpenTodos={fetchOpenTodos} />
+            <CreateTodo />
           </Tab>
           <Tab eventKey="myTodos" title="Meine Todos">
             <MyTodos
@@ -158,4 +158,4 @@ const Map = () => {
   );
 };
 
-export default Map;
+export default Tabulators;

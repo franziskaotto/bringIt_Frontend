@@ -1,15 +1,15 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
-import "./BringItRightLogin.css";
+import "./LoginFormHandler.css";
 import Logo from "../../Logo/Logo";
 
 
 // handles user login and stores the JWT token in local storage
-const BringItRightLogin = ({ setIsLoggedIn }) => {
+const LoginFormHandler = ({ setIsLoggedIn }) => {
   const [credentials, setCredentials] = useState({
     username: "",
-    password: ""
+    password: "",
   });
 
   // hook to navigate to different routes
@@ -28,18 +28,21 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
     e.preventDefault(); // Prevent the default form submission behavior
     const authoHeader = btoa(credentials.username + ":" + credentials.password); // Create a basic authHeader
     console.log(authoHeader);
-  
+
     try {
       // Send a POST request to the login endpoint with the user's credentials
-      const response = await fetch("http://localhost:8081/api/user/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Basic " + authoHeader // Include the basic authHeader
-        },
-        body: JSON.stringify(credentials),
-      });
-  
+      const response = await fetch(
+        "http://localhost:8081/api/user/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Basic " + authoHeader, // Include the basic authHeader
+          },
+          body: JSON.stringify(credentials),
+        }
+      );
+
       const result = await response.json();
       console.log("Response from login:", result); // Log the result object to see its structure
 
@@ -50,11 +53,11 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
         setIsLoggedIn(true);
         localStorage.setItem("userId", result.userId.toString());
         //localStorage.setItem("username", result.username)
-        localStorage.setItem("username", credentials.username) // save username to localstorage
-        console.log(credentials.username)
+        localStorage.setItem("username", credentials.username); // save username to localstorage
+        console.log(credentials.username);
 
         // to get username for creating todos
-        navigate("/map");
+        navigate("/home");
       } else {
         console.error("Login failed", result);
       }
@@ -62,7 +65,6 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
       console.error("Error during login", error);
     }
   };
-  
 
   const handleRegister = () => {
     setIsLoggedIn(true);
@@ -127,8 +129,8 @@ const BringItRightLogin = ({ setIsLoggedIn }) => {
   );
 };
 
-BringItRightLogin.propTypes = {
+LoginFormHandler.propTypes = {
   setIsLoggedIn: PropTypes.func.isRequired,
 };
 
-export default BringItRightLogin;
+export default LoginFormHandler;

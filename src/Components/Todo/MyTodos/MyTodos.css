@@ -1,140 +1,140 @@
 .my-todos {
-    padding: 20px;
-  }
-  
-  .my-todos h2 {
-    margin-bottom: 20px;
-    color: white;
-  }
-  
-  .my-todos ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .my-todos li {
-    background: #023E8A;
-    margin-bottom: 10px;
-    padding: 20px;
-    border-radius: 40px;
-  }
-  
-  .my-todos li h3 {
-    margin: 0 0 10px;
-    color: white;
-    font-size: 30px;
-  }
-  
-  .my-todos li p {
-    color: white; /* General color for all p elements within li */
-  }
-  
-  /* Specific p elements color overrides */
-  .my-todos li p.userOfferedId,
-  .my-todos li p.addInfo,
-  .my-todos li p.uploadPath,
-  .my-todos li p.expiresAt {
-    color: darkgray;
-  }
-  
-  .my-todos li p.description {
-    color: #0096C7;
-  }
-  
-  .my-todos li p.location {
-    color: white;
-  }
-  
-  .todo-item {
-    margin-bottom: 10px;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    padding: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .todo-summary {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .todo-summary h3 {
-    margin: 5px 0 0 0;
-  }
-  
-  .todo-summary .todo-id {
-    font-size: 14px;
-    margin: 0;
-    color: white;
-  }
-  
-  .todo-summary .arrow {
-    font-size: 18px;
-    align-self: flex-end;
-  }
-  
-  .todo-details {
-    margin-top: 10px;
-    transition: max-height 0.3s ease;
-  }
-  
-  .collapsed .todo-details {
-    max-height: 0;
-    overflow: hidden;
-    padding: 0;
-  }
-  
-  .expanded .todo-details {
-    max-height: 500px; /* Adjust as needed */
-    overflow: hidden;
-  }
-  
- /* General styles for the todo details */
+  padding: 20px;
+}
+
+.my-todos h2 {
+  margin-bottom: 20px;
+  color: white;
+}
+
+.my-todos ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.my-todos li {
+  background: #023E8A;
+  margin-bottom: 10px;
+  padding: 20px;
+  border-radius: 40px;
+}
+
+.my-todos li h3 {
+  margin: 0 0 10px;
+  color: white;
+  font-size: 30px;
+}
+
+.my-todos li p {
+  color: white; /* General color for all p elements within li */
+}
+
+/* Specific p elements color overrides */
+.my-todos li p.userOfferedId,
+.my-todos li p.addInfo,
+.my-todos li p.uploadPath,
+.my-todos li p.expiresAt {
+  color: darkgray;
+}
+
+.my-todos li p.description {
+  color: #0096C7;
+}
+
+.my-todos li p.location {
+  color: white;
+}
+
+.todo-item {
+  margin-bottom: 10px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.todo-summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.todo-summary h3 {
+  margin: 5px 0 0 0;
+}
+
+.todo-summary .todo-id {
+  font-size: 14px;
+  margin: 0;
+  color: white;
+}
+
+.todo-summary .arrow {
+  font-size: 18px;
+  align-self: flex-end;
+}
+
+.todo-details {
+  margin-top: 10px;
+  transition: max-height 0.3s ease;
+}
+
+.collapsed .todo-details {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.expanded .todo-details {
+  max-height: 500px; /* Adjust as needed */
+  overflow: hidden;
+}
+
+/* General styles for the todo details */
 .todo-details p {
-    margin: 5px 0;
-    color: white;
-  }
-  
-  /* Styles for the labels */
-  .todo-details .label {
-    font-size: 0.8em; /* Smaller font size for the labels */
-    color: #cccccc; /* Optional: change color to distinguish from value */
-    font-weight: bold; /* Optional: make labels bold */
-  }
-  
-  /* Styles for the values */
-  .todo-details .value {
-    font-size: 1.2em; /* Adjust the font size for the values */
-    color: white; /* You can set a different color if needed */
-  }
-  
-  /* Specific styles for the location and description values */
-  .todo-details .location .value {
-    font-size: 1.1em; /* Specific font size for location */
-    color: #0096C7; /* Specific color for location */
-  }
-  
-  .todo-details .description .value {
-    font-size: 1.1em; /* Specific font size for description */
-    color: #0096C7; /* Specific color for description */
-  }
+  margin: 5px 0;
+  color: white;
+}
 
-  .action-btn {
-    padding: 10px 30px;
-    cursor: pointer;
-    color: #eef1f8;
-    border-radius: 40px;
-    border: none;
-    font-size: 20px;
-    letter-spacing: 5px;
-    width: 240px;
-    background: #0077B6;
-  }
+/* Styles for the labels */
+.todo-details .label {
+  font-size: 0.8em; /* Smaller font size for the labels */
+  color: #cccccc; /* Optional: change color to distinguish from value */
+  font-weight: bold; /* Optional: make labels bold */
+}
 
-  .action-btn:hover {
-  background: #03045e;
+/* Styles for the values */
+.todo-details .value {
+  font-size: 1.2em; /* Adjust the font size for the values */
+  color: white; /* You can set a different color if needed */
+}
+
+/* Specific styles for the location and description values */
+.todo-details .location .value {
+  font-size: 1.1em; /* Specific font size for location */
+  color: #0096C7; /* Specific color for location */
+}
+
+.todo-details .description .value {
+  font-size: 1.1em; /* Specific font size for description */
+  color: #0096C7; /* Specific color for description */
+}
+
+.action-btn {
+  padding: 10px 30px;
+  cursor: pointer;
+  color: #eef1f8;
+  border-radius: 40px;
+  border: none;
+  font-size: 20px;
+  letter-spacing: 5px;
+  width: 240px;
+  background: #0077B6;
+}
+
+.action-btn:hover {
+background: #03045e;
 }
 
 
@@ -143,4 +143,3 @@
 
 
 
-  

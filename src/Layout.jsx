@@ -3,9 +3,9 @@ import "./Layout.css";
 import { Outlet, Link } from "react-router-dom";
 
 import Ellipses from "./Components/Ellipses";
-import BringItLeftContent from "./Components/Login/bringItLeftLogin";
 import Navbar from "./Components/Navbar";
-import BringItRightLogin from "./Components/Login/BringItRightLogin";
+import LoginFormHandler from "./Components/Login/LoginFormHandler";
+import WelcomeInfoSection from "./Components/Login/WelcomeInfoSection";
 
 function Layout() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -30,8 +30,8 @@ function Layout() {
         </>
       ) : (
         <div className="major-container">
-            <BringItLeftContent setIsLoggedIn={setIsLoggedIn} />
-            <BringItRightLogin setIsLoggedIn={setIsLoggedIn} />
+            <WelcomeInfoSection setIsLoggedIn={setIsLoggedIn} />
+            <LoginFormHandler setIsLoggedIn={setIsLoggedIn} />
         </div>
       )}
     </>

@@ -1,18 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { element } from "prop-types";
+
 import Layout from "./Layout";
 import ErrorPage from "./Pages/ErrorPage";
 import ReadMore from "./Pages/ReadMore";
 import SettingsPage from "./Pages/SettingPage";
-import Map from "./Pages/Map/Map";
 import Profil from "./Pages/Profil";
 import RegisterPage from "./Pages/RegisterPage";
-import { element } from "prop-types";
 import CreateTodo from "./Components/Todo/CreateTodo";
 import MyTodos from "./Components/Todo/MyTodos";
 import AcceptedTodos from "./Components/Todo/AcceptedTodos";
 import OpenTodos from "./Components/Todo/OpenTodos";
+import Tabulators from "./Pages/Tabulators/Tabulators";
 
 const router = createBrowserRouter([
   {
@@ -28,10 +29,9 @@ const router = createBrowserRouter([
         path: "register",
         element: <RegisterPage />,
       },
-
       {
-        path: "map",
-        element: <Map />,
+        path: "home",
+        element: <Tabulators />,
       },
       {
         path: "createTodo",
