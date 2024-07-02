@@ -42,7 +42,7 @@ const ReadMore = () => {
             Medikament- schaffst es aber selber nicht diese Besorgungen zu
             erledigen. Einer deiner Nachbarn fährt heute am Heimweg sicher noch
             beim Supermarkt oder der Apotheke vorbei und könnte dir problemlos
-            diepaar Sachen mitnehmen. Erstelle ein neues ToDo in bring it und
+            die paar Sachen mitnehmen. Erstelle ein neues ToDo in bring it und
             alle Sorgen lösen sich unter Umständen wie von selbst auf.
           </p>
           <p>

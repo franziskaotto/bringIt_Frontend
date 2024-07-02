@@ -7,44 +7,32 @@ import "./CreateTodo.css";
 // Define the validation schema using yup
 const validationSchema = Yup.object({
   userOfferedId: Yup.string().required(), // Ensure userId is required in validation
-  title: Yup.string()
-    .required("Bitte Title eingeben.")
-    .max(45, "Titel darf 45 Zeichen nicht überschreiten."),
-  location: Yup.string()
-    .required("Bitte einen Abholort eingeben.")
-    .max(45, "Abholort darf 45 Zeichen nicht überschreiten."),
-  description: Yup.string()
-    .required("Bitte Beschreibung eingeben.")
-    .max(220, "Beschreibung darf 220 Zeichen nicht überschreiten."),
-  addInfo: Yup.string()
-    .max(150, "Zusatzinformation darf 150 Zeichen nicht überschreiten."),
-  uploadPath: Yup.string()
-    .max(50, "Pfad darf 50 Zeichen nicht überschreiten."),
+  title: Yup.string().required("Bitte Title eingeben.").max(45, "Titel darf 45 Zeichen nicht überschreiten."),
+  location: Yup.string().required("Bitte einen Abholort eingeben.").max(45, "Abholort darf 45 Zeichen nicht überschreiten."),
+  description: Yup.string().required("Bitte Beschreibung eingeben.").max(220, "Beschreibung darf 220 Zeichen nicht überschreiten."),
+  addInfo: Yup.string().max(150, "Zusatzinformation darf 150 Zeichen nicht überschreiten."),
+  uploadPath: Yup.string().max(50, "Pfad darf 50 Zeichen nicht überschreiten."),
   expiresAt: Yup.date()
     .required()
-    .test(
-      "is-future-date",
-      "Das Datum muss mindestens 2 Stunden in der Zukunft liegen.",
-      (value) => {
-        if (!value) return false;
-        const now = new Date();
-        const futureDate = new Date(now.getTime() + 2 * 60 * 60 * 1000); // 2 hours from now
-        return value >= futureDate;
-      }
-    )
+    .test("is-future-date", "Das Datum muss mindestens 2 Stunden in der Zukunft liegen.", (value) => {
+      if (!value) return false;
+      const now = new Date();
+      const futureDate = new Date(now.getTime() + 2 * 60 * 60 * 1000); // 2 hours from now
+      return value >= futureDate;
+    }),
 });
 
 // Function to handle POST to register new todo
 const postNewTodo = async (todoData) => {
   const token = localStorage.getItem("token"); // Retrieve the token from local storage
-  const userOfferedId = localStorage.getItem("userId") // Retrieve username from local storage
+  const userOfferedId = localStorage.getItem("userId"); // Retrieve username from local storage
 
   try {
     const response = await fetch("http://localhost:8081/api/todo", {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Include the token in the Authorization header
       },
       body: JSON.stringify({ ...todoData, userOfferedId }), // Include userOfferedId in the request body
     });
@@ -63,9 +51,9 @@ const postNewTodo = async (todoData) => {
     console.error("error: ", error);
     return false;
   }
-}
+};
 
-const CreateTodo = () => {
+const CreateTodo = (fetchMyTodos, fetchOpenTodos) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const formik = useFormik({
@@ -77,7 +65,7 @@ const CreateTodo = () => {
       description: "",
       addInfo: "",
       uploadPath: "",
-      expiresAt: ""
+      expiresAt: "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -93,14 +81,18 @@ const CreateTodo = () => {
     return (
       <div className="todo-saved">
         <p>Todo erfolgreich erstellt!</p>
-        <div className="close-button" onClick={() => {
-          setIsSubmitted(false);
-          formik.resetForm(); // Reset form values to default
-        }}>X</div>
+        <div
+          className="close-button"
+          onClick={() => {
+            setIsSubmitted(false);
+            formik.resetForm(); // Reset form values to default
+          }}
+        >
+          X
+        </div>
       </div>
     );
   }
-  
 
   return (
     <div className="todo-card">
@@ -108,7 +100,7 @@ const CreateTodo = () => {
       <form className="todo-Form" onSubmit={formik.handleSubmit}>
         <div className="input-container-todo">
           {/* Display userOfferedId as read-only text */}
-          { /* <p className="user-id-text">User ID: {formik.values.userOfferedId}</p>*/}
+          {/* <p className="user-id-text">User ID: {formik.values.userOfferedId}</p>*/}
           {[
             { name: "title", type: "text", placeholder: "Titel", icon: "Draw.png" },
             { name: "location", type: "text", placeholder: "Abholort", icon: "Draw.png" },
@@ -146,9 +138,7 @@ const CreateTodo = () => {
                     onBlur={formik.handleBlur}
                   />
                 )}
-                {fieldTouched && fieldError ? (
-                  <div className="error">{fieldError}</div>
-                ) : null}
+                {fieldTouched && fieldError ? <div className="error">{fieldError}</div> : null}
               </div>
             );
           })}
@@ -161,6 +151,6 @@ const CreateTodo = () => {
       </form>
     </div>
   );
-}
+};
 
 export default CreateTodo;

@@ -11,8 +11,9 @@ import Profil from "./Pages/Profil";
 import RegisterPage from "./Pages/RegisterPage";
 import CreateTodo from "./Components/Todo/CreateTodo";
 import MyTodos from "./Components/Todo/MyTodos";
-import Tabulators from "./Pages/Tabulators";
-
+import AcceptedTodos from "./Components/Todo/AcceptedTodos";
+import OpenTodos from "./Components/Todo/OpenTodos";
+import Tabulators from "./Pages/Tabulators/Tabulators";
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,15 @@ const router = createBrowserRouter([
       },
       {
         path: "myTodos",
-        element: <MyTodos />
+        element: <MyTodos />,
+      },
+      {
+        path: "openTodos",
+        element: <OpenTodos />,
+      },
+      {
+        path: "acceptedTodos",
+        element: <AcceptedTodos />,
       },
       {
         path: "profil",
