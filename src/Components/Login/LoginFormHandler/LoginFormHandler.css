@@ -108,6 +108,29 @@
   margin: 0;
 }
 
+.loginWrong-message {
+  top: 400px; /* Position 200px above its normal position */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Adjust to center horizontally */
+  text-align: center;
+  padding: 20px 30px;
+  color: #eef1f8;
+  border-radius: 40px;
+  border: none;
+  font-size: 20px;
+  letter-spacing: 5px;
+  width: 460px;
+  background: #0077b6;
+  position: absolute; /* Position relative to its closest positioned ancestor */
+}
+
+
+.error-message .close-button {
+  cursor: pointer;
+  margin-left: 10px; /* Space between message and close button */
+  font-weight: bold;
+}
+
 
 
 @media (max-width: 1370px) {

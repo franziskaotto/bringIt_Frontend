@@ -13,7 +13,6 @@ function Layout() {
   const noNavbarRoutes = ["/", "/register", "/readMore"];
   const showNavbar = !noNavbarRoutes.includes(location.pathname);
 
-  console.log(isLoggedIn);
 
   return (
     <>

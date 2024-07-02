@@ -44,7 +44,7 @@
 .input-Field {
   flex: 1;
   width: 100%; /* Ensure the input field takes up all available space */
-  padding: 10px 50px 10px 50px; /* Adjust padding to make space for the icon */
+  padding: 10px 10px 10px 50px; /* Adjust padding to make space for the icon */
   border-radius: 40px;
   border-width: 2px;
   border-style: solid;
@@ -106,6 +106,16 @@
     padding: 10px; /* Reduce padding for smaller screens */
     max-height: none; /* Ensure the card does not exceed the screen height */
   }
+
+  .input-Field {
+    padding: 10px 10px 10px 40px; /* Adjust padding for smaller screens */
+  }
+
+  .icon {
+    left: 10px; /* Adjust icon position for smaller screens */
+    width: 18px; /* Adjust icon size for smaller screens if needed */
+    height: 18px; /* Adjust icon size for smaller screens if needed */
+  }
 }
 
 @media (max-width: 963px) {
@@ -128,11 +138,10 @@
   }
 
   .input-Field {
-    padding: 10px 15px; /* Adjust padding for smaller screens */
+    padding: 10px 10px 10px 40px; /* Adjust padding for smaller screens */
   }
 
   .todo-saved {
     width: 90%;
-  
   }
 }

@@ -91,6 +91,18 @@
   position: relative;
 }
 
+@media (max-width: 767px) {
+.input-Field {
+  padding: 10px 10px 10px 40px; /* Adjust padding for smaller screens */
+}
+
+.icon {
+  left: 10px; /* Adjust icon position for smaller screens */
+  width: 18px; /* Adjust icon size for smaller screens if needed */
+  height: 18px; /* Adjust icon size for smaller screens if needed */
+}
+}
+
 @media (max-width: 963px) {
   .register-card {
     width: 90%; /* Adjust width for smaller screens */

@@ -4,18 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import "./LoginFormHandler.css";
 import Logo from "../../Logo/Logo";
 
-
-// handles user login and stores the JWT token in local storage
 const LoginFormHandler = ({ setIsLoggedIn }) => {
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
   });
-
-  // hook to navigate to different routes
+  const [error, setError] = useState(""); // State to manage error message
   const navigate = useNavigate();
 
-  // Function to handle changes in the input fields and update the credentials state
   const handleChange = (e) => {
     setCredentials({
       ...credentials,
@@ -23,46 +19,43 @@ const LoginFormHandler = ({ setIsLoggedIn }) => {
     });
   };
 
-  // Function to handle the login form submission
   const handleLogin = async (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-    const authoHeader = btoa(credentials.username + ":" + credentials.password); // Create a basic authHeader
-    console.log(authoHeader);
+    e.preventDefault();
+    const authoHeader = btoa(credentials.username + ":" + credentials.password);
 
     try {
-      // Send a POST request to the login endpoint with the user's credentials
       const response = await fetch(
         "http://localhost:8081/api/user/auth/login",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Basic " + authoHeader, // Include the basic authHeader
+            Authorization: "Basic " + authoHeader,
           },
           body: JSON.stringify(credentials),
         }
       );
 
       const result = await response.json();
-      console.log("Response from login:", result); // Log the result object to see its structure
 
       if (response.ok) {
-        console.log(result);
-        // Store the token in local storage
         localStorage.setItem("token", result.token);
         setIsLoggedIn(true);
         localStorage.setItem("userId", result.userId.toString());
-        //localStorage.setItem("username", result.username)
-        localStorage.setItem("username", credentials.username); // save username to localstorage
-        console.log(credentials.username);
-
-        // to get username for creating todos
+        localStorage.setItem("username", credentials.username);
         navigate("/home");
       } else {
-        console.error("Login failed", result);
+        // Handle incorrect username or password
+        if (response.status === 401) {
+          setError("Username oder Passwort falsch. Bitte probiere es nochmal.");
+        } else {
+          console.error("Login fehlgeschlagen.", result);
+          setError("Login fehlgeschlagen. Bitte versuche es nochmal.");
+        }
       }
     } catch (error) {
-      console.error("Error during login", error);
+      console.error("Error during login.", error);
+      setError("Username oder Passwort falsch.");
     }
   };
 
@@ -111,6 +104,15 @@ const LoginFormHandler = ({ setIsLoggedIn }) => {
             LOGIN
           </button>
         </div>
+
+        {error && (
+          <div className="loginWrong-message">
+            {error}
+            <span className="close-button" onClick={() => setError("")}>
+              X
+            </span>
+          </div>
+        )}
 
         <div className="links">
           <div className="register">
