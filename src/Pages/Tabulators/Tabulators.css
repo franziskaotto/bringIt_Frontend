@@ -1,21 +1,16 @@
 /* Tabulator - Menu */
 
-.left-side-content-map{
+.left-side-content-map {
   margin-top: 100px;
   padding-top: 10px;
-
-
 }
 
-.map-and-filter-container{
-
+.map-and-filter-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-
-
 
 @media (min-width: 1370px) {
   .map-and-filter-container {
@@ -24,10 +19,7 @@
     flex-direction: row;
     justify-content: center;
   }
-
-  
 }
-
 
 .tabs {
   display: flex;
@@ -43,13 +35,9 @@
   padding: 0;
   margin: 0;
   display: flex;
-  
 }
 
-
-
 .tab-btn {
-
   width: 100%;
   padding: 10px;
   background: none;
@@ -70,5 +58,5 @@
 }
 
 .tab-panel--active {
-  display: block; 
+  display: block;
 }

@@ -5,12 +5,11 @@ import Logo from "../Logo/Logo";
 import handleLogout from "../Logout/LogoutUser";
 
 const Navbar = () => {
-
   return (
     <div className="navbar-container">
       <nav className="navbar">
         <div className="logo-btn">
-          <Link to="/map">
+          <Link to="/home">
             <Logo />
           </Link>
         </div>
@@ -26,10 +25,10 @@ const Navbar = () => {
               <img src="public/Images/Setting-btn.png" alt="Settings" />
             </Link>
           </div>
-            <div className="logout-btn">
+          <div className="logout-btn">
             <div onClick={handleLogout}>
               <Link to="/">
-              <img src="public/Images/logout-btn.png" alt="Logout" />
+                <img src="public/Images/logout-btn.png" alt="Logout" />
               </Link>
             </div>
           </div>

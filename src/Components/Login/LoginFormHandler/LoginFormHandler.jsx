@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import "./LoginFormHandler.css";
 import Logo from "../../Logo/Logo";
 
-
 // handles user login and stores the JWT token in local storage
 const LoginFormHandler = ({ setIsLoggedIn }) => {
   const [credentials, setCredentials] = useState({
@@ -31,17 +30,14 @@ const LoginFormHandler = ({ setIsLoggedIn }) => {
 
     try {
       // Send a POST request to the login endpoint with the user's credentials
-      const response = await fetch(
-        "http://localhost:8081/api/user/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Basic " + authoHeader, // Include the basic authHeader
-          },
-          body: JSON.stringify(credentials),
-        }
-      );
+      const response = await fetch("http://localhost:8081/api/user/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Basic " + authoHeader, // Include the basic authHeader
+        },
+        body: JSON.stringify(credentials),
+      });
 
       const result = await response.json();
       console.log("Response from login:", result); // Log the result object to see its structure
@@ -77,11 +73,7 @@ const LoginFormHandler = ({ setIsLoggedIn }) => {
       <form className="singIn-Form" onSubmit={handleLogin}>
         <div className="input-Container-login">
           <div className="input-with-icon-login">
-            <img
-              className="icon-user"
-              src="../../../../public/Images/user.png"
-              alt="user icon"
-            />
+            <img className="icon-user" src="../../../../public/Images/user.png" alt="user icon" />
             <input
               className="input-Field-login"
               type="text"
@@ -92,11 +84,7 @@ const LoginFormHandler = ({ setIsLoggedIn }) => {
             />
           </div>
           <div className="input-with-icon-login">
-            <img
-              className="icon-user"
-              src="/Images/password.png"
-              alt="password icon"
-            />
+            <img className="icon-user" src="/Images/password.png" alt="password icon" />
             <input
               className="input-Field-login"
               type="password"

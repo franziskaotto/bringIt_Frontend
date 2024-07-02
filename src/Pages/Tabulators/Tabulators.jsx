@@ -27,9 +27,11 @@ const Tabulators = () => {
   useEffect(() => {
     if (key === "myTodos") {
       fetchMyTodos();
-    } else if (key === "openTodos") {
+    }
+    if (key === "openTodos") {
       fetchOpenTodos();
-    } else if (key === "acceptedTodos") {
+    }
+    if (key === "acceptedTodos") {
       fetchAcceptedTodos();
     }
   }, [key]);
@@ -79,8 +81,6 @@ const Tabulators = () => {
 
   // fetch Todos by User Taken (Accepted Todos):
   const fetchAcceptedTodos = async () => {
-    console.log("userId for fetch: " + userId);
-
     try {
       const response = await fetch(`http://localhost:8081/api/todo/takenByUser/${userId}`, {
         headers: {
