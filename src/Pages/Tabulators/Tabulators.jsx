@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import GoogleMaps from "../../Components/GoogleMaps";
-import TodoFilter from "../../Components/TodoFilter";
+import TodoFilter from "../../Components/Todo/TodoFilter";
 import CreateTodo from "../../Components/Todo/CreateTodo";
 import MyTodos from "../../Components/Todo/MyTodos";
 import OpenTodos from "../../Components/Todo/OpenTodos";
@@ -50,7 +50,7 @@ const Tabulators = () => {
       } else {
         console.error("Failed to fetch MyTodos");
         console.log(response);
-        console.log(username);
+        //console.log(username);
       }
     } catch (error) {
       console.error("Error fetching MyTodos:", error);
@@ -139,7 +139,7 @@ const Tabulators = () => {
               setErrorMessage={setErrorMessage}
             />
           </Tab>
-          <Tab eventKey="acceptedTodos" title="angenommene Todos">
+          <Tab eventKey="acceptedTodos" title="Angenommene Todos">
             <AcceptedTodos
               activeTab={key}
               setExpandedTodo={setExpandedTodo}

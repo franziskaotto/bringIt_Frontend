@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import "../Todos.css";
 import TodoListTemplate from "../TodoListTemplate";
 
@@ -17,7 +18,7 @@ const OpenTodos = ({
   // 10 ensures that the string is interpreted as a decimal number.
 
   // fetch todos on component mount = not necessary
-  // because fetch is activated with useExxect on eventKey-change
+  // because fetch is activated with useEffect on eventKey-change
   // useEffect(() => {
   //   fetchOpenTodos();
   // }, []);
@@ -53,6 +54,18 @@ const OpenTodos = ({
       )}
     </div>
   );
+};
+
+OpenTodos.propTypes = {
+  activeTab: PropTypes.string.isRequired,
+  setExpandedTodo: PropTypes.func.isRequired,
+  expandedTodo: PropTypes.object,
+  todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetchMyTodos: PropTypes.func.isRequired,
+  fetchOpenTodos: PropTypes.func.isRequired,
+  fetchAcceptedTodos: PropTypes.func.isRequired,
+  errorMessage: PropTypes.string,
+  setErrorMessage: PropTypes.func.isRequired,
 };
 
 export default OpenTodos;

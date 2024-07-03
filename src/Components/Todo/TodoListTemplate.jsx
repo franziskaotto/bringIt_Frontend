@@ -1,5 +1,6 @@
 import { useState } from "react";
 import TodoTemplateButton from "./TodoTemplateButton";
+import PropTypes from "prop-types";
 
 const TodoListTemplate = ({ todo, activeTab, setExpandedTodo, expandedTodo, fetchMyTodos, fetchOpenTodos, fetchAcceptedTodos, setErrorMessage }) => {
   const userId = parseInt(localStorage.getItem("userId"), 10);
@@ -213,6 +214,31 @@ const TodoListTemplate = ({ todo, activeTab, setExpandedTodo, expandedTodo, fetc
       )}
     </li>
   );
+};
+
+TodoListTemplate.propTypes = {
+  todo: PropTypes.shape({
+    todoId: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    addInfo: PropTypes.string,
+    expiresAt: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    userOffered: PropTypes.shape({
+      username: PropTypes.string.isRequired,
+    }).isRequired,
+    userTaken: PropTypes.shape({
+      userId: PropTypes.number.isRequired,
+    }).isRequired,
+  }).isRequired,
+  activeTab: PropTypes.oneOf(["myTodos", "openTodos", "acceptedTodos"]).isRequired,
+  setExpandedTodo: PropTypes.func.isRequired,
+  expandedTodo: PropTypes.number,
+  fetchMyTodos: PropTypes.func.isRequired,
+  fetchOpenTodos: PropTypes.func.isRequired,
+  fetchAcceptedTodos: PropTypes.func.isRequired,
+  setErrorMessage: PropTypes.func.isRequired,
 };
 
 export default TodoListTemplate;
