@@ -2,14 +2,23 @@ import { useState } from "react";
 import TodoTemplateButton from "./TodoTemplateButton";
 import PropTypes from "prop-types";
 
-const TodoListTemplate = ({ todo, activeTab, setExpandedTodo, expandedTodo, fetchMyTodos, fetchOpenTodos, fetchAcceptedTodos, setErrorMessage }) => {
+const TodoListTemplate = ({
+  todo,
+  activeTab,
+  setExpandedTodo,
+  expandedTodo,
+  fetchMyTodos,
+  fetchOpenTodos,
+  fetchAcceptedTodos,
+  setErrorMessage,
+}) => {
   const userId = parseInt(localStorage.getItem("userId"), 10);
- 
+
   // handle expand or not
   const handleToggle = (todoId) => {
     setExpandedTodo(expandedTodo === todoId ? null : todoId);
   };
- 
+
   // Update Todo Status
   const handleStatusChange = async (todoId, makeStatus) => {
     const token = localStorage.getItem("token");
@@ -128,26 +137,35 @@ const TodoListTemplate = ({ todo, activeTab, setExpandedTodo, expandedTodo, fetc
 
   // get border-color by status
   const getBorderColorByStatus = (todoStatus) => {
-    if (todoStatus === "Offen") {return "border-red"}
-    else if (todoStatus === "In Arbeit") {return "border-yellow"}
-    else if (todoStatus === "Erledigt") {return "border-green"}
-    else if (todoStatus === "Abgelaufen") {return "border-blue"}
-    else return "border-white"
-  }
+    if (todoStatus === "Offen") {
+      return "border-red";
+    } else if (todoStatus === "In Arbeit") {
+      return "border-yellow";
+    } else if (todoStatus === "Erledigt") {
+      return "border-green";
+    } else if (todoStatus === "Abgelaufen") {
+      return "border-blue";
+    } else return "border-white";
+  };
 
- //  ${getBorderColorByStatus(todo.status)}
+  //  ${getBorderColorByStatus(todo.status)}
 
   return (
-    <li key={todo.todoId} className={`todo-item 
+    <li
+      key={todo.todoId}
+      className={`todo-item 
         ${expandedTodo === todo.todoId ? "expanded" : "collapsed"}
         ${getBorderColorByStatus(todo.status)}
-        `}>
+        `}
+    >
       <div className="todo-summary" onClick={() => handleToggle(todo.todoId)}>
         <p className="todo-id">Todo Nr: {todo.todoId}</p>
         <h3>{todo.title}</h3>
         <div className="todo-user-arrow">
           <p className="todo-username">by User: {todo.userOffered.username}</p>
-          <span className="arrow">{expandedTodo === todo.todoId ? "▲" : "▼"}</span>
+          <span className="arrow">
+            {expandedTodo === todo.todoId ? "▲" : "▼"}
+          </span>
         </div>
       </div>
       {expandedTodo === todo.todoId && (
@@ -177,7 +195,9 @@ const TodoListTemplate = ({ todo, activeTab, setExpandedTodo, expandedTodo, fetc
           <p className="expiresAt">
             <span className="label">Verfallsdatum:</span>
             <br />
-            <span className="value">{new Date(todo.expiresAt).toLocaleString()}</span>
+            <span className="value">
+              {new Date(todo.expiresAt).toLocaleString()}
+            </span>
           </p>
           <p className="status">
             <span className="label">Status:</span>
@@ -186,25 +206,49 @@ const TodoListTemplate = ({ todo, activeTab, setExpandedTodo, expandedTodo, fetc
           </p>
           {activeTab === "acceptedTodos" && todo.status === "In Arbeit" && (
             <div className="todo-actions">
-              <TodoTemplateButton handleStatusChange={handleStatusChange} buttonText={"Erledigt"} makeStatus={"Erledigt"} todoId={todo.todoId} />
-              <TodoTemplateButton handleStatusChange={handleStatusChange} buttonText={"Stornieren"} makeStatus={"Offen"} todoId={todo.todoId} />
+              <TodoTemplateButton
+                handleStatusChange={handleStatusChange}
+                buttonText={"Erledigt"}
+                makeStatus={"Erledigt"}
+                todoId={todo.todoId}
+              />
+              <TodoTemplateButton
+                handleStatusChange={handleStatusChange}
+                buttonText={"Stornieren"}
+                makeStatus={"Offen"}
+                todoId={todo.todoId}
+              />
             </div>
           )}
           {activeTab === "openTodos" && (
             <div className="todo-actions">
-              <TodoTemplateButton handleStatusChange={handleStatusChange} buttonText={"Annehmen"} makeStatus={"In Arbeit"} todoId={todo.todoId} />
+              <TodoTemplateButton
+                handleStatusChange={handleStatusChange}
+                buttonText={"Annehmen"}
+                makeStatus={"In Arbeit"}
+                todoId={todo.todoId}
+              />
             </div>
           )}
           {activeTab === "myTodos" && (
             <div className="todo-actions">
-              <button onClick={() => handleEdit(todo.todoId)} className="action-btn">
+              <button
+                onClick={() => handleEdit(todo.todoId)}
+                className="action-btn"
+              >
                 Bearbeiten
               </button>
-              <button onClick={() => handleCancel(todo.todoId)} className="action-btn">
+              <button
+                onClick={() => handleCancel(todo.todoId)}
+                className="action-btn"
+              >
                 Löschen
               </button>
               {todo.status === "In Arbeit" && (
-                <button onClick={() => handleMyTodoCompleted(todo)} className="action-btn">
+                <button
+                  onClick={() => handleMyTodoCompleted(todo)}
+                  className="action-btn"
+                >
                   Erledigt
                 </button>
               )}
@@ -216,29 +260,32 @@ const TodoListTemplate = ({ todo, activeTab, setExpandedTodo, expandedTodo, fetc
   );
 };
 
-TodoListTemplate.propTypes = {
-  todo: PropTypes.shape({
-    todoId: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    location: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    addInfo: PropTypes.string,
-    expiresAt: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
-    userOffered: PropTypes.shape({
-      username: PropTypes.string.isRequired,
-    }).isRequired,
-    userTaken: PropTypes.shape({
-      userId: PropTypes.number.isRequired,
-    }).isRequired,
-  }).isRequired,
-  activeTab: PropTypes.oneOf(["myTodos", "openTodos", "acceptedTodos"]).isRequired,
-  setExpandedTodo: PropTypes.func.isRequired,
-  expandedTodo: PropTypes.number,
-  fetchMyTodos: PropTypes.func.isRequired,
-  fetchOpenTodos: PropTypes.func.isRequired,
-  fetchAcceptedTodos: PropTypes.func.isRequired,
-  setErrorMessage: PropTypes.func.isRequired,
-};
+// WHAT DO WE NEED THIS FOR ?????
+
+// TodoListTemplate.propTypes = {
+//   todo: PropTypes.shape({
+//     todoId: PropTypes.number.isRequired,
+//     title: PropTypes.string.isRequired,
+//     location: PropTypes.string.isRequired,
+//     description: PropTypes.string.isRequired,
+//     addInfo: PropTypes.string,
+//     expiresAt: PropTypes.string.isRequired,
+//     status: PropTypes.string.isRequired,
+//     userOffered: PropTypes.shape({
+//       username: PropTypes.string.isRequired,
+//     }).isRequired,
+//     userTaken: PropTypes.shape({
+//       userId: PropTypes.number.isRequired,
+//     }).isRequired,
+//   }).isRequired,
+//   activeTab: PropTypes.oneOf(["myTodos", "openTodos", "acceptedTodos"])
+//     .isRequired,
+//   setExpandedTodo: PropTypes.func.isRequired,
+//   expandedTodo: PropTypes.number,
+//   fetchMyTodos: PropTypes.func.isRequired,
+//   fetchOpenTodos: PropTypes.func.isRequired,
+//   fetchAcceptedTodos: PropTypes.func.isRequired,
+//   setErrorMessage: PropTypes.func.isRequired,
+// };
 
 export default TodoListTemplate;

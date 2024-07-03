@@ -13,13 +13,11 @@ function Layout() {
   const noNavbarRoutes = ["/", "/register", "/readMore"];
   const showNavbar = !noNavbarRoutes.includes(location.pathname);
 
-
   return (
     <>
-    <div className="ellipses">
-      <Ellipses />
-
-    </div>
+      <div className="ellipses">
+        <Ellipses />
+      </div>
 
       {isLoggedIn ? (
         <>
@@ -29,8 +27,8 @@ function Layout() {
         </>
       ) : (
         <div className="major-container">
-            <WelcomeInfoSection setIsLoggedIn={setIsLoggedIn} />
-            <LoginFormHandler setIsLoggedIn={setIsLoggedIn} />
+          <WelcomeInfoSection setIsLoggedIn={setIsLoggedIn} />
+          <LoginFormHandler setIsLoggedIn={setIsLoggedIn} />
         </div>
       )}
     </>
