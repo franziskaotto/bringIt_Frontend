@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./Profil.css";
 
 const Profil = () => {
-  const [currentUser, setCurrentUser] = useState(null); // Initialize with null
+  const [user, setUser] = useState(null); // Initialize with null
   const [errorMessage, setErrorMessage] = useState("");
-
-  console.log("inside Profil");
 
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
@@ -13,15 +11,17 @@ const Profil = () => {
   // fetch user:
   const fetchUser = async () => {
     try {
-      const response = await fetch(`http://localhost:8081/api/users/id/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `http://localhost:8081/api/users/id/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetched user data: ", data); // Log the fetched data
-        setCurrentUser(data);
+        setUser(data);
       } else {
         console.error("Failed to fetch User");
         console.log("response: " + response);
@@ -33,40 +33,49 @@ const Profil = () => {
     }
   };
 
+  // fetch User on component mount:
   useEffect(() => {
     fetchUser();
   }, []);
 
+  // Display currentUser in Console once it is fetched:
   useEffect(() => {
-    if (currentUser) {
-      console.log("CurrentUser: ", currentUser);
-      console.log("BringITS of " + currentUser.user.username + ": " + currentUser.user.bringIts);
+    if (user) {
+      console.log(
+        "CurrentUser",
+        user.user.username,
+        ": ",
+        user,
+        " / BringIts: ",
+        user.user.bringIts
+      );
     }
-  }, [currentUser]);
+  }, [user]);
 
   return (
     <div className="profile-container">
-      {currentUser && currentUser.user ? (
+      {user && user.user ? (
         <div className="user-details">
-          <h1>{currentUser.user.username}'s Profile: </h1>
+          <h1>{user.user.username}'s Profile: </h1>
           <p>
-            <strong>Username:</strong> {currentUser.user.username}
+            <strong>Username:</strong> {user.user.username}
           </p>
           <p>
-            <strong>Name:</strong> {currentUser.user.firstName} {currentUser.user.lastName}
+            <strong>Name:</strong> {user.user.firstName} {user.user.lastName}
           </p>
           <p>
-            <strong>Email:</strong> {currentUser.user.email}
+            <strong>Email:</strong> {user.user.email}
           </p>
           <p>
-            <strong>Phone:</strong> {currentUser.user.phone}
+            <strong>Phone:</strong> {user.user.phone}
           </p>
           <p>
-            <strong>Adresse:</strong> {currentUser.user.address.streetNumber}, {currentUser.user.address.postalCode}, {currentUser.user.address.city}
+            <strong>Adresse:</strong> {user.user.address.streetNumber},{" "}
+            {user.user.address.postalCode}, {user.user.address.city}
           </p>
 
           <h3>
-            Bring-Its: <strong>{currentUser.user.bringIts}</strong>
+            Bring-Its: <strong>{user.user.bringIts}</strong>
           </h3>
         </div>
       ) : (
