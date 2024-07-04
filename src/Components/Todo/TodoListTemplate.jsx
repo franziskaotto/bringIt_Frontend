@@ -260,8 +260,6 @@ const TodoListTemplate = ({
   );
 };
 
-// WHAT DO WE NEED THIS FOR ?????
-
 // TodoListTemplate.propTypes = {
 //   todo: PropTypes.shape({
 //     todoId: PropTypes.number.isRequired,
@@ -278,8 +276,7 @@ const TodoListTemplate = ({
 //       userId: PropTypes.number.isRequired,
 //     }).isRequired,
 //   }).isRequired,
-//   activeTab: PropTypes.oneOf(["myTodos", "openTodos", "acceptedTodos"])
-//     .isRequired,
+//   activeTab: PropTypes.oneOf(["myTodos", "openTodos", "acceptedTodos"]).isRequired,
 //   setExpandedTodo: PropTypes.func.isRequired,
 //   expandedTodo: PropTypes.number,
 //   fetchMyTodos: PropTypes.func.isRequired,

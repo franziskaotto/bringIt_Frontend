@@ -1,10 +1,15 @@
 import React from "react";
+import { useRecoilValue } from "recoil";
 import { Outlet, Link } from "react-router-dom";
 import "./Navbar.css";
 import Logo from "../Logo/Logo";
 import handleLogout from "../Logout/LogoutUser";
+import { bringItsState } from "../../state/bringItsState";
 
 const Navbar = () => {
+  const username = localStorage.getItem("username"); // Retrieve the username from localStorage
+  const bringIts = useRecoilValue(bringItsState);
+
   return (
     <div className="navbar-container">
       <nav className="navbar">
@@ -12,6 +17,17 @@ const Navbar = () => {
           <Link to="/home">
             <Logo />
           </Link>
+        </div>
+
+        <div className="user-info">
+          <h4>
+            Willkommen, <strong>{username}</strong>!{" "}
+            <em>
+              {" "}
+              Deine Bring-ITS: <strong>{bringIts}</strong>{" "}
+            </em>
+          </h4>
+          {/* Display the username */}
         </div>
 
         <div className="right-buttons">

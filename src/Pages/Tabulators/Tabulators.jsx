@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import "./Tabulators.css";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -10,6 +11,7 @@ import CreateTodo from "../../Components/Todo/CreateTodo";
 import MyTodos from "../../Components/Todo/MyTodos";
 import OpenTodos from "../../Components/Todo/OpenTodos";
 import AcceptedTodos from "../../Components/Todo/AcceptedTodos";
+import { bringItsState } from "../../state/bringItsState";
 
 const Tabulators = () => {
   const [key, setKey] = useState("map");
@@ -18,8 +20,10 @@ const Tabulators = () => {
   const [acceptedTodos, setAcceptedTodos] = useState([]);
   const [myTodos, setMyTodos] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [currentUser, setCurrentUser] = useState(null); // Initialize with null
   const token = localStorage.getItem("token");
   const userId = parseInt(localStorage.getItem("userId"), 10);
+  const [bringIts, setBringIts] = useRecoilState(bringItsState);
 
   console.log("key: " + key);
 
@@ -39,14 +43,18 @@ const Tabulators = () => {
   // fetch MyTodos
   const fetchMyTodos = async () => {
     try {
-      const response = await fetch(`http://localhost:8081/api/todo/offeredByUser/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `http://localhost:8081/api/todo/offeredByUser/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (response.ok) {
         const data = await response.json();
         setMyTodos(data);
+        fetchCurrentUser();
       } else {
         console.error("Failed to fetch MyTodos");
         console.log(response);
@@ -68,6 +76,7 @@ const Tabulators = () => {
       if (response.ok) {
         const data = await response.json();
         setOpenTodos(data);
+        fetchCurrentUser();
       } else {
         console.error("Failed to fetch OpenTodos");
         console.log("response: " + response);
@@ -82,14 +91,18 @@ const Tabulators = () => {
   // fetch Todos by User Taken (Accepted Todos):
   const fetchAcceptedTodos = async () => {
     try {
-      const response = await fetch(`http://localhost:8081/api/todo/takenByUser/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `http://localhost:8081/api/todo/takenByUser/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (response.ok) {
         const data = await response.json();
         setAcceptedTodos(data);
+        fetchCurrentUser();
       } else {
         console.error("Failed to fetch AcceptedTodos");
         setErrorMessage("Failed to fetch todos");
@@ -100,10 +113,47 @@ const Tabulators = () => {
     }
   };
 
+  // fetch current user:
+  const fetchCurrentUser = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8081/api/users/id/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Fetched user data: ", data); // Log the fetched data
+        setCurrentUser(data);
+        setBringIts(data.user.bringIts); // Properly call the setter function
+      } else {
+        console.error("Failed to fetch User");
+        console.log("response: " + response);
+        setErrorMessage("Failed to fetch User " + userId);
+      }
+    } catch (error) {
+      console.error("Error fetching User: ", error);
+      setErrorMessage("Error fetching User");
+    }
+  };
+
+  // call fetchCurrentUser on componentMount so that bringIts in Navbar are displayed:
+  useEffect(() => {
+    fetchCurrentUser();
+  }, []);
+
   return (
     <>
       <div className="left-side-content-map">
-        <Tabs id="uncontrolled-tab-example" activeKey={key} onSelect={(k) => setKey(k)} className="mb-3">
+        <Tabs
+          id="uncontrolled-tab-example"
+          activeKey={key}
+          onSelect={(k) => setKey(k)}
+          className="mb-3"
+        >
           <Tab eventKey="map" title="Map">
             <div className="map-and-filter-container">
               <GoogleMaps />
