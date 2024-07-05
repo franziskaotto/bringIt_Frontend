@@ -1,5 +1,5 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import "../Todos.css";
 import TodoListTemplate from "../TodoListTemplate";
 
@@ -55,19 +55,5 @@ const OpenTodos = ({
     </div>
   );
 };
-
-// WHAT DO WE NEED THIS FOR ?????
-
-// OpenTodos.propTypes = {
-//   activeTab: PropTypes.string.isRequired,
-//   setExpandedTodo: PropTypes.func.isRequired,
-//   expandedTodo: PropTypes.object,
-//   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
-//   fetchMyTodos: PropTypes.func.isRequired,
-//   fetchOpenTodos: PropTypes.func.isRequired,
-//   fetchAcceptedTodos: PropTypes.func.isRequired,
-//   errorMessage: PropTypes.string,
-//   setErrorMessage: PropTypes.func.isRequired,
-// };
 
 export default OpenTodos;

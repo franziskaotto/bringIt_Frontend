@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
 import "./MyTodos.css";
-import ReloadTodos from "../ReloadTodos/ReloadTodos";
+//import ReloadTodos from "../ReloadTodos/ReloadTodos";
 import TodoListTemplate from "../TodoListTemplate";
 
 const MyTodos = ({
@@ -22,7 +23,7 @@ const MyTodos = ({
       {username && <h3>Willkommen, {username}!</h3>}{" "}
       {/* Display the username */}
       {/* Button to reload todos */}
-      <ReloadTodos fetchTodos={fetchMyTodos} />
+      {/*<ReloadTodos fetchTodos={fetchMyTodos} />*/}
       {errorMessage && (
         <div className="error-message">
           <p>{errorMessage}</p>

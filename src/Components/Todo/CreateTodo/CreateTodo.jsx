@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import get from "lodash.get"; // Ensure lodash.get is imported
@@ -53,26 +54,53 @@ const postNewTodo = async (todoData) => {
   }
 };
 
-const CreateTodo = (fetchMyTodos, fetchOpenTodos) => {
+const updateTodo = async (todoData) => {
+  const token = localStorage.getItem("token"); // Retrieve the token from local storage
+
+  try {
+    const response = await fetch(`http://localhost:8081/api/todo/${todoData.todoId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+      },
+      body: JSON.stringify(todoData), // Send updated todo data
+    });
+    if (response.ok) {
+      console.log("Todo erfolgreich aktualisiert.");
+      return true;
+    } else {
+      console.error("Todo konnte nicht aktualisiert werden.");
+      console.log("Response status:", response.status);
+      return false;
+    }
+  } catch (error) {
+    console.error("error: ", error);
+    return false;
+  }
+};
+
+const CreateTodo = ({ fetchMyTodos, fetchOpenTodos, todoToEdit, onClose }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const formik = useFormik({
     initialValues: {
-      //userId: localStorage.getItem("userId") // Initialize userId from localStorage
       userOfferedId: parseInt(localStorage.getItem("userId"), 10), // Ensure userId is a number
-      title: "",
-      location: "",
-      description: "",
-      addInfo: "",
-      uploadPath: "",
-      expiresAt: "",
+      title: todoToEdit ? todoToEdit.title : "",
+      location: todoToEdit ? todoToEdit.location : "",
+      description: todoToEdit ? todoToEdit.description : "",
+      addInfo: todoToEdit ? todoToEdit.addInfo : "",
+      uploadPath: todoToEdit ? todoToEdit.uploadPath : "",
+      expiresAt: todoToEdit ? new Date(todoToEdit.expiresAt).toISOString().slice(0, -1) : "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      //const userId = localStorage.getItem("userId"); // Retrieve userId from local storage
-      const success = await postNewTodo(values);
+      const success = todoToEdit ? await updateTodo({ ...values, todoId: todoToEdit.todoId }) : await postNewTodo(values);
       if (success) {
         setIsSubmitted(true);
+        fetchMyTodos();
+        fetchOpenTodos();
+        onClose();
       }
     },
   });
@@ -80,12 +108,13 @@ const CreateTodo = (fetchMyTodos, fetchOpenTodos) => {
   if (isSubmitted) {
     return (
       <div className="todo-saved">
-        <p>Todo erfolgreich erstellt!</p>
+        <p>Todo erfolgreich {todoToEdit ? "aktualisiert" : "erstellt"}!</p>
         <div
           className="close-button"
           onClick={() => {
             setIsSubmitted(false);
             formik.resetForm(); // Reset form values to default
+            onClose(); // Close the form/modal
           }}
         >
           X
@@ -99,8 +128,6 @@ const CreateTodo = (fetchMyTodos, fetchOpenTodos) => {
       {/* Form component with onSubmit handler */}
       <form className="todo-Form" onSubmit={formik.handleSubmit}>
         <div className="input-container-todo">
-          {/* Display userOfferedId as read-only text */}
-          {/* <p className="user-id-text">User ID: {formik.values.userOfferedId}</p>*/}
           {[
             { name: "title", type: "text", placeholder: "Titel", icon: "Draw.png" },
             { name: "location", type: "text", placeholder: "Abholort", icon: "Draw.png" },
@@ -144,7 +171,7 @@ const CreateTodo = (fetchMyTodos, fetchOpenTodos) => {
           })}
           <div className="button-container">
             <button className="saveTodo-button" type="submit">
-              TODO SPEICHERN
+              TODO {todoToEdit ? "AKTUALISIEREN" : "SPEICHERN"}
             </button>
           </div>
         </div>
