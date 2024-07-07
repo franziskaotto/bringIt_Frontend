@@ -18,6 +18,8 @@ const TodoListTemplate = ({
   const [tooltipText, setTooltipText] = useState("");
   const userId = parseInt(localStorage.getItem("userId"), 10);
 
+  let tooltipTimer; // To store the timer ID
+
   // handle expand or not
   const handleToggle = (todoId) => {
     setExpandedTodo(expandedTodo === todoId ? null : todoId);
@@ -168,6 +170,20 @@ const TodoListTemplate = ({
     }
   };
 
+  // Handle mouse enter with delay
+  const handleMouseEnter = (text) => {
+    tooltipTimer = setTimeout(() => {
+      setTooltipText(text);
+      setTooltipVisible(true);
+    }, 250); // 1000 milliseconds = 1 second
+  };
+
+  // Handle mouse leave
+  const handleMouseLeave = () => {
+    clearTimeout(tooltipTimer); // Clear the timer if user leaves before the delay
+    setTooltipVisible(false);
+  };
+
   return (
     <>
       <li
@@ -179,8 +195,8 @@ const TodoListTemplate = ({
       >
         <div
           class="tooltip-area"
-          onMouseEnter={() => setTooltipVisible(true)}
-          onMouseLeave={() => setTooltipVisible(false)}
+          onMouseEnter={() => handleMouseEnter(getTooltipText(todo.status))}
+          onMouseLeave={handleMouseLeave}
         ></div>
         {tooltipVisible && (
           <div className="tooltip">{getTooltipText(todo.status)}</div>
