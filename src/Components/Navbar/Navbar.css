@@ -1,17 +1,15 @@
-.navbar-container {
+.navbar {
   position: fixed;
   box-sizing: border-box;
   top: 0;
   left: 0;
   width: 100%;
-  height: 65px;
+  height: 80px;
   background-blend-mode: overlay, normal;
   backdrop-filter: blur(40px);
   border-bottom: 2px solid #eef1f8;
   z-index: 1000;
-}
-
-.navbar {
+  padding-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,11 +17,13 @@
 }
 
 .user-info {
-  position: bottom;
+  position: center;
 }
 
 .logo-btn {
+  margin-left: 50px;
   margin-top: 5px;
+  margin-bottom: 5px;
   display: flex;
   align-items: center;
 }
@@ -36,7 +36,6 @@
 .profil-btn,
 .settings-btn,
 .logout-btn {
-  margin-top: 10px;
   margin-left: 20px;
 }
 

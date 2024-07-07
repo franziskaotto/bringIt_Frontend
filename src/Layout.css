@@ -4,13 +4,11 @@
   color: #eef1f8;
 }
 
-
 html,
 body,
 #root {
   height: 100%;
   margin: 0;
-  padding: 0;
 }
 
 body {
@@ -41,7 +39,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 }
 
 @media (min-width: 1370px) {
@@ -51,6 +48,4 @@ body {
     flex-direction: row;
     justify-content: center;
   }
-
-  
 }
