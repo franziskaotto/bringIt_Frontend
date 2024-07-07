@@ -142,7 +142,7 @@
   background: #03045e;
 }
 
-.tooltip-area {
+.tooltip-area-top {
   height: 20px;
   position: absolute;
   top: 0;
@@ -151,4 +151,16 @@
   bottom: 0;
   cursor: pointer;
   z-index: 999; /* Ensure tooltip area is above padding of TodoListTemplate */
+}
+
+.tooltip-area-bottom {
+  height: 20px;
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+  /* z-index: -999;  */
+  /* Ensure tooltip area is above padding of TodoListTemplate */
 }
