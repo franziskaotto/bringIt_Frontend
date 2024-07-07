@@ -18,11 +18,11 @@ const MyTodos = ({
 
   return (
     <div className="my-todos">
-      <h2>Meine Todos</h2>
-      {username && <h3>Willkommen, {username}!</h3>}{" "}
+      {/* <h2>Meine Todos</h2> 
+      {/* {username && <h3>Willkommen, {username}!</h3>} */}
       {/* Display the username */}
       {/* Button to reload todos */}
-      <ReloadTodos fetchTodos={fetchMyTodos} />
+      {/* <ReloadTodos fetchTodos={fetchMyTodos} /> */}
       {errorMessage && (
         <div className="error-message">
           <p>{errorMessage}</p>

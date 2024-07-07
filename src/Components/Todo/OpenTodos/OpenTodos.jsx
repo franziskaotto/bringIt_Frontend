@@ -56,18 +56,4 @@ const OpenTodos = ({
   );
 };
 
-// WHAT DO WE NEED THIS FOR ?????
-
-// OpenTodos.propTypes = {
-//   activeTab: PropTypes.string.isRequired,
-//   setExpandedTodo: PropTypes.func.isRequired,
-//   expandedTodo: PropTypes.object,
-//   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
-//   fetchMyTodos: PropTypes.func.isRequired,
-//   fetchOpenTodos: PropTypes.func.isRequired,
-//   fetchAcceptedTodos: PropTypes.func.isRequired,
-//   errorMessage: PropTypes.string,
-//   setErrorMessage: PropTypes.func.isRequired,
-// };
-
 export default OpenTodos;

@@ -37,6 +37,7 @@
   padding: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
+  position: relative;
 }
 
 .border-red {
@@ -139,4 +140,15 @@
 
 .action-btn:hover {
   background: #03045e;
+}
+
+.tooltip-area {
+  height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+  z-index: 999; /* Ensure tooltip area is above padding of TodoListTemplate */
 }
