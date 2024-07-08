@@ -18,7 +18,39 @@
   margin: 10px 0;
 }
 
-.error-message {
-  color: red;
-  font-weight: bold;
+.save-changes-btn,
+.cancel-btn,
+.edit-profile-btn {
+  width: 200px;
+  height:50px;
+  font-size: 20px;
+  padding: 10px;
+  cursor: pointer;
+  background: #03045E;
+  color: #eef1f8;
+  border-radius: 40px;
+  border: none;
+  letter-spacing: 5px;
 }
+
+.user-details label {
+  display: block; /* Display labels as block to start on a new line */
+  margin-bottom: 5px; /* Adjust margin as needed */
+}
+
+.user-details input[type="text"],
+.user-details input[type="email"],
+.user-details input[type="tel"],
+.user-details input[type="date"],
+.user-details textarea {
+    width: 40%;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box; /* Include padding and border in width calculation */
+    color: #03045E;
+}
+
+
+
