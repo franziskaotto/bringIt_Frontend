@@ -22,7 +22,7 @@ const Profil = () => {
       );
       if (response.ok) {
         const data = await response.json();
-        setUser(data);
+        setUser(data.user); // Update the user state
       } else {
         console.error("Failed to fetch User");
         setErrorMessage("Failed to fetch User " + userId);
@@ -41,18 +41,17 @@ const Profil = () => {
   // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUser((prevUser) => ({
-      ...prevUser,
-      user: {
-        ...prevUser.user,
-        address: {
-          ...prevUser.user.address,
-          [name]: value,
-        },
-      },
-    }));
+    setUser((prevUser) => {
+      const updatedUser = { ...prevUser };
+      if (name.includes("address.")) {
+        const addressField = name.split(".")[1];
+        updatedUser.address[addressField] = value;
+      } else {
+        updatedUser[name] = value;
+      }
+      return updatedUser;
+    });
   };
-  
 
   // Handle form submission for updating user data
   const handleSubmit = async (e) => {
@@ -66,7 +65,7 @@ const Profil = () => {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(user.user), // Send the entire user object
+          body: JSON.stringify(user), // Send the entire user object
         }
       );
       if (response.ok) {
@@ -83,22 +82,39 @@ const Profil = () => {
       setErrorMessage("Error updating user data");
     }
   };
-  
 
   return (
     <div className="profile-container">
-      {user && user.user ? (
+      {user ? (
         <div className="user-details">
-          <h1>{user.user.username}'s Profile</h1>
+          <h1>{user.username}'s Profil</h1>
           {editMode ? (
             <form onSubmit={handleSubmit}>
               <label>
-                Username:
+                Vorname:
                 <input
                   type="text"
-                  name="username"
-                  value={user.user.username}
-                  disabled // Disable editing username
+                  name="firstName"
+                  value={user.firstName || ''}
+                  onChange={handleInputChange}
+                />
+              </label>
+              <label>
+                Nachname:
+                <input
+                  type="text"
+                  name="lastName"
+                  value={user.lastName || ''}
+                  onChange={handleInputChange}
+                />
+              </label>
+              <label>
+                Geburtsdatum:
+                <input
+                  type="date"
+                  name="dateOfBirth"
+                  value={user.dateOfBirth || ''}
+                  onChange={handleInputChange}
                 />
               </label>
               <label>
@@ -106,80 +122,87 @@ const Profil = () => {
                 <input
                   type="email"
                   name="email"
-                  value={user.user.email}
+                  value={user.email || ''}
                   onChange={handleInputChange}
                 />
               </label>
               <label>
-                Phone:
+                Telefon:
                 <input
                   type="tel"
                   name="phone"
-                  value={user.user.phone}
+                  value={user.phone || ''}
                   onChange={handleInputChange}
                 />
               </label>
               <label>
-                Street Number:
+                Strasse Hausnummer:
                 <input
                   type="text"
-                  name="streetNumber"
-                  value={user.user.address.streetNumber}
+                  name="address.streetNumber"
+                  value={user.address?.streetNumber || ''}
                   onChange={handleInputChange}
                 />
               </label>
               <label>
-                City:
+                Stadt:
                 <input
                   type="text"
-                  name="city"
-                  value={user.user.address.city}
+                  name="address.city"
+                  value={user.address?.city || ''}
                   onChange={handleInputChange}
                 />
               </label>
               <label>
-                Postal Code:
+                Postleitzahl:
                 <input
                   type="text"
-                  name="postalCode"
-                  value={user.user.address.postalCode}
+                  name="address.postalCode"
+                  value={user.address?.postalCode || ''}
                   onChange={handleInputChange}
                 />
               </label>
               <div>
-                <button type="submit" className="save-changes-btn">Save</button>
+                <button type="submit" className="save-changes-btn">Speichern</button>
                 <button type="button" onClick={() => setEditMode(false)} className="cancel-btn">
-                  Cancel
+                  Abbrechen
                 </button>
               </div>
             </form>
           ) : (
             <>
               <p>
-                <strong>Username:</strong> {user.user.username}
+                <strong>Username:</strong> {user.username}
               </p>
               <p>
-                <strong>Email:</strong> {user.user.email}
+                <strong>Vorname:</strong> {user.firstName}
               </p>
               <p>
-                <strong>Phone:</strong> {user.user.phone}
+                <strong>Nachname:</strong> {user.lastName}
               </p>
               <p>
-                <strong>Address:</strong>{" "}
-                {user.user.address.streetNumber}, {user.user.address.postalCode},{" "}
-                {user.user.address.city}
+                <strong>Geburtsdatum:</strong> {user.dateOfBirth}
+              </p>
+              <p>
+                <strong>Email:</strong> {user.email}
+              </p>
+              <p>
+                <strong>Telefon:</strong> {user.phone}
+              </p>
+              <p>
+                <strong>Adresse:</strong> {user.address?.streetNumber}, {user.address?.postalCode}, {user.address?.city}
               </p>
               <h3>
-                Bring-Its: <strong>{user.user.bringIts}</strong>
+                Bring-Its: <strong>{user.bringIts}</strong>
               </h3>
               <button onClick={() => setEditMode(true)} className="edit-profile-btn">
-                Edit Profil
+                Bearbeiten
               </button>
             </>
           )}
         </div>
       ) : (
-        <p>Loading user data...</p>
+        <p>Userdaten werden geladen...</p>
       )}
       {errorMessage && <p className="error-message">{errorMessage}</p>}
     </div>

@@ -41,6 +41,7 @@
 .user-details input[type="text"],
 .user-details input[type="email"],
 .user-details input[type="tel"],
+.user-details input[type="date"],
 .user-details textarea {
     width: 40%;
     padding: 8px;
