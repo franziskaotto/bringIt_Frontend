@@ -44,12 +44,11 @@
   border: 2px solid #dddddd; /* Update border color to match hover effect */
   cursor: pointer;
   color: white; /* Inactive tab font color */
-
 }
 
 .tab-btn--active {
   background-color: #007bff;
-  color: #03045E !important; /* Active tab font color */
+  color: #03045e !important; /* Active tab font color */
 }
 
 .tab-panel {

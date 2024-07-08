@@ -3,68 +3,68 @@ import "./TodoFilter.css";
 
 const TodoFilter = () => {
   const [validTodos, setValidTodos] = useState([]);
-  const [postalCodes, setPostalCodes] = useState([])
-  const [city, setCity] = useState([])
-  const [distances, setDistances] = useState([])
+  const [postalCodes, setPostalCodes] = useState([]);
+  const [city, setCity] = useState([]);
+  const [distances, setDistances] = useState([]);
 
-
-  const [pickUpStation, setPickUpStation] = useState([]);
-
+  // const [pickUpStation, setPickUpStation] = useState([]);
 
   console.log(validTodos);
 
-  
   const getAllPostalCodes = (data) => {
     data.forEach((todo) => {
-      if(todo.userOffered.address.postalCode){
-        const postalCodeArray = todo.userOffered.address.postalCode.split(",").map((postCode) => postCode.trim())
+      if (todo.userOffered.address.postalCode) {
+        const postalCodeArray = todo.userOffered.address.postalCode
+          .split(",")
+          .map((postCode) => postCode.trim());
         postalCodeArray.forEach((postCode) => {
           setPostalCodes(
             (prevPostalCodes) => new Set([...prevPostalCodes, postCode])
-          )
-        })
-        
+          );
+        });
       }
-    })
-  }
+    });
+  };
 
   const getAllCities = (data) => {
     data.forEach((todo) => {
-      if(todo.userOffered.address.city) {
-        const cityArray = todo.userOffered.address.city.split(",").map((city) => city.trim())
+      if (todo.userOffered.address.city) {
+        const cityArray = todo.userOffered.address.city
+          .split(",")
+          .map((city) => city.trim());
         cityArray.forEach((city) => {
-          setCity((prevCities) =>  new Set([...prevCities, city]))
-        }) 
+          setCity((prevCities) => new Set([...prevCities, city]));
+        });
       }
-    })
+    });
+  };
 
-  }
-  
-  const getAllDistances = (data) =>{
-    console.log("Distances")
-  }
-  
+  const getAllDistances = (data) => {
+    console.log("Distances");
+  };
+
+  /*   
   const getMyTodos = (data) => {
     // validTodos.forEach((todo) => {
-      
-      // })
-  }
-    
-    const getAllPickUpStations = (data) => {
-      data.forEach((todo) => {
-        if (todo.location) {
-          const pickUpStationsArray = todo.location
-            .split(",")
-            .map((loc) => loc.trim());
-          pickUpStationsArray.forEach((pickUpStation) => {
-            setPickUpStation(
-              (prevPickUpStations) => new Set([...prevPickUpStations, pickUpStation])
-            );
-          });
-        }
-      });
-    };
+    // })
+  };
 
+  const getAllPickUpStations = (data) => {
+    data.forEach((todo) => {
+      if (todo.location) {
+        const pickUpStationsArray = todo.location
+          .split(",")
+          .map((loc) => loc.trim());
+        pickUpStationsArray.forEach((pickUpStation) => {
+          setPickUpStation(
+            (prevPickUpStations) =>
+              new Set([...prevPickUpStations, pickUpStation])
+          );
+        });
+      }
+    });
+  };
+ */
 
   const fetchValidTodos = async () => {
     try {
@@ -79,13 +79,12 @@ const TodoFilter = () => {
 
       const data = await response.json();
       setValidTodos(data);
-      
 
       getAllPostalCodes(data);
-      getAllCities(data)
+      getAllCities(data);
       getAllDistances(data);
-      getMyTodos(data);
-      getAllPickUpStations(data);
+      // getMyTodos(data);
+      // getAllPickUpStations(data);
     } catch (error) {
       console.log(error);
     }
@@ -99,6 +98,7 @@ const TodoFilter = () => {
     <div className="login-card">
       <form className="singIn-Form">
         <div className="input-Container-login">
+          <h4>Todos filtern:</h4>
           <div className="input-with-icon-login">
             <select
               className="input-Field-login"
@@ -108,6 +108,7 @@ const TodoFilter = () => {
               <option value="" disabled hidden>
                 Postleitzahl
               </option>
+              <option value="none">No filter</option>
               {[...postalCodes].map((postCode) => (
                 <option
                   className="option-container"
@@ -128,6 +129,7 @@ const TodoFilter = () => {
               <option value="" disabled hidden>
                 Stadt
               </option>
+              <option value="none">No filter</option>
               {[...city].map((city) => (
                 <option className="option-container" key={city} value={city}>
                   {city}
@@ -142,19 +144,22 @@ const TodoFilter = () => {
               defaultValue=""
             >
               <option value="" disabled hidden>
-                Distanz
+                Distanz zu User (km)
               </option>
-              {validTodos.map((todo) => (
+              <option value="none">No filter</option>
+              {[0.5, 1, 2, 5, 10].map((distance) => (
                 <option
                   className="option-container"
-                  key={todo.todoId}
-                  value={todo.userOffered.address.city}
+                  key={distance}
+                  value={distance}
                 >
-                  {todo.userOffered.address.city}
+                  {distance}
                 </option>
               ))}
             </select>
           </div>
+          <h4>Todos sortieren:</h4>
+          {/* 
           <div className="input-with-icon-login">
             <select
               className="input-Field-login"
@@ -175,6 +180,8 @@ const TodoFilter = () => {
               ))}
             </select>
           </div>
+
+
           <div className="input-with-icon-login">
             <select
               className="input-Field-login"
@@ -195,6 +202,8 @@ const TodoFilter = () => {
               ))}
             </select>
           </div>
+
+
           <div className="input-with-icon-login">
             <select
               className="input-Field-login"
@@ -215,6 +224,8 @@ const TodoFilter = () => {
               ))}
             </select>
           </div>
+
+ */}
         </div>
       </form>
     </div>

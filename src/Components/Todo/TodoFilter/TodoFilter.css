@@ -3,12 +3,18 @@
 }
 
 .input-with-icon-login.expanded {
-  height: auto; 
+  height: auto;
   background-color: #f0f0f0;
 }
 
-
-.option-container{
-  color: black
-
+.option-container {
+  color: black;
 }
+
+/* .login-card {
+  width: 350px;
+} */
+
+/* .input-Field-login {
+  width: 250px;
+} */

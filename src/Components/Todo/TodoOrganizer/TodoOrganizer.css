@@ -1,0 +1,25 @@
+.organizer-bar {
+  display: flex;
+  /* justify-content: space-between; */
+  /* padding: 10px; */
+  /* background-color: #f0f0f033; */
+  color: black;
+  font-size: 14px;
+  margin: 0;
+}
+
+.organizer-button {
+  color: black;
+  background-color: #eaeaea;
+  border-radius: 5px;
+  border: none;
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+span {
+  font-style: italic;
+  color: #575757;
+  margin-left: 20px;
+  font-weight: bold;
+}

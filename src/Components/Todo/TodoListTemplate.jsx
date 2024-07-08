@@ -194,7 +194,7 @@ const TodoListTemplate = ({
         `}
       >
         <div
-          class="tooltip-area-top"
+          className="tooltip-area-top"
           onMouseEnter={() => handleMouseEnter(getTooltipText(todo.status))}
           onMouseLeave={handleMouseLeave}
         ></div>
@@ -215,7 +215,7 @@ const TodoListTemplate = ({
           </div>
         </div>
         <div
-          class="tooltip-area-bottom"
+          className="tooltip-area-bottom"
           onMouseEnter={() => handleMouseEnter(getTooltipText(todo.status))}
           onMouseLeave={handleMouseLeave}
         ></div>
