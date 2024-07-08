@@ -5,7 +5,9 @@ const Profil = () => {
   const [user, setUser] = useState(null); // Initialize with null
   const [editMode, setEditMode] = useState(false); // State to manage edit mode
   const [errorMessage, setErrorMessage] = useState("");
-  
+  const [password, setPassword] = useState(""); // State to manage new password
+  const [confirmPassword, setConfirmPassword] = useState(""); // State to manage confirm password
+
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
 
@@ -53,35 +55,55 @@ const Profil = () => {
     });
   };
 
-  // Handle form submission for updating user data
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(
-        `http://localhost:8081/api/user`,
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(user), // Send the entire user object
-        }
-      );
-      if (response.ok) {
-        console.log("User data updated successfully");
-        setEditMode(false); // Exit edit mode after successful update
-        fetchUser(); // Fetch user data again to update the view
-      } else {
-        const errorData = await response.json();
-        console.error("Failed to update user data:", errorData.errorMessage);
-        setErrorMessage("Failed to update user data");
-      }
-    } catch (error) {
-      console.error("Error updating user data:", error);
-      setErrorMessage("Error updating user data");
+  // Handle password change
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "password") {
+      setPassword(value);
+    } else if (name === "confirmPassword") {
+      setConfirmPassword(value);
     }
   };
+
+  // Handle form submission for updating user data
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (password !== confirmPassword) {
+    setErrorMessage("Passwörter stimmen nicht überein.");
+    return;
+  }
+  try {
+    const updatedUser = { ...user };
+    if (password) {
+      updatedUser.password = password;
+    }
+    const response = await fetch(
+      `http://localhost:8081/api/user`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedUser), // Send the entire user object
+      }
+    );
+    if (response.ok) {
+      console.log("User data updated successfully");
+      setErrorMessage(""); // Reset error message state
+      setEditMode(false); // Exit edit mode after successful update
+      fetchUser(); // Fetch user data again to update the view
+    } else {
+      const errorData = await response.json();
+      console.error("Failed to update user data:", errorData.errorMessage);
+      setErrorMessage("Failed to update user data");
+    }
+  } catch (error) {
+    console.error("Error updating user data:", error);
+    setErrorMessage("Error updating user data");
+  }
+};
+
 
   return (
     <div className="profile-container">
@@ -92,6 +114,7 @@ const Profil = () => {
             <form onSubmit={handleSubmit}>
               <label>
                 Vorname:
+                <br />
                 <input
                   type="text"
                   name="firstName"
@@ -101,6 +124,7 @@ const Profil = () => {
               </label>
               <label>
                 Nachname:
+                <br />
                 <input
                   type="text"
                   name="lastName"
@@ -110,6 +134,7 @@ const Profil = () => {
               </label>
               <label>
                 Geburtsdatum:
+                <br />
                 <input
                   type="date"
                   name="dateOfBirth"
@@ -119,6 +144,7 @@ const Profil = () => {
               </label>
               <label>
                 Email:
+                <br />
                 <input
                   type="email"
                   name="email"
@@ -128,6 +154,7 @@ const Profil = () => {
               </label>
               <label>
                 Telefon:
+                <br />
                 <input
                   type="tel"
                   name="phone"
@@ -137,6 +164,7 @@ const Profil = () => {
               </label>
               <label>
                 Strasse Hausnummer:
+                <br />
                 <input
                   type="text"
                   name="address.streetNumber"
@@ -146,6 +174,7 @@ const Profil = () => {
               </label>
               <label>
                 Stadt:
+                <br />
                 <input
                   type="text"
                   name="address.city"
@@ -155,11 +184,32 @@ const Profil = () => {
               </label>
               <label>
                 Postleitzahl:
+                <br />
                 <input
                   type="text"
                   name="address.postalCode"
                   value={user.address?.postalCode || ''}
                   onChange={handleInputChange}
+                />
+              </label>
+              <label>
+                Neues Passwort:
+                <br />
+                <input
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                />
+              </label>
+              <label>
+                Passwort bestätigen:
+                <br />
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={confirmPassword}
+                  onChange={handlePasswordChange}
                 />
               </label>
               <div>
