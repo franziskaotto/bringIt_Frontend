@@ -23,11 +23,13 @@ const AcceptedTodos = ({
   // }, []);
 
   // Sort todos with "In Arbeit" before "Erledigt"
-  const sortedTodos = todos.sort((a, b) => {
-    if (a.status === "In Arbeit" && b.status !== "In Arbeit") return -1;
-    if (a.status !== "In Arbeit" && b.status === "In Arbeit") return 1;
-    return 0;
-  });
+  // const sortedTodos = todos.sort((a, b) => {
+  //   if (a.status === "In Arbeit" && b.status !== "In Arbeit") return -1;
+  //   if (a.status !== "In Arbeit" && b.status === "In Arbeit") return 1;
+  //   return 0;
+  // });
+
+ const sortedTodos = todos;
 
   return (
     <div className="my-todos">

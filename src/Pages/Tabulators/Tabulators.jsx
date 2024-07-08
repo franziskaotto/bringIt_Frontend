@@ -261,7 +261,7 @@ const Tabulators = () => {
 
   // handle Filter MyTodos by Status:
   const handleFilterStatusMyTodos = (status) => {
-    if (status === "Alle") {
+    if (status === "none") {
       fetchMyTodos();
     } else {
       const filteredTodos = myTodos.filter((todo) => todo.status === status);
@@ -271,7 +271,7 @@ const Tabulators = () => {
 
   // handle Filter OpenTodos by City:
   const handleFilterOpenTodsoByCity = (city) => {
-    if (city === "kein Filter") {
+    if (city === "none") {
       fetchOpenTodos();
     } else {
       fetchOpenTodosByCity(city);
@@ -280,7 +280,7 @@ const Tabulators = () => {
 
   // handle Filter OpenTodos by postcode:
   const handleFilterOpenTodsoByPostcode = (postcode) => {
-    if (postcode === "kein Filter") {
+    if (postcode === "none") {
       fetchOpenTodos();
     } else {
       fetchOpenTodosByPostcode(postcode);
@@ -307,6 +307,7 @@ const Tabulators = () => {
           </Tab>
           <Tab eventKey="myTodos" title="Meine Todos">
             <TodoOrganizer
+              todos={myTodos}
               onSort={handleSortMyTodos}
               activeTab={key}
               filterByStatus={handleFilterStatusMyTodos}
@@ -325,6 +326,7 @@ const Tabulators = () => {
           </Tab>
           <Tab eventKey="openTodos" title="Offene Todos">
             <TodoOrganizer
+              todos={openTodos}
               onSort={handleSortOpenTodos}
               filterByCity={handleFilterOpenTodsoByCity}
               filterByPostcode={handleFilterOpenTodsoByPostcode}
@@ -343,7 +345,11 @@ const Tabulators = () => {
             />
           </Tab>
           <Tab eventKey="acceptedTodos" title="Angenommene Todos">
-            <TodoOrganizer onSort={handleSortAcceptedTodos} activeTab={key} />
+              <TodoOrganizer 
+              todos={acceptedTodos} 
+              onSort={handleSortAcceptedTodos} 
+              activeTab={key} 
+            />
             <AcceptedTodos
               activeTab={key}
               setExpandedTodo={setExpandedTodo}
