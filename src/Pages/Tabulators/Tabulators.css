@@ -1,8 +1,8 @@
 /* Tabulator - Menu */
 
-.left-side-content-map {
-  margin-top: 100px;
+.content-tabulators {
   padding-top: 10px;
+  margin: 100px 50px 50px 50px; /*top, right, bottom, left*/
 }
 
 .map-and-filter-container {
@@ -10,6 +10,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-left: 5px #ccc;
+}
+.tab-content {
+  border-left: #ccc;
 }
 
 @media (min-width: 1370px) {
@@ -44,18 +48,17 @@
   border: 2px solid #dddddd; /* Update border color to match hover effect */
   cursor: pointer;
   color: white; /* Inactive tab font color */
-
 }
 
 .tab-btn--active {
   background-color: #007bff;
-  color: #03045E !important; /* Active tab font color */
+  color: #03045e !important; /* Active tab font color */
 }
 
 .tab-panel {
   display: none; /* Hide all panels by default */
   padding: 20px;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   flex: 1;
 }
 
@@ -79,4 +82,16 @@
   color: #dddddd; /* Color when hovering over inactive tabs */
   background-color: white;
   color: black;
+}
+
+.-sticky {
+  position: fixed;
+  top: 85px;
+  z-index: 1000;
+  margin-bottom: 20px;
+  background-color: #3ba3ce;
+}
+
+.hidden {
+  display: none;
 }

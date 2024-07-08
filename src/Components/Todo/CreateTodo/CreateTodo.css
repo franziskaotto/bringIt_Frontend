@@ -1,14 +1,12 @@
 .todo-card {
-  position: absolute;
+  position: relative;
   width: 80%;
   height: auto;
-  top: 480px;
-  left: 50%;
-  transform: translate(-50%, -50%);
   box-sizing: border-box;
   background-blend-mode: overlay, normal;
   backdrop-filter: blur(40px);
   padding: 20px;
+  margin-top: 40px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -102,7 +100,10 @@
   .todo-card {
     width: 90%; /* Adjust width for smaller screens */
     top: 60%; /* Adjusted top position for smartphones */
-    transform: translate(-50%, -50%); /* Ensure it remains centered horizontally */
+    transform: translate(
+      -50%,
+      -50%
+    ); /* Ensure it remains centered horizontally */
     padding: 10px; /* Reduce padding for smaller screens */
     max-height: none; /* Ensure the card does not exceed the screen height */
   }

@@ -1,5 +1,6 @@
 .navbar {
   position: fixed;
+  overflow: hidden;
   box-sizing: border-box;
   top: 0;
   left: 0;

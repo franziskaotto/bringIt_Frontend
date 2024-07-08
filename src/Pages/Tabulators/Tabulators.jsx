@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useRecoilState } from "recoil";
 import "./Tabulators.css";
 
@@ -25,7 +25,8 @@ const Tabulators = () => {
   const userId = parseInt(localStorage.getItem("userId"), 10);
   const [bringIts, setBringIts] = useRecoilState(bringItsState);
 
-  console.log("key: " + key);
+  const tabBarRef = useRef(null);
+  const [scroll, setScroll] = useState(false);
 
   // fetch todos onChange of activeKey according to specific key.
   useEffect(() => {
@@ -140,19 +141,26 @@ const Tabulators = () => {
     }
   };
 
+  const handleStickyTabs = () => {
+    window.addEventListener("scroll", () => {
+      setScroll(window.scrollY > 85);
+    });
+  };
+
   // call fetchCurrentUser on componentMount so that bringIts in Navbar are displayed:
   useEffect(() => {
     fetchCurrentUser();
+    handleStickyTabs();
   }, []);
 
   return (
     <>
-      <div className="left-side-content-map">
+      <div className="content-tabulators">
         <Tabs
           id="uncontrolled-tab-example"
           activeKey={key}
           onSelect={(k) => setKey(k)}
-          className="mb-3"
+          className={`mb-3 ${scroll ? `-sticky` : ""}`}
         >
           <Tab eventKey="map" title="Map">
             <div className="map-and-filter-container">
