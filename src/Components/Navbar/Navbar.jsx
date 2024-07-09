@@ -20,13 +20,11 @@ const Navbar = () => {
         </div>
 
         <div className="user-info">
-          <h4>
-            Willkommen, <strong>{username}</strong>!{" "}
-            <em>
-              {" "}
-              Deine Bring-ITS: <strong>{bringIts}</strong>{" "}
-            </em>
-          </h4>
+          Willkommen, <strong>{username}</strong>!{" "}
+          <span className="your-bringits">
+            {" "}
+            Deine Bring-ITS: <span className="bringits-number">{bringIts}</span>
+          </span>
           {/* Display the username */}
         </div>
 

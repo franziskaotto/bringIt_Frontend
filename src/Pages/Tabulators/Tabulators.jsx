@@ -19,7 +19,9 @@ const Tabulators = () => {
   const [expandedTodo, setExpandedTodo] = useState(null);
   const [openTodos, setOpenTodos] = useState([]);
   const [acceptedTodos, setAcceptedTodos] = useState([]);
+  const [originalAcceptedTodos, setOriginalAcceptedTodos] = useState([]);
   const [myTodos, setMyTodos] = useState([]);
+  const [originalMyTodos, setOriginalMyTodos] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [currentUser, setCurrentUser] = useState(null); // Initialize with null
   const token = localStorage.getItem("token");
@@ -54,7 +56,8 @@ const Tabulators = () => {
       );
       if (response.ok) {
         const data = await response.json();
-        setMyTodos(data);
+        setOriginalMyTodos(data); // Store the original myTodos
+        setMyTodos(data); // Set the current myTodos
         fetchCurrentUser();
       } else {
         console.error("Failed to fetch MyTodos");
@@ -76,7 +79,9 @@ const Tabulators = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        setOpenTodos(data);
+        // Filter todos based on userId -> remove todos by this user
+        const todos = data.filter((todo) => todo.userOffered.userId !== userId);
+        setOpenTodos(todos);
         fetchCurrentUser();
       } else {
         console.error("Failed to fetch OpenTodos");
@@ -114,11 +119,11 @@ const Tabulators = () => {
     }
   };
 
-  // fetch openTodos by postcode:
-  const fetchOpenTodosByPostcode = async (postcode) => {
+  // fetch OpenTodos by PostalCode:
+  const fetchOpenTodosByPostalCode = async (postalCode) => {
     try {
       const response = await fetch(
-        `http://localhost:8081/api/todo/postcode/${postcode}`,
+        `http://localhost:8081/api/todo/postcode/${postalCode}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -129,13 +134,13 @@ const Tabulators = () => {
         const data = await response.json();
         setOpenTodos(data);
       } else {
-        console.error("Failed to fetch OpenTodosByCity " + postcode);
+        console.error("Failed to fetch OpenTodosByCity " + postalCode);
         console.log("response: " + response);
-        setErrorMessage("Failed to fetch OpenTodosBy City " + postcode);
+        setErrorMessage("Failed to fetch OpenTodosBy City " + postalCode);
       }
     } catch (error) {
       console.error("Error fetching OpenTOdosByCity: ", error);
-      setErrorMessage("Error fetching OpenTOdodsByCity ", postcode);
+      setErrorMessage("Error fetching OpenTOdodsByCity ", postalCode);
     }
   };
 
@@ -152,6 +157,7 @@ const Tabulators = () => {
       );
       if (response.ok) {
         const data = await response.json();
+        setOriginalAcceptedTodos(data); // Store the original acceptedTodos
         setAcceptedTodos(data);
         fetchCurrentUser();
       } else {
@@ -260,11 +266,13 @@ const Tabulators = () => {
   };
 
   // handle Filter MyTodos by Status:
-  const handleFilterStatusMyTodos = (status) => {
+  const handleFilterStatusMyTodos = async (status) => {
     if (status === "none") {
-      fetchMyTodos();
+      await fetchMyTodos();
     } else {
-      const filteredTodos = myTodos.filter((todo) => todo.status === status);
+      const filteredTodos = originalMyTodos.filter(
+        (todo) => todo.status === status
+      );
       setMyTodos(filteredTodos);
     }
   };
@@ -278,12 +286,48 @@ const Tabulators = () => {
     }
   };
 
-  // handle Filter OpenTodos by postcode:
-  const handleFilterOpenTodsoByPostcode = (postcode) => {
-    if (postcode === "none") {
+  // handle Filter OpenTodos by PostalCode:
+  const handleFilterOpenTodosByPostalCode = (postalCode) => {
+    if (postalCode === "none") {
       fetchOpenTodos();
     } else {
-      fetchOpenTodosByPostcode(postcode);
+      fetchOpenTodosByPostalCode(postalCode);
+    }
+  };
+
+  // handle Filter AcceptedTodos by City;
+  const handleFilterAcceptedTodosByCity = (city) => {
+    if (postalCode === "none") {
+      fetchAcceptedTodos();
+    } else {
+      const filteredTodos = originalAcceptedTodos.filter(
+        (todo) => todo.userOffered.address.city.trim() === city
+      );
+      setAcceptedTodos(filteredTodos);
+    }
+  };
+
+  // handle Filter AcceptedTodos by PostalCode:
+  const handleFilterAcceptedTodosByPostalCode = (postalCode) => {
+    if (postalCode === "none") {
+      fetchAcceptedTodos();
+    } else {
+      const filteredTodos = originalAcceptedTodos.filter(
+        (todo) => todo.userOffered.address.postalCode.trim() === postalCode
+      );
+      setAcceptedTodos(filteredTodos);
+    }
+  };
+
+  // handle Filter AcceptedTodos by Status:
+  const handleFilterStatusAcceptedTodos = async (status) => {
+    if (status === "none") {
+      await fetchAcceptedTodos();
+    } else {
+      const filteredTodos = originalAcceptedTodos.filter(
+        (todo) => todo.status === status
+      );
+      setAcceptedTodos(filteredTodos);
     }
   };
 
@@ -329,7 +373,7 @@ const Tabulators = () => {
               todos={openTodos}
               onSort={handleSortOpenTodos}
               filterByCity={handleFilterOpenTodsoByCity}
-              filterByPostcode={handleFilterOpenTodsoByPostcode}
+              filterByPostcode={handleFilterOpenTodosByPostalCode}
               activeTab={key}
             />
             <OpenTodos
@@ -345,10 +389,13 @@ const Tabulators = () => {
             />
           </Tab>
           <Tab eventKey="acceptedTodos" title="Angenommene Todos">
-              <TodoOrganizer 
-              todos={acceptedTodos} 
-              onSort={handleSortAcceptedTodos} 
-              activeTab={key} 
+            <TodoOrganizer
+              todos={acceptedTodos}
+              onSort={handleSortAcceptedTodos}
+              activeTab={key}
+              filterByCity={handleFilterAcceptedTodosByCity}
+              filterByPostcode={handleFilterAcceptedTodosByPostalCode}
+              filterByStatus={handleFilterStatusAcceptedTodos}
             />
             <AcceptedTodos
               activeTab={key}

@@ -4,7 +4,6 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import "./TodoOrganizer.css";
 import { DropdownItem } from "react-bootstrap";
 
-
 // use img files instead of emojis in SortButtons
 // import ArrowUp from '../../../../public/Images/Pfeil_Dropdown.png';
 // import ArrowDown from '../../../../public/Images/Pfeil_Dropdown.png';
@@ -37,66 +36,76 @@ const TodoOrganizer = ({
     onSort(type, newSortOrder);
   };
 
-// get Cities for Dropdown:
-// const getAllCities = () => {
-//   todos.forEach((todo) => {
-//     if (todo.userOffered.address.city) {
-//       const cityArray = todo.userOffered.address.city
-//         .split(",")
-//         .map((city) => city.trim());
-//       cityArray.forEach((city) => {
-//         setCity((prevCities) => new Set([...prevCities, city]));
-//       });
-//       console.log("cityArray: " + prevCities);
-//     }
-//   });
-// };
+  // get Cities for Dropdown:
+  // const getAllCities = () => {
+  //   todos.forEach((todo) => {
+  //     if (todo.userOffered.address.city) {
+  //       const cityArray = todo.userOffered.address.city
+  //         .split(",")
+  //         .map((city) => city.trim());
+  //       cityArray.forEach((city) => {
+  //         setCity((prevCities) => new Set([...prevCities, city]));
+  //       });
+  //       console.log("cityArray: " + prevCities);
+  //     }
+  //   });
+  // };
 
-// get Cities for Dropdown - version chatGPT:
-const getAllCities = () => {
-  const citySet = new Set();
-  todos.forEach((todo) => {
-    if (todo.userOffered && todo.userOffered.address && todo.userOffered.address.city) {
-      const cityArray = todo.userOffered.address.city.split(",").map((city) => city.trim());
-      cityArray.forEach((city) => {
-        citySet.add(city);
-      });
-    }
-  });
-  setCity([...citySet]);
-};
+  // get Cities for Dropdown - version chatGPT:
+  const getAllCities = () => {
+    const citySet = new Set();
+    todos.forEach((todo) => {
+      if (
+        todo.userOffered &&
+        todo.userOffered.address &&
+        todo.userOffered.address.city
+      ) {
+        const cityArray = todo.userOffered.address.city
+          .split(",")
+          .map((city) => city.trim());
+        cityArray.forEach((city) => {
+          citySet.add(city);
+        });
+      }
+    });
+    setCity([...citySet]);
+  };
 
+  // get Postcodes for Dropdown:
+  const getAllPostcodes = () => {
+    const postcodeSet = new Set();
+    todos.forEach((todo) => {
+      if (
+        todo.userOffered &&
+        todo.userOffered.address &&
+        todo.userOffered.address.postalCode
+      ) {
+        const postcodeArray = todo.userOffered.address.postalCode
+          .split(",")
+          .map((postcode) => postcode.trim());
+        postcodeArray.forEach((postcode) => {
+          postcodeSet.add(postcode);
+        });
+      }
+    });
+    setPostcodes([...postcodeSet]);
+  };
 
-// get Postcodes for Dropdown:
-const getAllPostcodes = () => {
-  const postcodeSet = new Set();
-  todos.forEach((todo) => {
-    if (todo.userOffered && todo.userOffered.address && todo.userOffered.address.postalCode) {
-      const postcodeArray = todo.userOffered.address.postalCode.split(",").map((postcode) => postcode.trim());
-      postcodeArray.forEach((postcode) => {
-        postcodeSet.add(postcode);
-      });
-    }
-  });
-  setPostcodes([...postcodeSet]);
-};
+  // get Statuses for Dropdown:
+  const getAllStatuses = () => {
+    const statusSet = new Set();
+    todos.forEach((todo) => {
+      if (todo.status) {
+        const statusArray = todo.status.split(",");
+        statusArray.forEach((status) => {
+          statusSet.add(status);
+        });
+      }
+    });
+    setStatus([...statusSet]);
+  };
 
-// get Statuses for Dropdown:
-const getAllStatuses = () => {
-  const statusSet = new Set();
-  todos.forEach((todo) => {
-    if (todo.status) {
-      const statusArray = todo.status.split(",").map((status) => status.trim());
-      statusArray.forEach((status) => {
-        statusSet.add(status);
-      });
-    }
-  });
-  setStatus([...statusSet]);
-};
-
-
-// handle filter Status - not yet
+  // handle filter Status - not yet
   // const handleFilterByStatus = (status) => {
   //   setSelectedStatus(status);
   //   filterByStatus(status);
@@ -110,7 +119,10 @@ const getAllStatuses = () => {
           className="organizer-button"
           onClick={() => handleSort("createdAt")}
         >
-          erstellt am/um {sortDirection.createdAt === "asc" ? "⬇️" : "⬆️"}
+          erstellt am/um{" "}
+          <span className="arrows">
+            {sortDirection.createdAt === "asc" ? "⬇️" : "⬆️"}
+          </span>
           {/* use img files instead of emojis in SortButtons
           erstellt am/um <img src={sortDirection.createdAt === "asc" ? ArrowUp : ArrowDown} alt="arrow" /> */}
         </button>
@@ -133,13 +145,12 @@ const getAllStatuses = () => {
         FILTERN:
         {activeTab !== "myTodos" && (
           <>
-            
             {/* DROPDOWN City */}
-            <select 
-            className="organizer-button" 
-            defaultValue="" 
-            onFocus={getAllCities} // Call getAllCities when the dropdown is focused
-            onChange={(e) => filterByCity(e.target.value)} // Trigger filterByCity on selection
+            <select
+              className="organizer-button"
+              defaultValue=""
+              onFocus={getAllCities} // Call getAllCities when the dropdown is focused
+              onChange={(e) => filterByCity(e.target.value)} // Trigger filterByCity on selection
             >
               <option value="" disabled hidden>
                 Stadt
@@ -153,43 +164,46 @@ const getAllStatuses = () => {
             </select>
 
             {/* DROPDOWN PostalCode */}
-            <select 
-            className="organizer-button" 
-            defaultValue="" 
-            onFocus={getAllPostcodes}
-            onChange={(e) => filterByPostcode(e.target.value)}
+            <select
+              className="organizer-button"
+              defaultValue=""
+              onFocus={getAllPostcodes}
+              onChange={(e) => filterByPostcode(e.target.value)}
             >
               <option value="" disabled hidden>
                 PLZ
               </option>
               <option value="none">kein Filter</option>
               {[...postcodes].map((postcodes) => (
-                <option className="option-container" key={postcodes} value={postcodes}>
+                <option
+                  className="option-container"
+                  key={postcodes}
+                  value={postcodes}
+                >
                   {postcodes}
                 </option>
               ))}
             </select>
           </>
         )}
-
         {/* DROPDOWN Status */}
         {activeTab !== "openTodos" && (
-           <select 
-           className="organizer-button" 
-           defaultValue="" 
-           onFocus={getAllStatuses}
-           onChange={(e) => filterByStatus(e.target.value)}
-           >
-             <option value="" disabled hidden>
-               Status
-             </option>
-             <option value="none">kein Filter</option>
-             {[...status].map((status) => (
-               <option className="option-container" key={status} value={status}>
-                 {status}
-               </option>
-             ))}
-           </select>
+          <select
+            className="organizer-button"
+            defaultValue=""
+            onFocus={getAllStatuses}
+            onChange={(e) => filterByStatus(e.target.value)}
+          >
+            <option value="" disabled hidden>
+              Status
+            </option>
+            <option value="none">kein Filter</option>
+            {[...status].map((status) => (
+              <option className="option-container" key={status} value={status}>
+                {status}
+              </option>
+            ))}
+          </select>
         )}
       </span>
     </div>

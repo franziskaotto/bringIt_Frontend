@@ -24,7 +24,16 @@
   border: none;
   margin-left: 10px;
   margin-top: 5px;
-  padding: 5px 10px;
+  padding: 2px 5px;
+}
+
+.arrows {
+  font-size: larger;
+  font-style: normal;
+  font-weight: 500px;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 select.organizer-button {
@@ -43,7 +52,6 @@ option.option-container {
   color: black;
   background-color: #eaeaea;
 }
-
 
 span {
   font-style: italic;

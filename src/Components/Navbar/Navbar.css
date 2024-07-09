@@ -20,6 +20,7 @@
 
 .user-info {
   position: bottom;
+  font-size: 20px;
 }
 
 .logo-btn {
@@ -58,4 +59,19 @@
 .logout-btn img {
   height: 45px;
   width: 50px;
+}
+
+.your-bringits {
+  color: #414141;
+  font-weight: bold;
+  font-style: normal;
+}
+
+.bringits-number {
+  background-color: rgba(211, 211, 211, 0.534);
+  color: #3b3b3b;
+  padding: 1px 4px;
+  border-radius: 4px;
+  display: inline-block; /* Ensure it appears inline */
+  margin-left: 2px; /* Optional: space between text and number */
 }
