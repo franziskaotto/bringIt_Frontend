@@ -88,10 +88,5 @@
   position: fixed;
   top: 85px;
   z-index: 1000;
-  margin-bottom: 20px;
   background-color: #3ba3ce;
-}
-
-.hidden {
-  display: none;
 }
