@@ -1,25 +1,32 @@
 /* Tabulator - Menu */
 
 .left-side-content-map {
-  margin-top: 100px;
+  margin-top: 80px;
   padding-top: 10px;
+}
+
+.map-tab {
+  margin-top: 70px;
 }
 
 .map-and-filter-container {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-@media (min-width: 1370px) {
+/* @media (min-width: 1370px) {
   .map-and-filter-container {
     align-items: center;
     height: 100%;
     flex-direction: row;
     justify-content: center;
   }
-}
+} */
 
 .tabs {
   display: flex;
@@ -52,14 +59,18 @@
 }
 
 .tab-panel {
-  display: none; /* Hide all panels by default */
-  padding: 20px;
-  border: 1px solid #ccc;
+  /* Hide all panels by default */
+  display: none;
+  padding-top: 40px;
   flex: 1;
 }
 
 .tab-panel--active {
   display: block;
+}
+
+.nav-tabs {
+  border-bottom: 1px solid white;
 }
 
 /* Additional CSS to override Bootstrap defaults */
@@ -78,4 +89,33 @@
   color: #dddddd; /* Color when hovering over inactive tabs */
   background-color: white;
   color: black;
+}
+
+.mb-3 {
+  position: fixed;
+  width: 100%;
+  /* top: 10; */
+  z-index: 999;
+  /* background-color: #007bff; */
+}
+
+.todo-organizer {
+  position: fixed;
+  top: 130px;
+  /* Adjust based on the height of the tabs */
+  width: 100%;
+  z-index: 999;
+  background-color: rgba(255, 255, 255, 0.171);
+  padding: 10px 0;
+  /* border-bottom: 1px solid #ccc; */
+}
+
+/* Ensure the content below the fixed elements can scroll */
+.content-container {
+  margin-top: 50px;
+  /* Adjust based on the combined height of tabs and TodoOrganizer */
+  padding-top: 10px;
+  height: calc(100vh - 150px);
+  /* Adjust based on the combined height of tabs and TodoOrganizer */
+  overflow-y: auto;
 }

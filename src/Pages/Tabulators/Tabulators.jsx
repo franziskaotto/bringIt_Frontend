@@ -348,74 +348,96 @@ const Tabulators = () => {
           onSelect={(k) => setKey(k)}
           className="mb-3"
         >
-          <Tab eventKey="map" title="Map">
+          <Tab eventKey="map" title="Map" className="map-tab">
             <div className="map-and-filter-container">
               <GoogleMaps />
-              <TodoFilter />
+              {/* <TodoFilter /> */}
             </div>
           </Tab>
-          <Tab eventKey="createTodo" title="Todo erstellen">
-            <CreateTodo />
+          <Tab
+            eventKey="createTodo"
+            title="Todo erstellen"
+            className="tab-panel"
+          >
+            <div className="content-container">
+              <CreateTodo className="content-container" />
+            </div>
           </Tab>
-          <Tab eventKey="myTodos" title="Meine Todos">
-            <TodoOrganizer
-              todos={originalMyTodos}
-              onSort={handleSortMyTodos}
-              activeTab={key}
-              filterByStatus={handleFilterStatusMyTodos}
-            />
-            <MyTodos
-              activeTab={key}
-              setExpandedTodo={setExpandedTodo}
-              expandedTodo={expandedTodo}
-              todos={myTodos}
-              fetchMyTodos={fetchMyTodos}
-              fetchOpenTodos={fetchOpenTodos}
-              fetchAcceptedTodos={fetchAcceptedTodos}
-              errorMessage={errorMessage}
-              setErrorMessage={setErrorMessage}
-            />
+          <Tab eventKey="myTodos" title="Meine Todos" className="tab-panel">
+            <div className="todo-organizer">
+              <TodoOrganizer
+                todos={originalMyTodos}
+                onSort={handleSortMyTodos}
+                activeTab={key}
+                filterByStatus={handleFilterStatusMyTodos}
+              />
+            </div>
+            <div className="content-container">
+              <MyTodos
+                activeTab={key}
+                setExpandedTodo={setExpandedTodo}
+                expandedTodo={expandedTodo}
+                todos={myTodos}
+                fetchMyTodos={fetchMyTodos}
+                fetchOpenTodos={fetchOpenTodos}
+                fetchAcceptedTodos={fetchAcceptedTodos}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+              />
+            </div>
           </Tab>
-          <Tab eventKey="openTodos" title="Offene Todos">
-            <TodoOrganizer
-              todos={originalOpenTodos}
-              onSort={handleSortOpenTodos}
-              filterByCity={handleFilterOpenTodsoByCity}
-              filterByPostalCode={handleFilterOpenTodosByPostalCode}
-              activeTab={key}
-            />
-            <OpenTodos
-              activeTab={key}
-              setExpandedTodo={setExpandedTodo}
-              expandedTodo={expandedTodo}
-              todos={openTodos}
-              fetchMyTodos={fetchMyTodos}
-              fetchOpenTodos={fetchOpenTodos}
-              fetchAcceptedTodos={fetchAcceptedTodos}
-              errorMessage={errorMessage}
-              setErrorMessage={setErrorMessage}
-            />
+          <Tab eventKey="openTodos" title="Offene Todos" className="tab-panel">
+            <div className="todo-organizer">
+              <TodoOrganizer
+                todos={originalOpenTodos}
+                onSort={handleSortOpenTodos}
+                filterByCity={handleFilterOpenTodsoByCity}
+                filterByPostalCode={handleFilterOpenTodosByPostalCode}
+                activeTab={key}
+              />
+            </div>
+            <div className="content-container">
+              <OpenTodos
+                activeTab={key}
+                setExpandedTodo={setExpandedTodo}
+                expandedTodo={expandedTodo}
+                todos={openTodos}
+                fetchMyTodos={fetchMyTodos}
+                fetchOpenTodos={fetchOpenTodos}
+                fetchAcceptedTodos={fetchAcceptedTodos}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+              />
+            </div>
           </Tab>
-          <Tab eventKey="acceptedTodos" title="Angenommene Todos">
-            <TodoOrganizer
-              todos={originalAcceptedTodos}
-              onSort={handleSortAcceptedTodos}
-              activeTab={key}
-              filterByCity={handleFilterAcceptedTodosByCity}
-              filterByPostalCode={handleFilterAcceptedTodosByPostalCode}
-              filterByStatus={handleFilterStatusAcceptedTodos}
-            />
-            <AcceptedTodos
-              activeTab={key}
-              setExpandedTodo={setExpandedTodo}
-              expandedTodo={expandedTodo}
-              todos={acceptedTodos}
-              fetchMyTodos={fetchMyTodos}
-              fetchOpenTodos={fetchOpenTodos}
-              fetchAcceptedTodos={fetchAcceptedTodos}
-              errorMessage={errorMessage}
-              setErrorMessage={setErrorMessage}
-            />
+          <Tab
+            eventKey="acceptedTodos"
+            title="Angenommene Todos"
+            className="tab-panel"
+          >
+            <div className="todo-organizer">
+              <TodoOrganizer
+                todos={originalAcceptedTodos}
+                onSort={handleSortAcceptedTodos}
+                activeTab={key}
+                filterByCity={handleFilterAcceptedTodosByCity}
+                filterByPostalCode={handleFilterAcceptedTodosByPostalCode}
+                filterByStatus={handleFilterStatusAcceptedTodos}
+              />
+            </div>
+            <div className="content-container">
+              <AcceptedTodos
+                activeTab={key}
+                setExpandedTodo={setExpandedTodo}
+                expandedTodo={expandedTodo}
+                todos={acceptedTodos}
+                fetchMyTodos={fetchMyTodos}
+                fetchOpenTodos={fetchOpenTodos}
+                fetchAcceptedTodos={fetchAcceptedTodos}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+              />
+            </div>
           </Tab>
         </Tabs>
       </div>

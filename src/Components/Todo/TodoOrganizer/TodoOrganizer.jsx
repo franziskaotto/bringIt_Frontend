@@ -167,7 +167,7 @@ const TodoOrganizer = ({
                 Stadt
               </option>
               <option className="kein-filter-option" value="">
-                kein Filter
+                Alle
               </option>
               {[...city].map((city) => (
                 <option className="option-container" key={city} value={city}>
@@ -187,7 +187,7 @@ const TodoOrganizer = ({
                 PLZ
               </option>
               <option className="kein-filter-option" value="">
-                kein Filter
+                Alle
               </option>
               {[...postalCodes].map((postcodes) => (
                 <option
@@ -213,7 +213,7 @@ const TodoOrganizer = ({
               Status
             </option>
             <option className="kein-filter-option" value="">
-              kein Filter
+              Alle
             </option>
             {[...statuses].map((status) => (
               <option className="option-container" key={status} value={status}>

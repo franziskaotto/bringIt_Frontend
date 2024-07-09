@@ -8,18 +8,9 @@
   margin: 0;
 }
 
-/* .organizer-button {
-  color: black;
-  background-color: #eaeaea;
-  border-radius: 5px;
-  border: none;
-  margin-left: 10px;
-  margin-top: 5px;
-} */
-
 .organizer-button {
   color: black;
-  background-color: #eaeaea;
+  background-color: #bdbdbd;
   border-radius: 5px;
   border: none;
   margin-left: 10px;
@@ -47,13 +38,22 @@ select.organizer-button {
   background-size: 10px;
 }
 
+.organizer-button:hover {
+  background-color: #eaeaea;
+}
+
+.organizer-buttonn:checked {
+  border: 2px solid red;
+}
+
 option.option-container {
   color: black;
   background-color: #eaeaea;
 }
 
 .kein-filter-option {
-  color: gray;
+  color: #797979;
+  font-style: italic;
 }
 
 span {

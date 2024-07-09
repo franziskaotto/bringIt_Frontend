@@ -4,7 +4,6 @@
   color: #eef1f8;
 }
 
-
 html,
 body,
 #root {
@@ -14,7 +13,8 @@ body,
 }
 
 body {
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
+  overflow: hidden;
   background: rgb(3, 4, 94);
   background: linear-gradient(
     0deg,
@@ -41,7 +41,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 }
 
 @media (min-width: 1370px) {
@@ -51,6 +50,4 @@ body {
     flex-direction: row;
     justify-content: center;
   }
-
-  
 }
