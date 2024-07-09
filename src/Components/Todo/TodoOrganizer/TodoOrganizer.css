@@ -4,7 +4,7 @@
   /* padding: 10px; */
   /* background-color: #f0f0f033; */
   color: black;
-  font-size: 16px;
+  font-size: 14px;
   margin: 0;
 }
 
@@ -28,12 +28,11 @@
 }
 
 .arrows {
-  font-size: larger;
+  /* font-size: larger; */
   font-style: normal;
   font-weight: 500px;
   margin: 0;
   padding: 0;
-  border: 0;
 }
 
 select.organizer-button {
@@ -51,6 +50,10 @@ select.organizer-button {
 option.option-container {
   color: black;
   background-color: #eaeaea;
+}
+
+.kein-filter-option {
+  color: gray;
 }
 
 span {

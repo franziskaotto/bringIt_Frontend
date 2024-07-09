@@ -29,7 +29,7 @@ const AcceptedTodos = ({
   //   return 0;
   // });
 
- const sortedTodos = todos;
+  const sortedTodos = todos;
 
   return (
     <div className="my-todos">
@@ -44,7 +44,7 @@ const AcceptedTodos = ({
       ) : (
         <ul>
           {sortedTodos
-            .filter((todo) => todo.userOffered.userId !== userId)
+            // .filter((todo) => todo.userOffered.userId !== userId)
             .map((todo) => (
               <TodoListTemplate
                 key={todo.todoId}

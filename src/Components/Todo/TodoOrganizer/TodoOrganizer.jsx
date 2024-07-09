@@ -14,7 +14,7 @@ const TodoOrganizer = ({
   activeTab,
   filterByStatus,
   filterByCity,
-  filterByPostcode,
+  filterByPostalCode,
 }) => {
   const [sortDirection, setSortDirection] = useState({
     createdAt: "asc",
@@ -22,9 +22,11 @@ const TodoOrganizer = ({
     distance: "asc",
   });
   const [selectedStatus, setSelectedStatus] = useState("All");
-  const [city, setCity] = useState([]);
-  const [postcodes, setPostcodes] = useState([]);
-  const [status, setStatus] = useState([]);
+  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedPostcode, setSelectedPostcode] = useState("");
+  const [city, setCities] = useState([]);
+  const [postalCodes, setPostalCodes] = useState([]);
+  const [statuses, setStatuses] = useState([]);
 
   // handle SortDirection (asc or desc):
   const handleSort = (type) => {
@@ -35,21 +37,6 @@ const TodoOrganizer = ({
     });
     onSort(type, newSortOrder);
   };
-
-  // get Cities for Dropdown:
-  // const getAllCities = () => {
-  //   todos.forEach((todo) => {
-  //     if (todo.userOffered.address.city) {
-  //       const cityArray = todo.userOffered.address.city
-  //         .split(",")
-  //         .map((city) => city.trim());
-  //       cityArray.forEach((city) => {
-  //         setCity((prevCities) => new Set([...prevCities, city]));
-  //       });
-  //       console.log("cityArray: " + prevCities);
-  //     }
-  //   });
-  // };
 
   // get Cities for Dropdown - version chatGPT:
   const getAllCities = () => {
@@ -68,27 +55,27 @@ const TodoOrganizer = ({
         });
       }
     });
-    setCity([...citySet]);
+    setCities([...citySet]);
   };
 
-  // get Postcodes for Dropdown:
-  const getAllPostcodes = () => {
-    const postcodeSet = new Set();
+  // get PostalCodes for Dropdown:
+  const getAllPostalCodes = () => {
+    const postalCodeSet = new Set();
     todos.forEach((todo) => {
       if (
         todo.userOffered &&
         todo.userOffered.address &&
         todo.userOffered.address.postalCode
       ) {
-        const postcodeArray = todo.userOffered.address.postalCode
+        const postalCodeArray = todo.userOffered.address.postalCode
           .split(",")
-          .map((postcode) => postcode.trim());
-        postcodeArray.forEach((postcode) => {
-          postcodeSet.add(postcode);
+          .map((postalCode) => postalCode.trim());
+        postalCodeArray.forEach((postcode) => {
+          postalCodeSet.add(postcode);
         });
       }
     });
-    setPostcodes([...postcodeSet]);
+    setPostalCodes([...postalCodeSet]);
   };
 
   // get Statuses for Dropdown:
@@ -102,14 +89,32 @@ const TodoOrganizer = ({
         });
       }
     });
-    setStatus([...statusSet]);
+    setStatuses([...statusSet]);
   };
 
-  // handle filter Status - not yet
-  // const handleFilterByStatus = (status) => {
-  //   setSelectedStatus(status);
-  //   filterByStatus(status);
-  // };
+  // handle filter by City
+  const handleFilterByCity = (value) => {
+    setSelectedCity(value);
+    setSelectedPostcode("");
+    setSelectedStatus("");
+    filterByCity(value);
+  };
+
+  // handle filter by PostalCode
+  const handleFilterByPostalCode = (value) => {
+    setSelectedCity("");
+    setSelectedPostcode(value);
+    setSelectedStatus("");
+    filterByPostalCode(value);
+  };
+
+  // handle filter by Status
+  const handleFilterByStatus = (value) => {
+    setSelectedCity("");
+    setSelectedPostcode("");
+    setSelectedStatus(value);
+    filterByStatus(value);
+  };
 
   return (
     <div className="organizer-bar">
@@ -130,14 +135,20 @@ const TodoOrganizer = ({
           className="organizer-button"
           onClick={() => handleSort("expiresAt")}
         >
-          verfällt am/um {sortDirection.expiresAt === "asc" ? "⬇️" : "⬆️"}
+          verfällt am/um
+          <span className="arrows">
+            {sortDirection.expiresAt === "asc" ? "⬇️" : "⬆️"}
+          </span>
         </button>
         {activeTab !== "myTodos" && (
           <button
             className="organizer-button"
             onClick={() => handleSort("distance")}
           >
-            Distanz {sortDirection.distance === "asc" ? "⬇️" : "⬆️"}
+            Distanz
+            <span className="arrows">
+              {sortDirection.distance === "asc" ? "⬇️" : "⬆️"}
+            </span>
           </button>
         )}
       </span>
@@ -148,14 +159,16 @@ const TodoOrganizer = ({
             {/* DROPDOWN City */}
             <select
               className="organizer-button"
-              defaultValue=""
+              value={selectedCity}
               onFocus={getAllCities} // Call getAllCities when the dropdown is focused
-              onChange={(e) => filterByCity(e.target.value)} // Trigger filterByCity on selection
+              onChange={(e) => handleFilterByCity(e.target.value)} // Trigger filterByCity on selection
             >
               <option value="" disabled hidden>
                 Stadt
               </option>
-              <option value="none">kein Filter</option>
+              <option className="kein-filter-option" value="">
+                kein Filter
+              </option>
               {[...city].map((city) => (
                 <option className="option-container" key={city} value={city}>
                   {city}
@@ -166,15 +179,17 @@ const TodoOrganizer = ({
             {/* DROPDOWN PostalCode */}
             <select
               className="organizer-button"
-              defaultValue=""
-              onFocus={getAllPostcodes}
-              onChange={(e) => filterByPostcode(e.target.value)}
+              value={selectedPostcode}
+              onFocus={getAllPostalCodes}
+              onChange={(e) => handleFilterByPostalCode(e.target.value)}
             >
               <option value="" disabled hidden>
                 PLZ
               </option>
-              <option value="none">kein Filter</option>
-              {[...postcodes].map((postcodes) => (
+              <option className="kein-filter-option" value="">
+                kein Filter
+              </option>
+              {[...postalCodes].map((postcodes) => (
                 <option
                   className="option-container"
                   key={postcodes}
@@ -190,15 +205,17 @@ const TodoOrganizer = ({
         {activeTab !== "openTodos" && (
           <select
             className="organizer-button"
-            defaultValue=""
+            value={selectedStatus}
             onFocus={getAllStatuses}
-            onChange={(e) => filterByStatus(e.target.value)}
+            onChange={(e) => handleFilterByStatus(e.target.value)}
           >
             <option value="" disabled hidden>
               Status
             </option>
-            <option value="none">kein Filter</option>
-            {[...status].map((status) => (
+            <option className="kein-filter-option" value="">
+              kein Filter
+            </option>
+            {[...statuses].map((status) => (
               <option className="option-container" key={status} value={status}>
                 {status}
               </option>

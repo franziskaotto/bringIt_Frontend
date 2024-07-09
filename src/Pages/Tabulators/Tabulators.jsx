@@ -18,6 +18,7 @@ const Tabulators = () => {
   const [key, setKey] = useState("map");
   const [expandedTodo, setExpandedTodo] = useState(null);
   const [openTodos, setOpenTodos] = useState([]);
+  const [originalOpenTodos, setOriginalOpenTodos] = useState([]);
   const [acceptedTodos, setAcceptedTodos] = useState([]);
   const [originalAcceptedTodos, setOriginalAcceptedTodos] = useState([]);
   const [myTodos, setMyTodos] = useState([]);
@@ -56,7 +57,7 @@ const Tabulators = () => {
       );
       if (response.ok) {
         const data = await response.json();
-        setOriginalMyTodos(data); // Store the original myTodos
+        setOriginalMyTodos(data); // Store the original myTodos for correct DropDown
         setMyTodos(data); // Set the current myTodos
         fetchCurrentUser();
       } else {
@@ -69,7 +70,7 @@ const Tabulators = () => {
     }
   };
 
-  // fetch All not expired Todos with Status "Offen":
+  // fetch OpenTodos -> not expired, Status: "Offen":
   const fetchOpenTodos = async () => {
     try {
       const response = await fetch("http://localhost:8081/api/todo", {
@@ -81,6 +82,7 @@ const Tabulators = () => {
         const data = await response.json();
         // Filter todos based on userId -> remove todos by this user
         const todos = data.filter((todo) => todo.userOffered.userId !== userId);
+        setOriginalOpenTodos(todos);
         setOpenTodos(todos);
         fetchCurrentUser();
       } else {
@@ -94,7 +96,7 @@ const Tabulators = () => {
     }
   };
 
-  // fetch openTodos by city:
+  // fetch OpenTodos by City:
   const fetchOpenTodosByCity = async (city) => {
     try {
       const response = await fetch(
@@ -107,7 +109,9 @@ const Tabulators = () => {
       );
       if (response.ok) {
         const data = await response.json();
-        setOpenTodos(data);
+        // Filter todos based on userId -> remove todos by this user
+        const todos = data.filter((todo) => todo.userOffered.userId !== userId);
+        setOpenTodos(todos);
       } else {
         console.error("Failed to fetch OpenTodosByCity " + city);
         console.log("response: " + response);
@@ -132,7 +136,9 @@ const Tabulators = () => {
       );
       if (response.ok) {
         const data = await response.json();
-        setOpenTodos(data);
+        // Filter todos based on userId -> remove todos by this user
+        const todos = data.filter((todo) => todo.userOffered.userId !== userId);
+        setOpenTodos(todos);
       } else {
         console.error("Failed to fetch OpenTodosByCity " + postalCode);
         console.log("response: " + response);
@@ -144,7 +150,7 @@ const Tabulators = () => {
     }
   };
 
-  // fetch Todos by User Taken (Accepted Todos):
+  // fetch AcceptedTodos (by User Taken):
   const fetchAcceptedTodos = async () => {
     try {
       const response = await fetch(
@@ -157,8 +163,10 @@ const Tabulators = () => {
       );
       if (response.ok) {
         const data = await response.json();
-        setOriginalAcceptedTodos(data); // Store the original acceptedTodos
-        setAcceptedTodos(data);
+        // Filter todos based on userId -> remove todos by this user
+        const todos = data.filter((todo) => todo.userOffered.userId !== userId);
+        setOriginalAcceptedTodos(todos); // Store the original acceptedTodos
+        setAcceptedTodos(todos);
         fetchCurrentUser();
       } else {
         console.error("Failed to fetch AcceptedTodos");
@@ -267,7 +275,7 @@ const Tabulators = () => {
 
   // handle Filter MyTodos by Status:
   const handleFilterStatusMyTodos = async (status) => {
-    if (status === "none") {
+    if (status === "") {
       await fetchMyTodos();
     } else {
       const filteredTodos = originalMyTodos.filter(
@@ -279,7 +287,7 @@ const Tabulators = () => {
 
   // handle Filter OpenTodos by City:
   const handleFilterOpenTodsoByCity = (city) => {
-    if (city === "none") {
+    if (city === "") {
       fetchOpenTodos();
     } else {
       fetchOpenTodosByCity(city);
@@ -288,7 +296,7 @@ const Tabulators = () => {
 
   // handle Filter OpenTodos by PostalCode:
   const handleFilterOpenTodosByPostalCode = (postalCode) => {
-    if (postalCode === "none") {
+    if (postalCode === "") {
       fetchOpenTodos();
     } else {
       fetchOpenTodosByPostalCode(postalCode);
@@ -297,7 +305,7 @@ const Tabulators = () => {
 
   // handle Filter AcceptedTodos by City;
   const handleFilterAcceptedTodosByCity = (city) => {
-    if (postalCode === "none") {
+    if (city === "") {
       fetchAcceptedTodos();
     } else {
       const filteredTodos = originalAcceptedTodos.filter(
@@ -309,7 +317,7 @@ const Tabulators = () => {
 
   // handle Filter AcceptedTodos by PostalCode:
   const handleFilterAcceptedTodosByPostalCode = (postalCode) => {
-    if (postalCode === "none") {
+    if (postalCode === "") {
       fetchAcceptedTodos();
     } else {
       const filteredTodos = originalAcceptedTodos.filter(
@@ -321,7 +329,7 @@ const Tabulators = () => {
 
   // handle Filter AcceptedTodos by Status:
   const handleFilterStatusAcceptedTodos = async (status) => {
-    if (status === "none") {
+    if (status === "") {
       await fetchAcceptedTodos();
     } else {
       const filteredTodos = originalAcceptedTodos.filter(
@@ -351,7 +359,7 @@ const Tabulators = () => {
           </Tab>
           <Tab eventKey="myTodos" title="Meine Todos">
             <TodoOrganizer
-              todos={myTodos}
+              todos={originalMyTodos}
               onSort={handleSortMyTodos}
               activeTab={key}
               filterByStatus={handleFilterStatusMyTodos}
@@ -370,10 +378,10 @@ const Tabulators = () => {
           </Tab>
           <Tab eventKey="openTodos" title="Offene Todos">
             <TodoOrganizer
-              todos={openTodos}
+              todos={originalOpenTodos}
               onSort={handleSortOpenTodos}
               filterByCity={handleFilterOpenTodsoByCity}
-              filterByPostcode={handleFilterOpenTodosByPostalCode}
+              filterByPostalCode={handleFilterOpenTodosByPostalCode}
               activeTab={key}
             />
             <OpenTodos
@@ -390,11 +398,11 @@ const Tabulators = () => {
           </Tab>
           <Tab eventKey="acceptedTodos" title="Angenommene Todos">
             <TodoOrganizer
-              todos={acceptedTodos}
+              todos={originalAcceptedTodos}
               onSort={handleSortAcceptedTodos}
               activeTab={key}
               filterByCity={handleFilterAcceptedTodosByCity}
-              filterByPostcode={handleFilterAcceptedTodosByPostalCode}
+              filterByPostalCode={handleFilterAcceptedTodosByPostalCode}
               filterByStatus={handleFilterStatusAcceptedTodos}
             />
             <AcceptedTodos
