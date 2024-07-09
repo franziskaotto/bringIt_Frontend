@@ -70,9 +70,11 @@
 
 .bringits-number {
   background-color: rgba(211, 211, 211, 0.534);
+  /* border: 1px solid #ffffff; */
   color: #3b3b3b;
-  padding: 1px 4px;
+  padding: 0 4px;
   border-radius: 4px;
   display: inline-block; /* Ensure it appears inline */
   margin-left: 2px; /* Optional: space between text and number */
+  font-style: normal;
 }

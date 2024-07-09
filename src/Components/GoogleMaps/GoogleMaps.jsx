@@ -1,9 +1,8 @@
 "use client";
 
-
-import React, { useEffect, useState } from 'react'
-import "./GoogleMaps.css"
-import {createRoot} from "react-dom/client";
+import React, { useEffect, useState } from "react";
+import "./GoogleMaps.css";
+import { createRoot } from "react-dom/client";
 
 import {
   APIProvider,
@@ -12,20 +11,16 @@ import {
   AdvancedMarker,
   useMapsLibrary,
 } from "@vis.gl/react-google-maps";
-import Directions from './Directions';
-
+import Directions from "./Directions";
 
 const googleMapsAPIKey = "AIzaSyBacQv7qzQpvVYWkP9woi9FHEMJrFBN3Jk";
 const mapsId = "df621f6bd5a413fd";
 // const googleMapsAPIKey = process.env.NEXT_GOOGLE_MAPS_KEY;
 // const mapsId = process.env.NEXT_MAPS_ID;
 
-
-
 const GoogleMaps = () => {
   const [longitude, setLongitude] = useState(null);
   const [latitude, setLatitude] = useState(null);
-
 
   const getMyPosition = () => {
     return new Promise((resolve, reject) => {
@@ -50,9 +45,7 @@ const GoogleMaps = () => {
       }
     };
     fetchLocation();
-
   }, []);
-
 
   return (
     <>
@@ -71,7 +64,6 @@ const GoogleMaps = () => {
             >
               <AdvancedMarker position={{ lat: latitude, lng: longitude }}>
                 <Pin
-               
                   background={"#eef1f8"} // can also use image
                   borderColor={"#03045e"}
                   glyphColor={"#03045e"} //dot in the middle
@@ -79,24 +71,19 @@ const GoogleMaps = () => {
               </AdvancedMarker>
 
               <Directions />
-              
             </Map>
           ) : (
-            <p>Loading...</p>
+            <p>Loading map...</p>
           )}
         </div>
       </APIProvider>
     </>
   );
-}
-
-
-
+};
 
 export default GoogleMaps;
 
-
-//Info für uns: 
+//Info für uns:
 /*
 <APIProvider />
  - needs to wrap everything, 
