@@ -127,6 +127,9 @@ const TodoListTemplate = ({
   const handleSave = async () => {
     const token = localStorage.getItem("token");
   
+    // Format the date to 'YYYY-MM-DDTHH:MM:SS' before sending to the server
+    const formattedDate = new Date(editValues.expiresAt).toISOString().slice(0, 16);
+  
     try {
       const response = await fetch(`http://localhost:8081/api/todo`, {
         method: "PUT",
@@ -140,7 +143,7 @@ const TodoListTemplate = ({
           location: editValues.location,
           description: editValues.description,
           addInfo: editValues.addInfo,
-          expiresAt: editValues.expiresAt, 
+          expiresAt: formattedDate, // Send formatted date
         }),
       });
   
@@ -158,6 +161,7 @@ const TodoListTemplate = ({
       setErrorMessage("Error updating Todo");
     }
   };
+  
   
 
   // get border-color by status
@@ -245,7 +249,17 @@ const TodoListTemplate = ({
             <p className="expiresAt">
               <span className="label">Verfallsdatum:</span>
               <br />
-              <span className="value">{new Date(todo.expiresAt).toLocaleString()}</span>
+              {isEditing ? (
+           <input
+           type="datetime-local"
+           value={editValues.expiresAt ? editValues.expiresAt.slice(0, 17) : ''}
+           onChange={(e) => setEditValues({ ...editValues, expiresAt: e.target.value })}
+           style={{ color: "#023E8A" }}
+         />
+         
+              ) : (
+                <span className="value">{new Date(todo.expiresAt).toLocaleString()}</span>
+              )}
             </p>
             <p className="status">
               <span className="label">Status:</span>
