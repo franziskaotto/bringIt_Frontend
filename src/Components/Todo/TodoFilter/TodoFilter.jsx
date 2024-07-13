@@ -7,9 +7,7 @@ const TodoFilter = () => {
   const [city, setCity] = useState([]);
   const [distances, setDistances] = useState([]);
 
-  // const [pickUpStation, setPickUpStation] = useState([]);
-
-  console.log(validTodos);
+  const [pickUpStation, setPickUpStation] = useState([]);
 
   const getAllPostalCodes = (data) => {
     data.forEach((todo) => {
@@ -40,10 +38,9 @@ const TodoFilter = () => {
   };
 
   const getAllDistances = (data) => {
-    console.log("Distances");
+    //console.log("Distances");
   };
 
-  /*   
   const getMyTodos = (data) => {
     // validTodos.forEach((todo) => {
     // })
@@ -64,7 +61,6 @@ const TodoFilter = () => {
       }
     });
   };
- */
 
   const fetchValidTodos = async () => {
     try {

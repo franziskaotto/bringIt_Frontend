@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useRecoilState } from "recoil";
 import "./Tabulators.css";
 import { GoogleMap, DistanceMatrixService, LoadScript } from "@react-google-maps/api";
@@ -17,6 +17,12 @@ import { bringItsState } from "../../state/bringItsState";
 import TodoOrganizer from "../../Components/Todo/TodoOrganizer";
 
 
+//const googleMapsAPIKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+//const mapsId = import.meta.env.VITE_MAPS_ID;
+
+//console.log("Google Maps API Key: ", googleMapsAPIKey); // Check if the API key is correctly logged
+//console.log("Maps ID: ", mapsId);
+
 const Tabulators = () => {
   const [key, setKey] = useState("map");
   const [expandedTodo, setExpandedTodo] = useState(null);
@@ -34,10 +40,8 @@ const Tabulators = () => {
   const userId = parseInt(localStorage.getItem("userId"), 10);
   const [bringIts, setBringIts] = useRecoilState(bringItsState);
 
-  const GOOGLE_MAPS_API_KEY = "AIzaSyBacQv7qzQpvVYWkP9woi9FHEMJrFBN3Jk";
-  const MAPS_ID = "df621f6bd5a413fd";
-
-  console.log("key: " + key);
+  const tabBarRef = useRef(null);
+  const [scroll, setScroll] = useState(false);
 
   // fetch todos onChange of activeKey according to specific key.
   useEffect(() => {
@@ -241,9 +245,16 @@ const Tabulators = () => {
     }
   };
 
+  const handleStickyTabs = () => {
+    window.addEventListener("scroll", () => {
+      setScroll(window.scrollY > 85);
+    });
+  };
+
   // call fetchCurrentUser on componentMount so that bringIts in Navbar are displayed:
   useEffect(() => {
     fetchCurrentUser();
+    handleStickyTabs();
   }, []);
 
   // handle Sort MyTodos:
@@ -461,17 +472,20 @@ const Tabulators = () => {
 
   return (
     <>
-      <div className="left-side-content-map">
+      <div className="content-tabulators">
         <Tabs
           id="uncontrolled-tab-example"
           activeKey={key}
           onSelect={(k) => setKey(k)}
-          className="mb-3"
+          className={`mb-3 ${scroll ? `-sticky` : ""}`}
         >
           <Tab eventKey="map" title="Map" className="map-tab">
             <div className="map-and-filter-container">
-              <GoogleMaps />
-              {/* <TodoFilter /> */}
+              <GoogleMaps
+                fetchOpenTodos={fetchOpenTodos}
+                fetchAcceptedTodos={fetchAcceptedTodos}
+              />
+              <TodoFilter />
             </div>
           </Tab>
           <Tab

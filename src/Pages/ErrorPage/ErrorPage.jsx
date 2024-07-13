@@ -1,9 +1,12 @@
-
+import Logo from "../../Components/Logo";
 
 const ErrorPage = () => {
   return (
-    <div>ErrorPage</div>
-  )
-}
+    <div className="major-container">
+      <Logo />
+      <div>Error!</div>
+    </div>
+  );
+};
 
-export default ErrorPage
+export default ErrorPage;
