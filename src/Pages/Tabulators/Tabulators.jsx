@@ -164,7 +164,10 @@ const Tabulators = () => {
         >
           <Tab eventKey="map" title="Map">
             <div className="map-and-filter-container">
-              <GoogleMaps />
+              <GoogleMaps
+                fetchOpenTodos={fetchOpenTodos}
+                fetchAcceptedTodos={fetchAcceptedTodos}
+              />
               <TodoFilter />
             </div>
           </Tab>
