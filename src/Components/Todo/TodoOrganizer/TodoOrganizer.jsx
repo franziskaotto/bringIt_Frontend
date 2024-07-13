@@ -126,7 +126,7 @@ const TodoOrganizer = ({
         >
           erstellt am/um{" "}
           <span className="arrows">
-            {sortDirection.createdAt === "asc" ? "⬇️" : "⬆️"}
+            {sortDirection.createdAt === "asc" ? "▲" : "▼"}
           </span>
           {/* use img files instead of emojis in SortButtons
           erstellt am/um <img src={sortDirection.createdAt === "asc" ? ArrowUp : ArrowDown} alt="arrow" /> */}
@@ -137,7 +137,7 @@ const TodoOrganizer = ({
         >
           verfällt am/um
           <span className="arrows">
-            {sortDirection.expiresAt === "asc" ? "⬇️" : "⬆️"}
+            {sortDirection.expiresAt === "asc" ? "▲" : "▼"}
           </span>
         </button>
         {activeTab !== "myTodos" && (
@@ -147,7 +147,7 @@ const TodoOrganizer = ({
           >
             Distanz
             <span className="arrows">
-              {sortDirection.distance === "asc" ? "⬇️" : "⬆️"}
+              {sortDirection.distance === "asc" ? "▲" : "▼"}
             </span>
           </button>
         )}

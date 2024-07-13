@@ -286,18 +286,22 @@ const TodoListTemplate = ({
             )}
             {activeTab === "myTodos" && (
               <div className="todo-actions">
-                <button
+                {todo.status !== "In Arbeit" && (
+                  <>
+                  <button
                   onClick={() => handleEdit(todo.todoId)}
                   className="action-btn"
-                >
+                  >
                   Bearbeiten
                 </button>
                 <button
-                  onClick={() => handleCancel(todo.todoId)}
-                  className="action-btn"
+                onClick={() => handleCancel(todo.todoId)}
+                className="action-btn"
                 >
                   Löschen
                 </button>
+                  </>
+                )}
                 {todo.status === "In Arbeit" && (
                   <button
                     onClick={() => handleMyTodoCompleted(todo)}

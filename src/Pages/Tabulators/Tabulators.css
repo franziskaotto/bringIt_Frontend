@@ -19,14 +19,14 @@
   padding: 0;
 }
 
-/* @media (min-width: 1370px) {
+@media (min-width: 1370px) {
   .map-and-filter-container {
     align-items: center;
     height: 100%;
     flex-direction: row;
     justify-content: center;
   }
-} */
+}
 
 .tabs {
   display: flex;

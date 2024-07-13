@@ -480,7 +480,7 @@ const Tabulators = () => {
             className="tab-panel"
           >
             <div className="content-container">
-              <CreateTodo className="content-container" />
+              <CreateTodo />
             </div>
           </Tab>
           <Tab eventKey="myTodos" title="Meine Todos" className="tab-panel">
