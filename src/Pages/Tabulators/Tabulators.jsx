@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Component } from "react";
 import { useRecoilState } from "recoil";
 import "./Tabulators.css";
+import { GoogleMap, DistanceMatrixService } from "@react-google-maps/api";
+// import axios from "axios";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Tab from "react-bootstrap/Tab";
@@ -14,6 +16,7 @@ import AcceptedTodos from "../../Components/Todo/AcceptedTodos";
 import { bringItsState } from "../../state/bringItsState";
 import TodoOrganizer from "../../Components/Todo/TodoOrganizer";
 
+
 const Tabulators = () => {
   const [key, setKey] = useState("map");
   const [expandedTodo, setExpandedTodo] = useState(null);
@@ -25,9 +28,14 @@ const Tabulators = () => {
   const [originalMyTodos, setOriginalMyTodos] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [currentUser, setCurrentUser] = useState(null); // Initialize with null
+  const [currentUserLocation, setCurrentUserLocation] = useState(null);
+
   const token = localStorage.getItem("token");
   const userId = parseInt(localStorage.getItem("userId"), 10);
   const [bringIts, setBringIts] = useRecoilState(bringItsState);
+
+  const GOOGLE_MAPS_API_KEY = "AIzaSyBacQv7qzQpvVYWkP9woi9FHEMJrFBN3Jk";
+  const MAPS_ID = "df621f6bd5a413fd";
 
   console.log("key: " + key);
 
@@ -83,6 +91,19 @@ const Tabulators = () => {
         // Filter todos based on userId -> remove todos by this user
         const todos = data.filter((todo) => todo.userOffered.userId !== userId);
         setOriginalOpenTodos(todos);
+
+         // Fetch distances for the todos
+        const distances = await fetchDistances(todos);
+
+         // Combine the todos with their distances
+          const todosWithDistances = todos.map((todo) => {
+          const distanceData = distances.find((d) => d.todoId === todo.id);
+        return {
+          ...todo,
+          distance: distanceData ? distanceData.distance : null,
+        };
+      });
+
         setOpenTodos(todos);
         fetchCurrentUser();
       } else {
@@ -339,6 +360,45 @@ const Tabulators = () => {
     }
   };
 
+  // Function to fetch distances from Google-Matrix-API
+  const fetchDistances = async (todos) => {
+    const destinations = todos.map((todo) => `
+    ${todo.userOffered.address.streetNumber} 
+    ${todo.userOffered.address.postalCode} 
+    ${todo.userOffered.address.city}`);
+
+    const origin =  `
+    ${currentUser.address.streetNumber} 
+    ${currentUser.address.postalCode} 
+    ${currentUser.address.city}`
+
+    const destinationStr = destinations.join('|');
+
+    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destinationStr)}&key=${GOOGLE_MAPS_API_KEY}`;
+  
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (data.status === "ok") {
+        const distances = data.rows[0].elements.map((element, index) => ({
+          todoId: todos[index].id,
+          distances: element.distance.value, // distance in meters
+        }));
+        return distances;
+      } else {
+        console.error("Error fetching distances: ", data.error_message);
+        return [];
+      }
+    } catch (error) {
+      console.error("Error fetching distances: ", error);
+      return [];
+    }
+  };
+  
+     // handle Sort Todos by Distance:
+ 
+
   return (
     <>
       <div className="left-side-content-map">
@@ -446,3 +506,4 @@ const Tabulators = () => {
 };
 
 export default Tabulators;
+

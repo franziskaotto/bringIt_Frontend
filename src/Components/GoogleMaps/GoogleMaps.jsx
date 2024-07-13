@@ -3,6 +3,11 @@
 import React, { useEffect, useState } from "react";
 import "./GoogleMaps.css";
 import { createRoot } from "react-dom/client";
+// import { defineConfig} from 'vite';
+// import react from '@vitejs/plugin-react'
+// import dotenv from 'dotenv';
+
+// dotenv.config();
 
 import {
   APIProvider,
@@ -13,8 +18,10 @@ import {
 } from "@vis.gl/react-google-maps";
 import Directions from "./Directions";
 
-const googleMapsAPIKey = "AIzaSyBacQv7qzQpvVYWkP9woi9FHEMJrFBN3Jk";
-const mapsId = "df621f6bd5a413fd";
+
+// const googleMapsAPIKey = process.env.GOOGLE_MAPS_API_KEY
+// const mapsId = process.env.MAPS_ID;
+// console.log(googleMapsAPIKey)
 // const googleMapsAPIKey = process.env.NEXT_GOOGLE_MAPS_KEY;
 // const mapsId = process.env.NEXT_MAPS_ID;
 
@@ -81,7 +88,13 @@ const GoogleMaps = () => {
   );
 };
 
-export default GoogleMaps;
+export default GoogleMaps
+
+// export default GoogleMaps({plugins: [react()],
+//   define: {
+//     'process.env': process.env,
+//   },
+// });
 
 //Info für uns:
 /*
