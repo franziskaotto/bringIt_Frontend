@@ -13,6 +13,12 @@ import OpenTodos from "../../Components/Todo/OpenTodos";
 import AcceptedTodos from "../../Components/Todo/AcceptedTodos";
 import { bringItsState } from "../../state/bringItsState";
 
+//const googleMapsAPIKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+//const mapsId = import.meta.env.VITE_MAPS_ID;
+
+//console.log("Google Maps API Key: ", googleMapsAPIKey); // Check if the API key is correctly logged
+//console.log("Maps ID: ", mapsId);
+
 const Tabulators = () => {
   const [key, setKey] = useState("map");
   const [expandedTodo, setExpandedTodo] = useState(null);

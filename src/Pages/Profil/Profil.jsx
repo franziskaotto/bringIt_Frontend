@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import "./Profil.css";
 
+//const googleMapsAPIKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+//const mapsId = import.meta.env.VITE_MAPS_ID;
+
+//console.log("Google Maps API Key: ", googleMapsAPIKey); // For debugging
+//console.log("Maps ID: ", mapsId); // For debugging
+
 const Profil = () => {
-  const [user, setUser] = useState(null); // Initialize with null
-  const [editMode, setEditMode] = useState(false); // State to manage edit mode
+  const [user, setUser] = useState(null);
+  const [editMode, setEditMode] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
 
-  // Fetch user data
   const fetchUser = async () => {
     try {
       const response = await fetch(
@@ -22,7 +29,7 @@ const Profil = () => {
       );
       if (response.ok) {
         const data = await response.json();
-        setUser(data.user); // Update the user state
+        setUser(data.user);
       } else {
         console.error("Failed to fetch User");
         setErrorMessage("Failed to fetch User " + userId);
@@ -33,12 +40,10 @@ const Profil = () => {
     }
   };
 
-  // Fetch user on component mount
   useEffect(() => {
     fetchUser();
   }, []);
 
-  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUser((prevUser) => {
@@ -53,10 +58,26 @@ const Profil = () => {
     });
   };
 
-  // Handle form submission for updating user data
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "password") {
+      setPassword(value);
+    } else if (name === "confirmPassword") {
+      setConfirmPassword(value);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      setErrorMessage("Passwörter stimmen nicht überein.");
+      return;
+    }
     try {
+      const updatedUser = { ...user };
+      if (password) {
+        updatedUser.password = password;
+      }
       const response = await fetch(
         `http://localhost:8081/api/user`,
         {
@@ -65,13 +86,14 @@ const Profil = () => {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(user), // Send the entire user object
+          body: JSON.stringify(updatedUser),
         }
       );
       if (response.ok) {
         console.log("User data updated successfully");
-        setEditMode(false); // Exit edit mode after successful update
-        fetchUser(); // Fetch user data again to update the view
+        setErrorMessage("");
+        setEditMode(false);
+        fetchUser();
       } else {
         const errorData = await response.json();
         console.error("Failed to update user data:", errorData.errorMessage);
@@ -92,6 +114,7 @@ const Profil = () => {
             <form onSubmit={handleSubmit}>
               <label>
                 Vorname:
+                <br />
                 <input
                   type="text"
                   name="firstName"
@@ -101,6 +124,7 @@ const Profil = () => {
               </label>
               <label>
                 Nachname:
+                <br />
                 <input
                   type="text"
                   name="lastName"
@@ -110,6 +134,7 @@ const Profil = () => {
               </label>
               <label>
                 Geburtsdatum:
+                <br />
                 <input
                   type="date"
                   name="dateOfBirth"
@@ -119,6 +144,7 @@ const Profil = () => {
               </label>
               <label>
                 Email:
+                <br />
                 <input
                   type="email"
                   name="email"
@@ -128,6 +154,7 @@ const Profil = () => {
               </label>
               <label>
                 Telefon:
+                <br />
                 <input
                   type="tel"
                   name="phone"
@@ -137,6 +164,7 @@ const Profil = () => {
               </label>
               <label>
                 Strasse Hausnummer:
+                <br />
                 <input
                   type="text"
                   name="address.streetNumber"
@@ -146,6 +174,7 @@ const Profil = () => {
               </label>
               <label>
                 Stadt:
+                <br />
                 <input
                   type="text"
                   name="address.city"
@@ -155,11 +184,32 @@ const Profil = () => {
               </label>
               <label>
                 Postleitzahl:
+                <br />
                 <input
                   type="text"
                   name="address.postalCode"
                   value={user.address?.postalCode || ''}
                   onChange={handleInputChange}
+                />
+              </label>
+              <label>
+                Neues Passwort:
+                <br />
+                <input
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                />
+              </label>
+              <label>
+                Passwort bestätigen:
+                <br />
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={confirmPassword}
+                  onChange={handlePasswordChange}
                 />
               </label>
               <div>

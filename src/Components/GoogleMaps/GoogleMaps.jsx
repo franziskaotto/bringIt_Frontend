@@ -17,9 +17,8 @@ import Directions from './Directions';
 
 const googleMapsAPIKey = "AIzaSyBacQv7qzQpvVYWkP9woi9FHEMJrFBN3Jk";
 const mapsId = "df621f6bd5a413fd";
-// const googleMapsAPIKey = process.env.NEXT_GOOGLE_MAPS_KEY;
-// const mapsId = process.env.NEXT_MAPS_ID;
-
+//const googleMapsAPIKey = process.env.GOOGLE_MAPS_API_KEY;
+//const mapsId = process.env.MAPS_ID;
 
 
 const GoogleMaps = () => {
