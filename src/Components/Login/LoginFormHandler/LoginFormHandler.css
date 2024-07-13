@@ -1,18 +1,17 @@
 .login-card {
-  
   position: relative;
   margin: 0 auto;
   /* margin-left: 50px;
   margin-right: 15%; */
-  position: relative; 
+  position: relative;
   box-sizing: border-box;
-  width: 100%; 
-  max-width: 450px; 
+  width: 100%;
+  max-width: 450px;
   background-blend-mode: overlay, normal;
   backdrop-filter: blur(40px);
   border: 2px solid #eef1f8;
   padding: 20px;
-  padding-bottom:20px;
+  padding-bottom: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,8 +32,6 @@
   align-items: center;
 }
 
-
-
 .icon-user {
   position: absolute;
   display: inline-block;
@@ -48,8 +45,8 @@
 .input-Field-login {
   background: none;
   border-radius: 40px;
-  border-width: 2px;   
-  border-style: solid; 
+  border-width: 2px;
+  border-style: solid;
   border-color: #eef1f8;
   outline: none;
   background: none;
@@ -69,17 +66,24 @@
   letter-spacing: 4px;
   font-weight: normal;
   color: #eef1f8;
-
 }
 
+/* overwrites the autofill input background and cursor*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #eef1f8;
+  caret-color: #eef1f8; /* cursor-color */
+}
 
 .Login-Button {
-  
   width: 95%;
   padding: 10px;
-  
+
   cursor: pointer;
-  background: #03045E;
+  background: #03045e;
   color: #eef1f8;
   border-radius: 40px;
   border: none;
@@ -93,7 +97,8 @@
   margin-top: 20px;
 }
 
-.links .register, .links .forgotPW {
+.links .register,
+.links .forgotPW {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -124,21 +129,15 @@
   position: absolute; /* Position relative to its closest positioned ancestor */
 }
 
-
 .error-message .close-button {
   cursor: pointer;
   margin-left: 10px; /* Space between message and close button */
   font-weight: bold;
 }
 
-
-
 @media (max-width: 1370px) {
   .login-card {
     margin-top: 5%;
     margin-bottom: 20%;
   }
-
-
-  
 }

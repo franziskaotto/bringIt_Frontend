@@ -1,31 +1,31 @@
 "use client";
 
+import React, { useEffect, useState } from "react";
+import "./GoogleMaps.css";
+import { createRoot } from "react-dom/client";
 
-import React, { useEffect, useState } from 'react'
-import "./GoogleMaps.css"
-import {createRoot} from "react-dom/client";
-
-import {
-  APIProvider,
-  Map,
-  Pin,
-  AdvancedMarker,
-  useMapsLibrary,
-} from "@vis.gl/react-google-maps";
-import Directions from './Directions';
-
+import { APIProvider, Map } from "@vis.gl/react-google-maps";
+import ShowPinsOfTodos from "./ShowPinsOfTodos";
+import CenterLocationPin from "./CenterLocationPin";
 
 const googleMapsAPIKey = "AIzaSyBacQv7qzQpvVYWkP9woi9FHEMJrFBN3Jk";
 const mapsId = "df621f6bd5a413fd";
-//const googleMapsAPIKey = process.env.GOOGLE_MAPS_API_KEY;
-//const mapsId = process.env.MAPS_ID;
-
+// const googleMapsAPIKey = process.env.NEXT_GOOGLE_MAPS_KEY;
+// const mapsId = process.env.NEXT_MAPS_ID;
 
 const GoogleMaps = () => {
   const [longitude, setLongitude] = useState(null);
   const [latitude, setLatitude] = useState(null);
 
-
+  const fetchLocation = async () => {
+    try {
+      const position = await getMyPosition();
+      setLatitude(position.coords.latitude);
+      setLongitude(position.coords.longitude);
+    } catch (error) {
+      console.error("Error getting position", error);
+    }
+  };
   const getMyPosition = () => {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -33,25 +33,8 @@ const GoogleMaps = () => {
   };
 
   useEffect(() => {
-    const fetchLocation = async () => {
-      try {
-        const position = await getMyPosition();
-        setLatitude(position.coords.latitude);
-        setLongitude(position.coords.longitude);
-        console.log(
-          "Latitude: " +
-            position.coords.latitude +
-            ", Longitude: " +
-            position.coords.longitude
-        );
-      } catch (error) {
-        console.error("Error getting position", error);
-      }
-    };
     fetchLocation();
-
   }, []);
-
 
   return (
     <>
@@ -65,20 +48,12 @@ const GoogleMaps = () => {
               defaultZoom={15}
               defaultCenter={{ lat: latitude, lng: longitude }}
               mapId={mapsId}
-              gestureHandling={"greedy"} // handles gestures with handx, greey = all touch gestures, scrolling, zoom
+              gestureHandling={"greedy"} // handles gestures with handy, greedy = all touch gestures, scrolling, zoom
               // disableDefaultUI={true} //nur wenn wir was eigenes erstellen wollen
+              options={{}}
             >
-              <AdvancedMarker position={{ lat: latitude, lng: longitude }}>
-                <Pin
-               
-                  background={"#eef1f8"} // can also use image
-                  borderColor={"#03045e"}
-                  glyphColor={"#03045e"} //dot in the middle
-                ></Pin>
-              </AdvancedMarker>
-
-              <Directions />
-              
+              <CenterLocationPin latitude={latitude} longitude={longitude} />
+              <ShowPinsOfTodos />
             </Map>
           ) : (
             <p>Loading...</p>
@@ -87,15 +62,11 @@ const GoogleMaps = () => {
       </APIProvider>
     </>
   );
-}
-
-
-
+};
 
 export default GoogleMaps;
 
-
-//Info für uns: 
+//Info für uns:
 /*
 <APIProvider />
  - needs to wrap everything, 
