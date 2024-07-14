@@ -41,8 +41,6 @@ const ShowPinsOfAcceptedTodos = () => {
   };
 
   const extractAddressesFromTodo = async (todos) => {
-    console.log(todos);
-
     try {
       const updatedTodos = await Promise.all(
         todos.map(async (todo) => {
@@ -59,12 +57,10 @@ const ShowPinsOfAcceptedTodos = () => {
           };
         })
       );
-      console.log(updatedTodos[0]);
 
       // Check for duplicates and update the state
       updatedTodos.forEach((todo) => {
         if (!checkIfTodoExists(todo.todoId)) {
-          console.log(`Adding Todo ID: ${todo.todoId}`); // Debug log for adding todos
           setCoordinatesTodos((prevTodos) => [...prevTodos, todo]);
         } else {
           console.log(`Todo ID: ${todo.todoId} already exists, skipping.`);

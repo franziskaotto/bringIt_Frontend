@@ -15,10 +15,8 @@ const ShowPinsOfOpenTodos = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
 
         await extractAddressesFromTodo(data);
-        console.log(coordinatesTodos);
       } else {
         console.error("Failed to fetch OpenTodos");
         setErrorMessage("Failed to OpenTetch todos");
@@ -34,8 +32,6 @@ const ShowPinsOfOpenTodos = () => {
   };
 
   const extractAddressesFromTodo = async (todos) => {
-    console.log(todos);
-
     try {
       const updatedTodos = await Promise.all(
         todos.map(async (todo) => {
@@ -52,12 +48,10 @@ const ShowPinsOfOpenTodos = () => {
           };
         })
       );
-      console.log(updatedTodos[0]);
 
       // Check for duplicates and update the state
       updatedTodos.forEach((todo) => {
         if (!checkIfTodoExists(todo.todoId)) {
-          console.log(`Adding Todo ID: ${todo.todoId}`); // Debug log for adding todos
           setCoordinatesTodos((prevTodos) => [...prevTodos, todo]);
         } else {
           console.log(`Todo ID: ${todo.todoId} already exists, skipping.`);
