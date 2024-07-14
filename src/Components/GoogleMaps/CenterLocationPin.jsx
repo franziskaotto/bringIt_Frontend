@@ -14,9 +14,4 @@ const CenterLocationPin = ({ latitude, longitude }) => {
   );
 };
 
-CenterLocationPin.propTypes = {
-  latitude: PropTypes.String,
-  longitude: PropTypes.String,
-};
-
 export default CenterLocationPin;

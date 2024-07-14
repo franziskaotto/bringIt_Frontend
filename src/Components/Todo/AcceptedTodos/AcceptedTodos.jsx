@@ -33,12 +33,6 @@ const AcceptedTodos = ({
 
   return (
     <div className="my-todos">
-      {errorMessage && (
-        <div className="error-message">
-          <p>{errorMessage}</p>
-        </div>
-      )}
-
       {sortedTodos.length === 0 ? (
         <p>Sie haben derzeit keine angenommenen Todos</p>
       ) : (

@@ -593,7 +593,6 @@ const fetchDistances = async (todos) => {
                 fetchOpenTodos={fetchOpenTodos}
                 fetchAcceptedTodos={fetchAcceptedTodos}
               />
-              <TodoFilter />
             </div>
           </Tab>
           <Tab eventKey="createTodo" title="Todo erstellen">
