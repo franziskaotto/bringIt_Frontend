@@ -1,9 +1,12 @@
 /* Tabulator - Menu */
 
 .left-side-content-map {
-  margin-top: 80px;
   padding-top: 10px;
+  margin: 80px 50px 50px 50px; /*top, right, bottom, left*/
 }
+/* margin-top: 80px;
+  padding-top: 10px;
+} */
 
 .map-tab {
   margin-top: 70px;

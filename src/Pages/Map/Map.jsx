@@ -5,7 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import GoogleMaps from "../../Components/GoogleMaps/GoogleMaps";
-import TodoFilter from "../../Components/Todo/TodoFilter";
 import CreateTodo from "../../Components/Todo/CreateTodo";
 import MyTodos from "../../Components/Todo/MyTodos";
 
@@ -24,7 +23,6 @@ const Map = () => {
           <Tab eventKey="map" title="Map">
             <div className="map-and-filter-container">
               <GoogleMaps />
-              <TodoFilter />
             </div>
           </Tab>
           <Tab eventKey="createTodo" title="Todo erstellen">

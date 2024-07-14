@@ -1,17 +1,11 @@
 import React, { useEffect, useState, useRef, Component } from "react";
 import { useRecoilState } from "recoil";
 import "./Tabulators.css";
-import {
-  GoogleMap,
-  DistanceMatrixService,
-  LoadScript,
-} from "@react-google-maps/api";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import GoogleMaps from "../../Components/GoogleMaps";
-import TodoFilter from "../../Components/Todo/TodoFilter";
 import CreateTodo from "../../Components/Todo/CreateTodo";
 import MyTodos from "../../Components/Todo/MyTodos";
 import OpenTodos from "../../Components/Todo/OpenTodos";
@@ -36,7 +30,6 @@ const Tabulators = () => {
   const [originalMyTodos, setOriginalMyTodos] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [currentUser, setCurrentUser] = useState(null); // Initialize with null
-  const [distances, setDistances] = useState([]);
 
   const token = localStorage.getItem("token");
   const userId = parseInt(localStorage.getItem("userId"), 10);
@@ -435,117 +428,6 @@ const Tabulators = () => {
     });
   };
 
-  // Function to fetch distances from Google-Matrix-API -> request results in Cors-Error
-  /*
-const fetchDistances = async (todos) => {
-  const destinations = todos.map((todo) => `
-  ${todo.userOffered.address.streetNumber} 
-  ${todo.userOffered.address.postalCode} 
-  ${todo.userOffered.address.city}`);
-
-  const origin =  `
-  ${currentUser.user.address.streetNumber} 
-  ${currentUser.user.address.postalCode} 
-  ${currentUser.user.address.city}`
-
-  const destinationStr = destinations.join('|');
-
-  // const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destinationStr)}&key=${GOOGLE_MAPS_API_KEY}`;
-  const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${destinationStr}&key=${GOOGLE_MAPS_API_KEY}`;
-
-  try {
-    // const response = await fetch(url);
-    const response = await axios.get(url);
-    const data = await response.json();
-
-    console.log("XXX catch data: ", data);
-    if (data.status === "ok") {
-      const distances = data.rows[0].elements.map((element, index) => ({
-        todoId: todos[index].id,
-        distances: element.distance.value, // distance in meters
-      }));
-      return distances;
-    } else {
-      console.error("Error fetching distances: ", data.error_message);
-      return [];
-    }
-  } catch (error) {
-    console.error("Error fetching distances: ", error);
-    return [];
-  }
-};
-
-  */
-
-  // ?? VERS until 14.7. incl. SCROLL-STICKY TRYOUT
-
-  /*
-  return (
-    <>
-      <div className="content-tabulators">
-        <Tabs
-          id="uncontrolled-tab-example"
-          activeKey={key}
-          onSelect={(k) => setKey(k)}
-          className={`mb-3 ${scroll ? `-sticky` : ""}`}
-        >
-          <Tab eventKey="map" title="Map">
-            <div className="map-and-filter-container">
-              <GoogleMaps
-                fetchOpenTodos={fetchOpenTodos}
-                fetchAcceptedTodos={fetchAcceptedTodos}
-              />
-              <TodoFilter />
-            </div>
-          </Tab>
-          <Tab eventKey="createTodo" title="Todo erstellen">
-            <CreateTodo />
-          </Tab>
-          <Tab eventKey="myTodos" title="Meine Todos">
-            <MyTodos
-              activeTab={key}
-              setExpandedTodo={setExpandedTodo}
-              expandedTodo={expandedTodo}
-              todos={myTodos}
-              fetchMyTodos={fetchMyTodos}
-              fetchOpenTodos={fetchOpenTodos}
-              fetchAcceptedTodos={fetchAcceptedTodos}
-              errorMessage={errorMessage}
-              setErrorMessage={setErrorMessage}
-            />
-          </Tab>
-          <Tab eventKey="openTodos" title="Offene Todos">
-            <OpenTodos
-              activeTab={key}
-              setExpandedTodo={setExpandedTodo}
-              expandedTodo={expandedTodo}
-              todos={openTodos}
-              fetchMyTodos={fetchMyTodos}
-              fetchOpenTodos={fetchOpenTodos}
-              fetchAcceptedTodos={fetchAcceptedTodos}
-              errorMessage={errorMessage}
-              setErrorMessage={setErrorMessage}
-            />
-          </Tab>
-          <Tab eventKey="acceptedTodos" title="Angenommene Todos">
-            <AcceptedTodos
-              activeTab={key}
-              setExpandedTodo={setExpandedTodo}
-              expandedTodo={expandedTodo}
-              todos={acceptedTodos}
-              fetchMyTodos={fetchMyTodos}
-              fetchOpenTodos={fetchOpenTodos}
-              fetchAcceptedTodos={fetchAcceptedTodos}
-              errorMessage={errorMessage}
-              setErrorMessage={setErrorMessage}
-            />
-          </Tab>
-        </Tabs>
-      </div>
-    </>
-  );
-*/
-
   return (
     <>
       <div className="left-side-content-map">
@@ -558,7 +440,6 @@ const fetchDistances = async (todos) => {
           <Tab eventKey="map" title="Map" className="map-tab">
             <div className="map-and-filter-container">
               <GoogleMaps />
-              {/* <TodoFilter /> */}
             </div>
           </Tab>
           <Tab
@@ -651,5 +532,116 @@ const fetchDistances = async (todos) => {
     </>
   );
 };
+
+// Function to fetch distances from Google-Matrix-API -> request results in Cors-Error
+/*
+const fetchDistances = async (todos) => {
+  const destinations = todos.map((todo) => `
+  ${todo.userOffered.address.streetNumber} 
+  ${todo.userOffered.address.postalCode} 
+  ${todo.userOffered.address.city}`);
+
+  const origin =  `
+  ${currentUser.user.address.streetNumber} 
+  ${currentUser.user.address.postalCode} 
+  ${currentUser.user.address.city}`
+
+  const destinationStr = destinations.join('|');
+
+  // const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destinationStr)}&key=${GOOGLE_MAPS_API_KEY}`;
+  const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${destinationStr}&key=${GOOGLE_MAPS_API_KEY}`;
+
+  try {
+    // const response = await fetch(url);
+    const response = await axios.get(url);
+    const data = await response.json();
+
+    console.log("XXX catch data: ", data);
+    if (data.status === "ok") {
+      const distances = data.rows[0].elements.map((element, index) => ({
+        todoId: todos[index].id,
+        distances: element.distance.value, // distance in meters
+      }));
+      return distances;
+    } else {
+      console.error("Error fetching distances: ", data.error_message);
+      return [];
+    }
+  } catch (error) {
+    console.error("Error fetching distances: ", error);
+    return [];
+  }
+};
+
+  */
+
+// ?? VERS until 14.7. incl. SCROLL-STICKY TRYOUT
+
+/*
+  return (
+    <>
+      <div className="content-tabulators">
+        <Tabs
+          id="uncontrolled-tab-example"
+          activeKey={key}
+          onSelect={(k) => setKey(k)}
+          className={`mb-3 ${scroll ? `-sticky` : ""}`}
+        >
+          <Tab eventKey="map" title="Map">
+            <div className="map-and-filter-container">
+              <GoogleMaps
+                fetchOpenTodos={fetchOpenTodos}
+                fetchAcceptedTodos={fetchAcceptedTodos}
+              />
+              <TodoFilter />
+            </div>
+          </Tab>
+          <Tab eventKey="createTodo" title="Todo erstellen">
+            <CreateTodo />
+          </Tab>
+          <Tab eventKey="myTodos" title="Meine Todos">
+            <MyTodos
+              activeTab={key}
+              setExpandedTodo={setExpandedTodo}
+              expandedTodo={expandedTodo}
+              todos={myTodos}
+              fetchMyTodos={fetchMyTodos}
+              fetchOpenTodos={fetchOpenTodos}
+              fetchAcceptedTodos={fetchAcceptedTodos}
+              errorMessage={errorMessage}
+              setErrorMessage={setErrorMessage}
+            />
+          </Tab>
+          <Tab eventKey="openTodos" title="Offene Todos">
+            <OpenTodos
+              activeTab={key}
+              setExpandedTodo={setExpandedTodo}
+              expandedTodo={expandedTodo}
+              todos={openTodos}
+              fetchMyTodos={fetchMyTodos}
+              fetchOpenTodos={fetchOpenTodos}
+              fetchAcceptedTodos={fetchAcceptedTodos}
+              errorMessage={errorMessage}
+              setErrorMessage={setErrorMessage}
+            />
+          </Tab>
+          <Tab eventKey="acceptedTodos" title="Angenommene Todos">
+            <AcceptedTodos
+              activeTab={key}
+              setExpandedTodo={setExpandedTodo}
+              expandedTodo={expandedTodo}
+              todos={acceptedTodos}
+              fetchMyTodos={fetchMyTodos}
+              fetchOpenTodos={fetchOpenTodos}
+              fetchAcceptedTodos={fetchAcceptedTodos}
+              errorMessage={errorMessage}
+              setErrorMessage={setErrorMessage}
+            />
+          </Tab>
+        </Tabs>
+      </div>
+    </>
+  );
+*/
 
 export default Tabulators;
