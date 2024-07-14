@@ -1,35 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Pin, AdvancedMarker } from "@vis.gl/react-google-maps";
 const token = localStorage.getItem("token");
 
-const ShowPinsOfOpenTodos = () => {
+const ShowPinsOfOpenTodos = ({ openTodos }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [coordinatesTodos, setCoordinatesTodos] = useState([]);
-
-  const fetchOpenTodos = async () => {
-    try {
-      const response = await fetch("http://localhost:8081/api/todo", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.ok) {
-        const data = await response.json();
-
-        await extractAddressesFromTodo(data);
-      } else {
-        console.error("Failed to fetch OpenTodos");
-        setErrorMessage("Failed to OpenTetch todos");
-      }
-    } catch (error) {
-      console.error("Error fetching OpenTodos: ", error);
-      setErrorMessage("Error fetching OpenTodos");
-    }
-  };
-
-  const checkIfTodoExists = (todoId) => {
-    return coordinatesTodos.some((existingTodo) => existingTodo.id === todoId);
-  };
 
   const extractAddressesFromTodo = async (todos) => {
     try {
@@ -49,7 +24,7 @@ const ShowPinsOfOpenTodos = () => {
         })
       );
 
-      // Check for duplicates and update the state
+      // Checks for duplicates
       updatedTodos.forEach((todo) => {
         if (!checkIfTodoExists(todo.todoId)) {
           setCoordinatesTodos((prevTodos) => [...prevTodos, todo]);
@@ -60,6 +35,10 @@ const ShowPinsOfOpenTodos = () => {
     } catch (error) {
       console.error("Error extracting addresses: ", error);
     }
+  };
+
+  const checkIfTodoExists = (todoId) => {
+    return coordinatesTodos.some((existingTodo) => existingTodo.id === todoId);
   };
 
   const convertAddressToPosition = (address) => {
@@ -80,9 +59,10 @@ const ShowPinsOfOpenTodos = () => {
   };
 
   useEffect(() => {
-    fetchOpenTodos();
-  }, []);
-
+    if (openTodos && openTodos.length > 0) {
+      extractAddressesFromTodo(openTodos);
+    }
+  }, [openTodos]);
   return (
     <>
       {coordinatesTodos.map((address, index) => (

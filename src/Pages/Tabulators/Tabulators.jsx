@@ -44,6 +44,10 @@ const Tabulators = () => {
 
   // fetch todos onChange of activeKey according to specific key.
   useEffect(() => {
+    if (key === "map") {
+      fetchOpenTodos();
+      fetchAcceptedTodos();
+    }
     if (key === "myTodos") {
       fetchMyTodos();
     }
@@ -439,7 +443,10 @@ const Tabulators = () => {
         >
           <Tab eventKey="map" title="Map" className="map-tab">
             <div className="map-and-filter-container">
-              <GoogleMaps />
+              <GoogleMaps
+                openTodos={originalOpenTodos}
+                acceptedTodos={originalAcceptedTodos}
+              />
             </div>
           </Tab>
           <Tab

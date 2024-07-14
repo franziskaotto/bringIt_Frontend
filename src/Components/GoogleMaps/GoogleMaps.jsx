@@ -14,7 +14,7 @@ const mapsId = "df621f6bd5a413fd";
 // const googleMapsAPIKey = process.env.NEXT_GOOGLE_MAPS_KEY;
 // const mapsId = process.env.NEXT_MAPS_ID;
 
-const GoogleMaps = () => {
+const GoogleMaps = ({ openTodos, acceptedTodos }) => {
   const [longitude, setLongitude] = useState(null);
   const [latitude, setLatitude] = useState(null);
 
@@ -54,8 +54,8 @@ const GoogleMaps = () => {
               options={{}}
             >
               <CenterLocationPin latitude={latitude} longitude={longitude} />
-              <ShowPinsOfOpenTodos />
-              <ShowPinsOfAcceptedTodos />
+              <ShowPinsOfOpenTodos openTodos={openTodos} />
+              <ShowPinsOfAcceptedTodos acceptedTodos={acceptedTodos} />
             </Map>
           ) : (
             <p>Loading...</p>

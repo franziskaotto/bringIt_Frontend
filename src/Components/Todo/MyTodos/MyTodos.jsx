@@ -38,11 +38,7 @@ const MyTodos = ({
       {/* Display the username */}
       {/* Button to reload todos */}
       {/* <ReloadTodos fetchTodos={fetchMyTodos} /> */}
-      {errorMessage && (
-        <div className="error-message">
-          <p>{errorMessage}</p>
-        </div>
-      )}
+
       {todos.length === 0 ? (
         <p>Sie haben derzeit keine eigenen Todos</p>
       ) : (
