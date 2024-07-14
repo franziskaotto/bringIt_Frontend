@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./MyTodos.css";
-import ReloadTodos from "../ReloadTodos/ReloadTodos";
 import TodoListTemplate from "../TodoListTemplate";
-import TodoOrganizer from "../TodoOrganizer";
 
 const MyTodos = ({
   activeTab,
@@ -33,12 +31,6 @@ const MyTodos = ({
 
   return (
     <div className="my-todos">
-      {/* <h2>Meine Todos</h2> 
-      {/* {username && <h3>Willkommen, {username}!</h3>} */}
-      {/* Display the username */}
-      {/* Button to reload todos */}
-      {/* <ReloadTodos fetchTodos={fetchMyTodos} /> */}
-
       {todos.length === 0 ? (
         <p>Sie haben derzeit keine eigenen Todos</p>
       ) : (
