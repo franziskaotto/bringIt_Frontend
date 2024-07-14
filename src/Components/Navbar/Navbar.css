@@ -9,7 +9,6 @@
   backdrop-filter: blur(40px);
   border-bottom: 2px solid #eef1f8;
   z-index: 1000;
-  padding: 0 5px;
 }
 
 .navbar {
@@ -69,8 +68,7 @@
 }
 
 .bringits-number {
-  background-color: rgba(211, 211, 211, 0.534);
-  /* border: 1px solid #ffffff; */
+  background-color: #eef1f8;
   color: #3b3b3b;
   padding: 0 4px;
   border-radius: 4px;
