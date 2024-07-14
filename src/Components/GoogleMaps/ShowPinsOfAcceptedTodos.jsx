@@ -7,39 +7,6 @@ const ShowPinsOfAcceptedTodos = ({ acceptedTodos }) => {
   const [coordinatesTodos, setCoordinatesTodos] = useState([]);
   const userId = parseInt(localStorage.getItem("userId"), 10);
 
-  const fetchAcceptedTodos = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:8081/api/todo/takenByUser/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (response.ok) {
-        const data = await response.json();
-        // Filter todos based on userId -> remove todos by this user
-        console.log(data);
-        if (data.length === 0) {
-          console.log("no accepted todos");
-          return <div>hello</div>;
-        } else {
-          extractAddressesFromTodo(data);
-        }
-      } else {
-        console.error("Failed to fetch AcceptedTodos");
-        setErrorMessage("Failed to fetch AcceptedTodos");
-      }
-    } catch (error) {
-      console.error("Error fetching AcceptedTodos: ", error);
-      setErrorMessage("Error fetching AcceptedTodos");
-    }
-  };
-  const checkIfTodoExists = (todoId) => {
-    return coordinatesTodos.some((existingTodo) => existingTodo.id === todoId);
-  };
-
   const extractAddressesFromTodo = async (todos) => {
     console.log(todos);
 
@@ -75,6 +42,10 @@ const ShowPinsOfAcceptedTodos = ({ acceptedTodos }) => {
     }
   };
 
+  const checkIfTodoExists = (todoId) => {
+    return coordinatesTodos.some((existingTodo) => existingTodo.id === todoId);
+  };
+
   const convertAddressToPosition = (address) => {
     const geocoder = new window.google.maps.Geocoder();
     return new Promise((resolve, reject) => {
@@ -91,10 +62,6 @@ const ShowPinsOfAcceptedTodos = ({ acceptedTodos }) => {
       });
     });
   };
-
-  useEffect(() => {
-    fetchAcceptedTodos();
-  }, []);
 
   useEffect(() => {
     if (acceptedTodos && acceptedTodos.length > 0) {

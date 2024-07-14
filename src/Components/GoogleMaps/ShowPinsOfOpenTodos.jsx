@@ -6,33 +6,6 @@ const ShowPinsOfOpenTodos = ({ openTodos }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [coordinatesTodos, setCoordinatesTodos] = useState([]);
 
-  const fetchOpenTodos = async () => {
-    try {
-      const response = await fetch("http://localhost:8081/api/todo", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-
-        await extractAddressesFromTodo(data);
-        console.log(coordinatesTodos);
-      } else {
-        console.error("Failed to fetch OpenTodos");
-        setErrorMessage("Failed to OpenTetch todos");
-      }
-    } catch (error) {
-      console.error("Error fetching OpenTodos: ", error);
-      setErrorMessage("Error fetching OpenTodos");
-    }
-  };
-
-  const checkIfTodoExists = (todoId) => {
-    return coordinatesTodos.some((existingTodo) => existingTodo.id === todoId);
-  };
-
   const extractAddressesFromTodo = async (todos) => {
     try {
       const updatedTodos = await Promise.all(
@@ -66,6 +39,10 @@ const ShowPinsOfOpenTodos = ({ openTodos }) => {
     }
   };
 
+  const checkIfTodoExists = (todoId) => {
+    return coordinatesTodos.some((existingTodo) => existingTodo.id === todoId);
+  };
+
   const convertAddressToPosition = (address) => {
     const geocoder = new window.google.maps.Geocoder();
     return new Promise((resolve, reject) => {
@@ -82,10 +59,6 @@ const ShowPinsOfOpenTodos = ({ openTodos }) => {
       });
     });
   };
-
-  useEffect(() => {
-    fetchOpenTodos();
-  }, []);
 
   useEffect(() => {
     if (openTodos && openTodos.length > 0) {
