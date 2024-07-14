@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Pin, AdvancedMarker } from "@vis.gl/react-google-maps";
 const token = localStorage.getItem("token");
 
-const ShowPinsOfAcceptedTodos = () => {
+const ShowPinsOfAcceptedTodos = ({ acceptedTodos }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [coordinatesTodos, setCoordinatesTodos] = useState([]);
   const userId = parseInt(localStorage.getItem("userId"), 10);
@@ -95,6 +95,13 @@ const ShowPinsOfAcceptedTodos = () => {
   useEffect(() => {
     fetchAcceptedTodos();
   }, []);
+
+  useEffect(() => {
+    if (acceptedTodos && acceptedTodos.length > 0) {
+      console.log("Processing acceptedTodos prop:", acceptedTodos);
+      extractAddressesFromTodo(acceptedTodos);
+    }
+  }, [acceptedTodos]);
 
   return (
     <>

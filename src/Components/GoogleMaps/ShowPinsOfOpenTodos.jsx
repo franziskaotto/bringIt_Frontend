@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Pin, AdvancedMarker } from "@vis.gl/react-google-maps";
 const token = localStorage.getItem("token");
 
-const ShowPinsOfOpenTodos = () => {
+const ShowPinsOfOpenTodos = ({ openTodos }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [coordinatesTodos, setCoordinatesTodos] = useState([]);
 
@@ -34,8 +34,6 @@ const ShowPinsOfOpenTodos = () => {
   };
 
   const extractAddressesFromTodo = async (todos) => {
-    console.log(todos);
-
     try {
       const updatedTodos = await Promise.all(
         todos.map(async (todo) => {
@@ -54,7 +52,7 @@ const ShowPinsOfOpenTodos = () => {
       );
       console.log(updatedTodos[0]);
 
-      // Check for duplicates and update the state
+      // Checks for duplicates
       updatedTodos.forEach((todo) => {
         if (!checkIfTodoExists(todo.todoId)) {
           console.log(`Adding Todo ID: ${todo.todoId}`); // Debug log for adding todos
@@ -89,6 +87,11 @@ const ShowPinsOfOpenTodos = () => {
     fetchOpenTodos();
   }, []);
 
+  useEffect(() => {
+    if (openTodos && openTodos.length > 0) {
+      extractAddressesFromTodo(openTodos);
+    }
+  }, [openTodos]);
   return (
     <>
       {coordinatesTodos.map((address, index) => (
