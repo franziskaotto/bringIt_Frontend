@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./GoogleMaps.css";
-import { createRoot } from "react-dom/client";
 
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
-import ShowPinsOfTodos from "./ShowPinsOfTodos";
+
 import CenterLocationPin from "./CenterLocationPin";
+import ShowPinsOfOpenTodos from "./ShowPinsOfOpenTodos";
+import ShowPinsOfAcceptedTodos from "./ShowPinsOfAcceptedTodos";
 
 const googleMapsAPIKey = "AIzaSyBacQv7qzQpvVYWkP9woi9FHEMJrFBN3Jk";
 const mapsId = "df621f6bd5a413fd";
@@ -53,7 +54,8 @@ const GoogleMaps = () => {
               options={{}}
             >
               <CenterLocationPin latitude={latitude} longitude={longitude} />
-              <ShowPinsOfTodos />
+              <ShowPinsOfOpenTodos />
+              <ShowPinsOfAcceptedTodos />
             </Map>
           ) : (
             <p>Loading...</p>
