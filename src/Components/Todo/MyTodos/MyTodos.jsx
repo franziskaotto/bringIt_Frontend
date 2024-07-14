@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./MyTodos.css";
 import ReloadTodos from "../ReloadTodos/ReloadTodos";
 import TodoListTemplate from "../TodoListTemplate";
+import TodoOrganizer from "../TodoOrganizer";
 
 const MyTodos = ({
   activeTab,
@@ -14,7 +15,21 @@ const MyTodos = ({
   errorMessage,
   setErrorMessage,
 }) => {
+  const [filteredTodos, setFilteredTodos] = useState(todos);
   const username = localStorage.getItem("username"); // Retrieve the username from localStorage
+
+  useEffect(() => {
+    setFilteredTodos(todos);
+  }, [todos]);
+
+  const handleFilter = (status) => {
+    if (status === "All") {
+      setFilteredTodos(todos);
+    } else {
+      const filtered = todos.filter((todo) => todo.status === status);
+      setFilteredTodos(filtered);
+    }
+  };
 
   return (
     <div className="my-todos">

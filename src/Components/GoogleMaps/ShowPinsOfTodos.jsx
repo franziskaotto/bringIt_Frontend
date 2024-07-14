@@ -7,6 +7,7 @@ const ShowPinsOfTodos = () => {
   const [openTodos, setOpenTodos] = useState([]);
   const [location, setLocation] = useState(null);
   const [adressesOpenTodos, setAdressesOpenTodos] = useState([]);
+  const userId = parseInt(localStorage.getItem("userId"), 10);
 
   const fetchOpenTodos = async () => {
     try {
@@ -17,8 +18,21 @@ const ShowPinsOfTodos = () => {
       });
       if (response.ok) {
         const data = await response.json();
+
+        /*
+        // Filter todos based on userId -> remove todos by current user
+        const filteredTodos = data.filter(
+          (todo) => todo.userOffered.userId !== userId
+        );
+        setOpenTodos(filteredTodos);
+        fetchAllAdresses(filteredTodos);
+        console.log("Adresses OpenTodos: ", adressesOpenTodos);
+        return filteredTodos;
+*/
+
         setOpenTodos(data);
         fetchAllAdresses(data);
+        console.log("Adresses OpenTodos: ", adressesOpenTodos);
         return data;
       } else {
         console.error("Failed to fetch OpenTodos");

@@ -1,18 +1,22 @@
 /* Tabulator - Menu */
-.content-tabulators {
-  padding-top: 10px;
-  margin: 100px 50px 50px 50px; /*top, right, bottom, left*/
-}
+
 .left-side-content-map {
-  margin-top: 100px;
+  margin-top: 80px;
   padding-top: 10px;
+}
+
+.map-tab {
+  margin-top: 70px;
 }
 
 .map-and-filter-container {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 @media (min-width: 1370px) {
@@ -55,14 +59,18 @@
 }
 
 .tab-panel {
-  display: none; /* Hide all panels by default */
-  padding: 20px;
-  border: 1px solid #ccc;
+  /* Hide all panels by default */
+  display: none;
+  padding-top: 40px;
   flex: 1;
 }
 
 .tab-panel--active {
   display: block;
+}
+
+.nav-tabs {
+  border-bottom: 1px solid white;
 }
 
 /* Additional CSS to override Bootstrap defaults */
@@ -82,3 +90,118 @@
   background-color: white;
   color: black;
 }
+
+.mb-3 {
+  position: fixed;
+  width: 100%;
+  /* top: 10; */
+  z-index: 999;
+  /* background-color: #007bff; */
+}
+
+.todo-organizer {
+  position: fixed;
+  top: 130px;
+  /* Adjust based on the height of the tabs */
+  width: 100%;
+  z-index: 999;
+  background-color: rgba(255, 255, 255, 0.171);
+  padding: 10px 0;
+  /* border-bottom: 1px solid #ccc; */
+}
+
+/* Ensure the content below the fixed elements can scroll */
+.content-container {
+  margin-top: 50px;
+  /* Adjust based on the combined height of tabs and TodoOrganizer */
+  padding-top: 10px;
+  height: calc(100vh - 150px);
+  /* Adjust based on the combined height of tabs and TodoOrganizer */
+  overflow-y: auto;
+}
+
+/* VERSION UNTIL 14.7. 
+
+.content-tabulators {
+  padding-top: 10px;
+  margin: 100px 50px 50px 50px;
+}
+.left-side-content-map {
+  margin-top: 100px;
+  padding-top: 10px;
+}
+
+.map-and-filter-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 1370px) {
+  .map-and-filter-container {
+    align-items: center;
+    height: 100%;
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+.tabs {
+  display: flex;
+  flex-direction: row;
+}
+
+.tab-nav {
+  flex: 0 0 200px;
+}
+
+.tab-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.tab-btn {
+  width: 100%;
+  padding: 10px;
+  background: none;
+  border: 2px solid #dddddd;
+  cursor: pointer;
+  color: white;
+}
+
+.tab-btn--active {
+  background-color: #007bff;
+  color: #03045e !important;
+}
+
+.tab-panel {
+  display: none;
+  padding: 20px;
+  border: 1px solid #ccc;
+  flex: 1;
+}
+
+.tab-panel--active {
+  display: block;
+}
+
+.nav-tabs .nav-link {
+  color: White;
+  border: 1px solid white !important;
+}
+
+.nav-tabs .nav-link.active {
+  color: black;
+  background-color: white;
+}
+
+.nav-tabs .nav-link:hover {
+  color: #dddddd;
+  background-color: white;
+  color: black;
+}
+
+*/

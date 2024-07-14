@@ -12,7 +12,8 @@ body,
 }
 
 body {
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
+  overflow: hidden;
   background: rgb(3, 4, 94);
   background: linear-gradient(
     0deg,

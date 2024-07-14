@@ -35,21 +35,19 @@ const OpenTodos = ({
         <p>Es gibt derzeit keine offenen Todos</p>
       ) : (
         <ul>
-          {todos
-            .filter((todo) => todo.userOffered.userId !== userId) // Filter todos based on userId
-            .map((todo) => (
-              <TodoListTemplate
-                key={todo.todoId}
-                todo={todo}
-                activeTab={activeTab}
-                setExpandedTodo={setExpandedTodo}
-                expandedTodo={expandedTodo}
-                fetchMyTodos={fetchMyTodos}
-                fetchOpenTodos={fetchOpenTodos}
-                fetchAcceptedTodos={fetchAcceptedTodos}
-                setErrorMessage={setErrorMessage}
-              />
-            ))}
+          {todos.map((todo) => (
+            <TodoListTemplate
+              key={todo.todoId}
+              todo={todo}
+              activeTab={activeTab}
+              setExpandedTodo={setExpandedTodo}
+              expandedTodo={expandedTodo}
+              fetchMyTodos={fetchMyTodos}
+              fetchOpenTodos={fetchOpenTodos}
+              fetchAcceptedTodos={fetchAcceptedTodos}
+              setErrorMessage={setErrorMessage}
+            />
+          ))}
         </ul>
       )}
     </div>

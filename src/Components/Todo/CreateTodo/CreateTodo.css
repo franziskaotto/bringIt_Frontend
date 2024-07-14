@@ -1,18 +1,26 @@
 .todo-card {
-  position: relative;
   width: 80%;
   height: auto;
   box-sizing: border-box;
   background-blend-mode: overlay, normal;
   backdrop-filter: blur(40px);
   padding: 20px;
-  margin-top: 40px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   transition: height 0.3s ease-in-out;
   border-radius: 40px;
   border: 2px solid #eef1f8;
+
+  /* REMOVED 14.7. */
+  /* position: relative;
+  margin-top: 40px; */
+
+  /* ADDED 14.7. */
+  position: absolute;
+  top: 480px;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .input-container-todo {

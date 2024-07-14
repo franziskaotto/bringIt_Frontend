@@ -1,5 +1,12 @@
-.map-container {
+/* VERS UNTIL 14.7. */
+/* .map-container {
   height: 500px;
   width: 50%;
+  border-radius: 40px;
+} */
+
+.map-container {
+  height: 75vh;
+  width: 90%;
   border-radius: 40px;
 }
