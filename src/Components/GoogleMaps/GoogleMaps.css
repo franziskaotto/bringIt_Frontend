@@ -10,3 +10,8 @@
   width: 90%;
   border-radius: 40px;
 }
+
+p,
+button {
+  color: black;
+}

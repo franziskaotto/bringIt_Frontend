@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Pin, AdvancedMarker } from "@vis.gl/react-google-maps";
+import { Pin, AdvancedMarker, InfoWindow } from "@vis.gl/react-google-maps";
 const token = localStorage.getItem("token");
 
 const ShowPinsOfAcceptedTodos = ({ acceptedTodos }) => {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [selectedPin, setSelectedPin] = useState(null);
   const [coordinatesTodos, setCoordinatesTodos] = useState([]);
   const userId = parseInt(localStorage.getItem("userId"), 10);
 
@@ -13,8 +13,7 @@ const ShowPinsOfAcceptedTodos = ({ acceptedTodos }) => {
         todos.map(async (todo) => {
           const { streetNumber, postalCode, city } = todo.userOffered.address;
           const address = `${streetNumber}, ${postalCode}, ${city}`;
-          const coordinates = await convertAddressToPosition(address); // Await the promise
-
+          const coordinates = await convertAddressToPosition(address);
           return {
             ...todo,
             userOffered: {
@@ -71,18 +70,38 @@ const ShowPinsOfAcceptedTodos = ({ acceptedTodos }) => {
       {coordinatesTodos.map((address, index) => (
         <AdvancedMarker
           key={index}
+          onClick={() => setSelectedPin(address)}
           position={{
             lat: address.userOffered.address.lat,
             lng: address.userOffered.address.lng,
           }}
         >
           <Pin
+            key={address.todoId}
             background={"yellow"} // can also use image
             borderColor={"black"}
             glyphColor={"#755100"} //dot in the middle
+            //
           ></Pin>
         </AdvancedMarker>
       ))}
+
+      {selectedPin && (
+        <InfoWindow
+          onCloseClick={() => setSelectedPin(null)}
+          position={{
+            lat: selectedPin.userOffered.address.lat,
+            lng: selectedPin.userOffered.address.lng,
+          }}
+        >
+          <p>Todo ID: {selectedPin.todoId}</p>
+          <p>Titel: {selectedPin.title}</p>
+          <p>Details {selectedPin.description}</p>
+          <p>User: {selectedPin.userOffered.username}</p>
+          <p>Wo? {selectedPin.location}</p>
+          <button>-> Todo</button>
+        </InfoWindow>
+      )}
     </>
   );
 };

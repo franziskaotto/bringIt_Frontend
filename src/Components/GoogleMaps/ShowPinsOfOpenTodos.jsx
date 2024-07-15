@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Pin, AdvancedMarker } from "@vis.gl/react-google-maps";
+import { Pin, AdvancedMarker, InfoWindow } from "@vis.gl/react-google-maps";
 const token = localStorage.getItem("token");
 
 const ShowPinsOfOpenTodos = ({ openTodos }) => {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [selectedPin, setSelectedPin] = useState(null);
   const [coordinatesTodos, setCoordinatesTodos] = useState([]);
 
   const extractAddressesFromTodo = async (todos) => {
@@ -12,7 +12,7 @@ const ShowPinsOfOpenTodos = ({ openTodos }) => {
         todos.map(async (todo) => {
           const { streetNumber, postalCode, city } = todo.userOffered.address;
           const address = `${streetNumber}, ${postalCode}, ${city}`;
-          const coordinates = await convertAddressToPosition(address); // Await the promise
+          const coordinates = await convertAddressToPosition(address);
 
           return {
             ...todo,
@@ -63,11 +63,13 @@ const ShowPinsOfOpenTodos = ({ openTodos }) => {
       extractAddressesFromTodo(openTodos);
     }
   }, [openTodos]);
+
   return (
     <>
       {coordinatesTodos.map((address, index) => (
         <AdvancedMarker
           key={index}
+          onClick={() => setSelectedPin(address)}
           position={{
             lat: address.userOffered.address.lat,
             lng: address.userOffered.address.lng,
@@ -80,6 +82,22 @@ const ShowPinsOfOpenTodos = ({ openTodos }) => {
           ></Pin>
         </AdvancedMarker>
       ))}
+      {selectedPin && (
+        <InfoWindow
+          position={{
+            lat: selectedPin.userOffered.address.lat,
+            lng: selectedPin.userOffered.address.lng,
+          }}
+          onCloseClick={() => setSelectedPin(null)}
+        >
+          <p>Todo ID: {selectedPin.todoId}</p>
+          <p>Titel: {selectedPin.title}</p>
+          <p>Details {selectedPin.description}</p>
+          <p>User: {selectedPin.userOffered.username}</p>
+          <p>Wo? {selectedPin.location}</p>
+          <button>-> Todo</button>
+        </InfoWindow>
+      )}
     </>
   );
 };
