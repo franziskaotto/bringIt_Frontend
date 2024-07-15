@@ -94,12 +94,14 @@ const ShowPinsOfAcceptedTodos = ({ acceptedTodos }) => {
             lng: selectedPin.userOffered.address.lng,
           }}
         >
-          <p>Todo ID: {selectedPin.todoId}</p>
-          <p>Titel: {selectedPin.title}</p>
-          <p>Details {selectedPin.description}</p>
-          <p>User: {selectedPin.userOffered.username}</p>
-          <p>Wo? {selectedPin.location}</p>
-          <button>-> Todo</button>
+          <p className="pin-description">Todo ID: {selectedPin.todoId}</p>
+          <p className="pin-description">Titel: {selectedPin.title}</p>
+          <p className="pin-description">Details: {selectedPin.description}</p>
+          <p className="pin-description">
+            User: {selectedPin.userOffered.username}
+          </p>
+          <p className="pin-description">Wo? {selectedPin.location}</p>
+          <button className="btn-description">-> Todo</button>
         </InfoWindow>
       )}
     </>

@@ -284,7 +284,10 @@ const TodoListTemplate = ({
           onMouseLeave={handleMouseLeave}
         ></div>
         {expandedTodo === todo.todoId && (
-          <div className="todo-details">
+          <div
+            onClick={() => handleToggle(todo.todoId)}
+            className="todo-details"
+          >
             <div>
               <p className="location">
                 <span className="label">Abholort:</span>

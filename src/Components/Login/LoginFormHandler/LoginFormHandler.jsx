@@ -80,7 +80,7 @@ const LoginFormHandler = ({ setIsLoggedIn }) => {
               type="text"
               name="username"
               value={credentials.username}
-              placeholder="Username"
+              placeholder="Benutzername"
               onChange={handleChange}
             />
           </div>
@@ -95,7 +95,7 @@ const LoginFormHandler = ({ setIsLoggedIn }) => {
               type="password"
               name="password"
               value={credentials.password}
-              placeholder="Password"
+              placeholder="Passwort"
               onChange={handleChange}
             />
           </div>

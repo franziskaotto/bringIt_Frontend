@@ -11,7 +11,7 @@
   border-radius: 40px;
 }
 
-p,
-button {
+.pin-description,
+.btn-description {
   color: black;
 }
