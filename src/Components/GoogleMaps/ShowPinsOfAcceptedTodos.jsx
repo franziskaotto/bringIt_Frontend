@@ -77,9 +77,9 @@ const ShowPinsOfAcceptedTodos = ({ acceptedTodos }) => {
           }}
         >
           <Pin
-            background={"red"} // can also use image
+            background={"yellow"} // can also use image
             borderColor={"black"}
-            glyphColor={"maroon"} //dot in the middle
+            glyphColor={"#755100"} //dot in the middle
           ></Pin>
         </AdvancedMarker>
       ))}

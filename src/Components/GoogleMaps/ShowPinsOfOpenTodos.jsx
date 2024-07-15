@@ -74,9 +74,9 @@ const ShowPinsOfOpenTodos = ({ openTodos }) => {
           }}
         >
           <Pin
-            background={"rgb(39, 201, 39"} // can also use image
+            background={"red"} // can also use image
             borderColor={"black"}
-            glyphColor={"green"} //dot in the middle
+            glyphColor={"maroon"} //dot in the middle
           ></Pin>
         </AdvancedMarker>
       ))}
