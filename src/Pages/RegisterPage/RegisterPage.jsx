@@ -15,10 +15,16 @@ const validationSchema = Yup.object({
   username: Yup.string().required("Username is required."),
   password: Yup.string().required("Password is required."),
   firstName: Yup.string()
-    .matches(/^[a-zA-Z\s'-]+$/, "First name can only contain letters, spaces, hyphens, and apostrophes.")
+    .matches(
+      /^[a-zA-Z\s'-]+$/,
+      "First name can only contain letters, spaces, hyphens, and apostrophes."
+    )
     .required("First name is required."),
   lastName: Yup.string()
-    .matches(/^[a-zA-Z\s'-]+$/, "Last name can only contain letters, spaces, hyphens, and apostrophes.")
+    .matches(
+      /^[a-zA-Z\s'-]+$/,
+      "Last name can only contain letters, spaces, hyphens, and apostrophes."
+    )
     .required("Last name is required."),
   dateOfBirth: Yup.date()
     .required("Date of Birth is required.")
@@ -47,11 +53,20 @@ const postNewUser = async (userData) => {
       return { success: true };
     } else {
       const data = await response.json();
-      return { success: false, message: data.message || "Fehler beim Registrieren des Benutzers. Bitte versuche es erneut." };
+      return {
+        success: false,
+        message:
+          data.message ||
+          "Fehler beim Registrieren des Benutzers. Bitte versuche es erneut.",
+      };
     }
   } catch (error) {
     console.error("Error registering user:", error);
-    return { success: false, message: "Fehler beim Registrieren des Benutzers. Bitte versuche es erneut." };
+    return {
+      success: false,
+      message:
+        "Fehler beim Registrieren des Benutzers. Bitte versuche es erneut.",
+    };
   }
 };
 
@@ -92,67 +107,128 @@ const RegisterCard = () => {
     return (
       <div className="registration-saved">
         <p>Du hast dich erfolgreich registriert!</p>
-        <div className="close-button" onClick={() => {
-          setIsSubmitted(false);
-          setRegistrationMessage(""); // Reset message state
-          window.location.href = "http://localhost:5173/";
-          formik.resetForm();
-        }}>X</div>
+        <div
+          className="close-button"
+          onClick={() => {
+            setIsSubmitted(false);
+            setRegistrationMessage(""); // Reset message state
+            window.location.href = "http://localhost:5173/";
+            formik.resetForm();
+          }}
+        >
+          X
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="register-card">
-      <form className="singIn-Form" onSubmit={formik.handleSubmit}>
-        <div className="input-container-register">
-          {[
-            { name: "username", type: "text", placeholder: "Benutzername", icon: "Draw.png" },
-            { name: "password", type: "password", placeholder: "Passwort", icon: "password.png" },
-            { name: "email", type: "text", placeholder: "Email", icon: "email.png" },
-            { name: "firstName", type: "text", placeholder: "Vorname", icon: "user.png" },
-            { name: "lastName", type: "text", placeholder: "Nachname", icon: "user.png" },
-            { name: "dateOfBirth", type: "date", placeholder: "Geburtstag", icon: "calender.png" },
-            { name: "phone", type: "text", placeholder: "Telefonnummer", icon: "phone.png" },
-            { name: "address.streetNumber", type: "text", placeholder: "Straße & Nr.", icon: "PLZ.png" },
-            { name: "address.postalCode", type: "text", placeholder: "Postleitzahl", icon: "PLZ.png" },
-            { name: "address.city", type: "text", placeholder: "Ort", icon: "city.png" },
-          ].map(({ name, type, placeholder, icon }) => {
-            const fieldName = name;
-            const fieldError = get(formik.errors, fieldName);
-            const fieldTouched = get(formik.touched, fieldName);
+    <div className="register-card-wrapper">
+      <div className="register-card">
+        <form className="singIn-Form" onSubmit={formik.handleSubmit}>
+          <div className="input-container-register">
+            {[
+              {
+                name: "username",
+                type: "text",
+                placeholder: "Benutzername",
+                icon: "Draw.png",
+              },
+              {
+                name: "password",
+                type: "password",
+                placeholder: "Passwort",
+                icon: "password.png",
+              },
+              {
+                name: "email",
+                type: "text",
+                placeholder: "Email",
+                icon: "email.png",
+              },
+              {
+                name: "firstName",
+                type: "text",
+                placeholder: "Vorname",
+                icon: "user.png",
+              },
+              {
+                name: "lastName",
+                type: "text",
+                placeholder: "Nachname",
+                icon: "user.png",
+              },
+              {
+                name: "dateOfBirth",
+                type: "date",
+                placeholder: "Geburtstag",
+                icon: "calender.png",
+              },
+              {
+                name: "phone",
+                type: "text",
+                placeholder: "Telefonnummer",
+                icon: "phone.png",
+              },
+              {
+                name: "address.streetNumber",
+                type: "text",
+                placeholder: "Straße & Nr.",
+                icon: "PLZ.png",
+              },
+              {
+                name: "address.postalCode",
+                type: "text",
+                placeholder: "Postleitzahl",
+                icon: "PLZ.png",
+              },
+              {
+                name: "address.city",
+                type: "text",
+                placeholder: "Ort",
+                icon: "city.png",
+              },
+            ].map(({ name, type, placeholder, icon }) => {
+              const fieldName = name;
+              const fieldError = get(formik.errors, fieldName);
+              const fieldTouched = get(formik.touched, fieldName);
 
-            return (
-              <div key={name} className="input-with-icon">
-                <img className="icon" src={`../../../../public/Images/${icon}`} alt={`${name} icon`} />
-                <input
-                  className="input-Field"
-                  name={name}
-                  type={type}
-                  placeholder={placeholder}
-                  value={get(formik.values, name)}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {fieldTouched && fieldError ? <div className="error">{fieldError}</div> : null}
-              </div>
-            );
-          })}
-          {registrationMessage && (
-            <div className="error">
-              {registrationMessage}
-            </div>
-          )}
-          <>
-            <button className="register-button" onClick={handleBackButton}>
-              ZURÜCK
-            </button>
-            <button className="register-button" type="submit">
-              REGISTRIEREN
-            </button>
-          </>
-        </div>
-      </form>
+              return (
+                <div key={name} className="input-with-icon">
+                  <img
+                    className="icon"
+                    src={`../../../../public/Images/${icon}`}
+                    alt={`${name} icon`}
+                  />
+                  <input
+                    className="input-Field"
+                    name={name}
+                    type={type}
+                    placeholder={placeholder}
+                    value={get(formik.values, name)}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  {fieldTouched && fieldError ? (
+                    <div className="error">{fieldError}</div>
+                  ) : null}
+                </div>
+              );
+            })}
+            {registrationMessage && (
+              <div className="error">{registrationMessage}</div>
+            )}
+            <>
+              <button className="register-button" onClick={handleBackButton}>
+                ZURÜCK
+              </button>
+              <button className="register-button" type="submit">
+                REGISTRIEREN
+              </button>
+            </>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

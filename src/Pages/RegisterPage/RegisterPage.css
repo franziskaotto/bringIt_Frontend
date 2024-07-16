@@ -1,6 +1,30 @@
+/* Customize the scrollbar for the register-card */
+.register-card::-webkit-scrollbar {
+  width: 8px; /* Make the scrollbar thinner */
+}
+
+.register-card::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background of the scrollbar track */
+  border-radius: 10px; /* Optional: Add some border radius to the track */
+}
+
+.register-card::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Optional: Add some border radius to the thumb */
+  margin: 200px 0; /* Make the scrollbar thumb shorter in height */
+}
+
+.register-card::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker color when hovering over the scrollbar thumb */
+}
+
 .register-card {
   position: absolute;
   width: 80%;
+
+  max-height: 80vh;
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+
   height: auto;
   top: 50%;
   left: 50%;
@@ -92,15 +116,15 @@
 }
 
 @media (max-width: 767px) {
-.input-Field {
-  padding: 10px 10px 10px 40px; /* Adjust padding for smaller screens */
-}
+  .input-Field {
+    padding: 10px 10px 10px 40px; /* Adjust padding for smaller screens */
+  }
 
-.icon {
-  left: 10px; /* Adjust icon position for smaller screens */
-  width: 18px; /* Adjust icon size for smaller screens if needed */
-  height: 18px; /* Adjust icon size for smaller screens if needed */
-}
+  .icon {
+    left: 10px; /* Adjust icon position for smaller screens */
+    width: 18px; /* Adjust icon size for smaller screens if needed */
+    height: 18px; /* Adjust icon size for smaller screens if needed */
+  }
 }
 
 @media (max-width: 963px) {
@@ -110,7 +134,11 @@
     left: 50%;
     transform: translate(-50%, 0); /* Center horizontally */
     padding: 10px; /* Reduce padding for smaller screens */
-    max-height: none; /* Ensure the card does not exceed the screen height */
+    /* Ensure the card does not exceed the screen height */
+    /* max-height: none;  */
+
+    max-height: 90vh; /* Ensure the container doesn't exceed 90% of the viewport height */
+    overflow-y: auto; /* Enable vertical scrolling */
   }
 
   .input-container-register {

@@ -4,6 +4,7 @@ import TodoTemplateButton from "./TodoTemplateButton";
 import Tooltip from "./Tooltip.jsx";
 import PropTypes from "prop-types";
 import "./Tooltip.css";
+import "./Todos.css";
 
 const TodoListTemplate = ({
   todo,

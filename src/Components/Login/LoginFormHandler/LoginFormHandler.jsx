@@ -20,6 +20,7 @@ const LoginFormHandler = ({ setIsLoggedIn }) => {
   };
 
   const handleLogin = async (e) => {
+    console.log("Inside handleLogin");
     e.preventDefault();
     const authoHeader = btoa(credentials.username + ":" + credentials.password);
 
@@ -61,6 +62,47 @@ const LoginFormHandler = ({ setIsLoggedIn }) => {
 
   const handleRegister = () => {
     setIsLoggedIn(true);
+  };
+
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    const username = credentials.username; // Access username from state
+
+    try {
+      console.log("Trying GET request for new password for user " + username);
+      const response = await fetch(
+        `http://localhost:8081/api/users/getpassword/${username}`
+      );
+
+      const result = await response.json();
+      console.log("response= " + JSON.stringify(result));
+
+      if (response.ok) {
+        const email = result.user.email;
+        setError(
+          "Es wurde ein neues Passwort für " +
+            username +
+            " generiert und an " +
+            email +
+            " gesendet."
+        );
+
+        // Display message about sent email and what to do
+      } else {
+        if (response.status === 404) {
+          console.error("User " + username + " doesn't exist");
+          setError(
+            `Der User '${username}' existiert noch nicht. Bitte registriern Sie sich zuerst.`
+          );
+        } else {
+          console.error("Failed to get new password for user");
+          setError("Failed to get new password. Please try again.");
+        }
+      }
+    } catch (error) {
+      console.error("Error trying to retrieve new password:", error);
+      setError("Error trying to retrieve new password.");
+    }
   };
 
   return (
@@ -108,9 +150,9 @@ const LoginFormHandler = ({ setIsLoggedIn }) => {
         {error && (
           <div className="loginWrong-message">
             {error}
-            <span className="close-button" onClick={() => setError("")}>
-              X
-            </span>
+            <div className="close-button" onClick={() => setError("")}>
+              ❎
+            </div>
           </div>
         )}
 
@@ -121,7 +163,7 @@ const LoginFormHandler = ({ setIsLoggedIn }) => {
             </Link>
           </div>
           <div className="forgotPW">
-            <Link to={"/forgotPassword"}>
+            <Link to={"#"} onClick={handleForgotPassword}>
               <p>Passwort vergessen?</p>
             </Link>
           </div>

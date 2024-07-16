@@ -135,7 +135,11 @@ input:-webkit-autofill:active {
   font-weight: bold;
 }
 
-@media (max-width: 1370px) {
+.close-button {
+  font-size: 30px;
+}
+
+@media (max-width: 1170px) {
   .login-card {
     margin-top: 5%;
     margin-bottom: 20%;

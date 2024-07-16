@@ -12,7 +12,6 @@ body,
 }
 
 body {
-  /* overflow-y: scroll; */
   overflow: hidden;
   background: rgb(3, 4, 94);
   background: linear-gradient(
@@ -38,11 +37,13 @@ body {
 .major-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  max-height: 100vh; /* Set a maximum height for the container */
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
 }
 
-@media (min-width: 1370px) {
+@media (min-width: 1170px) {
   .major-container {
     align-items: center;
     height: 100%;
