@@ -52,8 +52,8 @@
   border-color: rgb(39, 201, 39);
 }
 
-.border-blue {
-  border-color: blue;
+.border-gray {
+  border-color: #999;
 }
 
 .border-white {

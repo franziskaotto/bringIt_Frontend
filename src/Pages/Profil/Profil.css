@@ -1,7 +1,8 @@
 .profile-container {
   margin-top: 100px;
   padding-top: 10px;
-  overflow-y: scroll;
+  max-height: 90vh; /* Set a maximum height for the container */
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
 }
 
 .user-details {

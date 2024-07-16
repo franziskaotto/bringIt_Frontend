@@ -10,18 +10,20 @@ const ShowPinsOfAcceptedTodos = ({ acceptedTodos }) => {
   const extractAddressesFromTodo = async (todos) => {
     try {
       const updatedTodos = await Promise.all(
-        todos.map(async (todo) => {
-          const { streetNumber, postalCode, city } = todo.userOffered.address;
-          const address = `${streetNumber}, ${postalCode}, ${city}`;
-          const coordinates = await convertAddressToPosition(address);
-          return {
-            ...todo,
-            userOffered: {
-              ...todo.userOffered,
-              address: coordinates,
-            },
-          };
-        })
+        todos
+          .filter((todo) => todo.status === "In Arbeit")
+          .map(async (todo) => {
+            const { streetNumber, postalCode, city } = todo.userOffered.address;
+            const address = `${streetNumber}, ${postalCode}, ${city}`;
+            const coordinates = await convertAddressToPosition(address);
+            return {
+              ...todo,
+              userOffered: {
+                ...todo.userOffered,
+                address: coordinates,
+              },
+            };
+          })
       );
 
       // Check for duplicates and update the state

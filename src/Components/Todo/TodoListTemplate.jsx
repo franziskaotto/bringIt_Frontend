@@ -214,7 +214,7 @@ const TodoListTemplate = ({
     } else if (todoStatus === "Erledigt") {
       return "border-green";
     } else if (todoStatus === "Abgelaufen") {
-      return "border-blue";
+      return "border-gray";
     } else return "border-white";
   };
 
@@ -228,7 +228,7 @@ const TodoListTemplate = ({
       case "Erledigt":
         return "Grün = ERLEDIGT";
       case "Abgelaufen":
-        return "Blau = ABGELAUFEN";
+        return "Grau = ABGELAUFEN";
       default:
         return "Unknown status.";
     }
@@ -284,11 +284,8 @@ const TodoListTemplate = ({
           onMouseLeave={handleMouseLeave}
         ></div>
         {expandedTodo === todo.todoId && (
-          <div
-            onClick={() => handleToggle(todo.todoId)}
-            className="todo-details"
-          >
-            <div>
+          <div className="todo-details">
+            <div onClick={() => handleToggle(todo.todoId)}>
               <p className="location">
                 <span className="label">Abholort:</span>
                 <br />
