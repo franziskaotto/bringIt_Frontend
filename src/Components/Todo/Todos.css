@@ -20,7 +20,7 @@
 }
 
 .my-todos li h3 {
-  margin: 0 0 10px;
+  margin: 0 0 5px;
   color: white;
   font-size: 30px;
 }
@@ -75,6 +75,7 @@
   font-size: 14px;
   color: white;
   margin: 0;
+  margin-bottom: 5px;
 }
 
 .todo-user-arrow {
@@ -96,6 +97,7 @@
 
 .todo-details {
   margin-top: 10px;
+  margin-left: 20px;
   transition: max-height 0.3s ease;
 }
 
@@ -119,11 +121,13 @@
   font-size: 0.8em;
   color: #cccccc;
   font-weight: bold;
+  margin: 0;
 }
 
 .todo-details .value {
   font-size: 1.2em;
   color: white;
+  margin: 0;
 }
 
 .action-btn {
@@ -137,6 +141,7 @@
   width: 240px;
   background: #0077b6;
   margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .action-btn:hover {
@@ -164,4 +169,35 @@
   cursor: pointer;
   /* z-index: -999;  */
   /* Ensure tooltip area is above padding of TodoListTemplate */
+}
+
+.todo-summary {
+  margin-left: 20px;
+}
+
+.userdetails {
+  font-style: italic;
+  padding-top: 10px;
+  font-size: 20px;
+  padding-bottom: 3px;
+}
+.expanded-wrapper {
+  display: flex;
+  align-items: flex-start;
+  /* gap: 200px; */
+  justify-content: space-between;
+}
+
+.expanded-right-container {
+  flex-grow: 1;
+}
+
+.expanded-left-container {
+  flex-grow: 2;
+  margin-right: 20px;
+}
+
+.collapsed-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }

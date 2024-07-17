@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "./MyTodos.css";
+// import "./MyTodos.css";
+import "../Todos.css";
 import TodoListTemplate from "../TodoListTemplate";
 
 const MyTodos = ({

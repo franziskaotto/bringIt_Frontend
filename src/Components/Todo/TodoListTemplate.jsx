@@ -206,6 +206,23 @@ const TodoListTemplate = ({
     }
   };
 
+  // Helper function to calculate age from date of birth
+  const calculateAge = (dateOfBirth) => {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+
+    // Adjust age if the current month and day is before the birth month and day
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+    return age;
+  };
+
   // get border-color by status
   const getBorderColorByStatus = (todoStatus) => {
     if (todoStatus === "Offen") {
@@ -268,7 +285,10 @@ const TodoListTemplate = ({
         )}
 
         <div className="todo-summary" onClick={() => handleToggle(todo.todoId)}>
-          <p className="todo-id">Todo Nr: {todo.todoId}</p>
+          <p className="todo-id">
+            Todo Nr: {todo.todoId},
+            <span>{new Date(todo.createdAt).toLocaleDateString()}</span>
+          </p>
           <h3>{todo.title}</h3>
           <div className="todo-user-arrow">
             <p className="todo-username">
@@ -286,100 +306,202 @@ const TodoListTemplate = ({
         ></div>
         {expandedTodo === todo.todoId && (
           <div className="todo-details">
-            <div onClick={() => handleToggle(todo.todoId)}>
-              <p className="location">
-                <span className="label">Abholort:</span>
-                <br />
-                {isEditing ? (
-                  <input
-                    type="text"
-                    value={editValues.location}
-                    onChange={(e) =>
-                      setEditValues({ ...editValues, location: e.target.value })
-                    }
-                    style={{ color: "#023E8A" }}
-                  />
-                ) : (
-                  <span className="value">{todo.location}</span>
-                )}
-              </p>
-              <p className="description">
-                <span className="label">Beschreibung:</span>
-                <br />
-                {isEditing ? (
-                  <input
-                    type="text"
-                    value={editValues.description}
-                    onChange={(e) =>
-                      setEditValues({
-                        ...editValues,
-                        description: e.target.value,
-                      })
-                    }
-                    style={{
-                      color: "#023E8A",
-                      width: "100%",
-                      minHeight: "4rem",
-                      resize: "vertical",
-                      padding: "0.5rem",
-                    }}
-                  />
-                ) : (
-                  <span className="value">{todo.description}</span>
-                )}
-              </p>
-              <p className="addInfo">
-                <span className="label">Zusatzinformation:</span>
-                <br />
-                {isEditing ? (
-                  <input
-                    type="text"
-                    value={editValues.addInfo}
-                    onChange={(e) =>
-                      setEditValues({ ...editValues, addInfo: e.target.value })
-                    }
-                    style={{
-                      color: "#023E8A",
-                      width: "100%",
-                      minHeight: "2rem",
-                      resize: "vertical",
-                      padding: "0.5rem",
-                    }}
-                  />
-                ) : (
-                  <span className="value">{todo.addInfo}</span>
-                )}
-              </p>
-              <p className="expiresAt">
-                <span className="label">Verfallsdatum:</span>
-                <br />
-                {isEditing ? (
-                  <input
-                    type="datetime-local"
-                    value={
-                      editValues.expiresAt
-                        ? editValues.expiresAt.slice(0, 17)
-                        : ""
-                    }
-                    onChange={(e) =>
-                      setEditValues({
-                        ...editValues,
-                        expiresAt: e.target.value,
-                      })
-                    }
-                    style={{ color: "#023E8A" }}
-                  />
-                ) : (
+            <div
+              className="expanded-wrapper"
+              onClick={() => handleToggle(todo.todoId)}
+            >
+              <div className="expanded-left-container">
+                <p className="location">
+                  <span className="label">Abholort:</span>
+                  <br />
+                  {isEditing ? (
+                    <input
+                      className="input-field"
+                      type="text"
+                      value={editValues.location}
+                      onChange={(e) =>
+                        setEditValues({
+                          ...editValues,
+                          location: e.target.value,
+                        })
+                      }
+                      style={{ color: "#023E8A" }}
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                  ) : (
+                    <span className="value">{todo.location}</span>
+                  )}
+                </p>
+                <p className="description">
+                  <span className="label">Beschreibung:</span>
+                  <br />
+                  {isEditing ? (
+                    <input
+                      className="input-field"
+                      type="text"
+                      value={editValues.description}
+                      onChange={(e) =>
+                        setEditValues({
+                          ...editValues,
+                          description: e.target.value,
+                        })
+                      }
+                      style={{
+                        color: "#023E8A",
+                        width: "100%",
+                        minHeight: "4rem",
+                        resize: "vertical",
+                        padding: "0.5rem",
+                      }}
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                  ) : (
+                    <span className="value">{todo.description}</span>
+                  )}
+                </p>
+                <p className="addInfo">
+                  <span className="label">Zusatzinformation:</span>
+                  <br />
+                  {isEditing ? (
+                    <input
+                      className="input-field"
+                      type="text"
+                      value={editValues.addInfo}
+                      onChange={(e) =>
+                        setEditValues({
+                          ...editValues,
+                          addInfo: e.target.value,
+                        })
+                      }
+                      style={{
+                        color: "#023E8A",
+                        width: "100%",
+                        minHeight: "2rem",
+                        resize: "vertical",
+                        padding: "0.5rem",
+                      }}
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                  ) : (
+                    <span className="value">{todo.addInfo}</span>
+                  )}
+                </p>
+                <p className="expiresAt">
+                  <span className="label">Verfallsdatum:</span>
+                  <br />
+                  {isEditing ? (
+                    <input
+                      className="input-field"
+                      type="datetime-local"
+                      value={
+                        editValues.expiresAt
+                          ? editValues.expiresAt.slice(0, 17)
+                          : ""
+                      }
+                      onChange={(e) =>
+                        setEditValues({
+                          ...editValues,
+                          expiresAt: e.target.value,
+                        })
+                      }
+                      style={{ color: "#023E8A" }}
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                  ) : (
+                    <span className="value">
+                      {new Date(todo.expiresAt).toLocaleString()}
+                    </span>
+                  )}
+                </p>
+                <p className="status">
+                  <span className="label">Status:</span>
+                  <br />
+                  <span className="value">{todo.status}</span>
+                </p>
+              </div>
+              {todo.status === "Offen" && activeTab !== "myTodos" && (
+                <div className="expanded-right-container">
+                  <div className="userdetails">USER-DETAILS</div>
+                  <span className="label">erstellt am </span>
                   <span className="value">
-                    {new Date(todo.expiresAt).toLocaleString()}
+                    {new Date(todo.createdAt).toLocaleString()}
                   </span>
-                )}
-              </p>
-              <p className="status">
-                <span className="label">Status:</span>
-                <br />
-                <span className="value">{todo.status}</span>
-              </p>
+                  <br />
+                  <span className="label">Name: </span>
+                  <span className="value">
+                    {todo.userOffered.firstName} {todo.userOffered.lastName}
+                  </span>
+                  <br />
+                  <span className="label">Plz, Ort: </span>
+                  <span className="value">
+                    {todo.userOffered.address.postalCode}
+                    {", "}
+                    {todo.userOffered.address.city}
+                  </span>
+                  <br />
+                  <span className="label">Strasse, Nr: </span>
+                  <span className="value">
+                    {todo.userOffered.address.streetNumber}
+                  </span>
+                  <br />
+                  <span className="label">mail: </span>
+                  <span className="value">{todo.userOffered.email}</span>
+                  <br />
+                  <span className="label">tel: </span>
+                  <span className="value">{todo.userOffered.phone}</span>
+                  <br />
+                  <span className="label">Alter: </span>
+                  <span className="value">
+                    {calculateAge(todo.userOffered.dateOfBirth)},
+                  </span>
+
+                  <span className="label"> BringITS: </span>
+                  <span className="value">{todo.userOffered.bringIts}</span>
+                  <br />
+                  <span className="label"> Entfernung zu home: </span>
+                  <span className="value">{todo.distance / 1000} km</span>
+                </div>
+              )}
+
+              {(todo.status === "In Arbeit" || todo.status === "Erledigt") && (
+                <div className="expanded-right-container">
+                  <div className="userdetails"> USER-DETAILS </div>
+
+                  <span className="label">angenommen von </span>
+                  <span className="value">{todo.userTaken.username}</span>
+                  <br />
+                  <span className="label">Name: </span>
+                  <span className="value">
+                    {todo.userTaken.firstName} {todo.userTaken.lastName}
+                  </span>
+                  <br />
+                  <span className="label">Plz, Ort: </span>
+                  <span className="value">
+                    {todo.userTaken.address.postalCode}
+                    {", "}
+                    {todo.userTaken.address.city}
+                  </span>
+                  <br />
+                  <span className="label">Strasse, Nr: </span>
+                  <span className="value">
+                    {todo.userTaken.address.streetNumber}
+                  </span>
+                  <br />
+                  <span className="label">mail: </span>
+                  <span className="value">{todo.userTaken.email}</span>
+                  <br />
+                  <span className="label">tel: </span>
+                  <span className="value">{todo.userTaken.phone}</span>
+                  <br />
+                  <span className="label">Alter: </span>
+                  <span className="value">
+                    {calculateAge(todo.userTaken.dateOfBirth)}
+                  </span>
+                  <br />
+                  <span className="label"> BringITS: </span>
+                  <span className="value">{todo.userTaken.bringIts}</span>
+                </div>
+              )}
             </div>
             {activeTab === "acceptedTodos" && todo.status === "In Arbeit" && (
               <div className="todo-actions">
