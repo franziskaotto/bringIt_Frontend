@@ -287,13 +287,20 @@ const TodoListTemplate = ({
         <div className="todo-summary" onClick={() => handleToggle(todo.todoId)}>
           <p className="todo-id">
             Todo Nr: {todo.todoId},
-            <span>{new Date(todo.createdAt).toLocaleDateString()}</span>
+            <span className="todo-username">
+              {new Date(todo.createdAt).toLocaleDateString()}
+            </span>
           </p>
           <h3>{todo.title}</h3>
           <div className="todo-user-arrow">
-            <p className="todo-username">
-              by User: {todo.userOffered.username}
-            </p>
+            {activeTab !== "myTodos" && (
+              <p className="todo-username">
+                by User:{" "}
+                <span className="todo-username">
+                  {todo.userOffered.username}
+                </span>
+              </p>
+            )}
             <span className="arrow">
               {expandedTodo === todo.todoId ? "▲" : "▼"}
             </span>
@@ -419,7 +426,7 @@ const TodoListTemplate = ({
                   <span className="value">{todo.status}</span>
                 </p>
               </div>
-              {todo.status === "Offen" && activeTab !== "myTodos" && (
+              {(activeTab === "openTodos" || activeTab === "acceptedTodos") && (
                 <div className="expanded-right-container">
                   <div className="userdetails">USER-DETAILS</div>
                   <span className="label">erstellt am </span>
@@ -463,45 +470,46 @@ const TodoListTemplate = ({
                 </div>
               )}
 
-              {(todo.status === "In Arbeit" || todo.status === "Erledigt") && (
-                <div className="expanded-right-container">
-                  <div className="userdetails"> USER-DETAILS </div>
+              {activeTab === "myTodos" &&
+                (todo.status === "In Arbeit" || todo.status === "Erledigt") && (
+                  <div className="expanded-right-container">
+                    <div className="userdetails"> USER-DETAILS </div>
 
-                  <span className="label">angenommen von </span>
-                  <span className="value">{todo.userTaken.username}</span>
-                  <br />
-                  <span className="label">Name: </span>
-                  <span className="value">
-                    {todo.userTaken.firstName} {todo.userTaken.lastName}
-                  </span>
-                  <br />
-                  <span className="label">Plz, Ort: </span>
-                  <span className="value">
-                    {todo.userTaken.address.postalCode}
-                    {", "}
-                    {todo.userTaken.address.city}
-                  </span>
-                  <br />
-                  <span className="label">Strasse, Nr: </span>
-                  <span className="value">
-                    {todo.userTaken.address.streetNumber}
-                  </span>
-                  <br />
-                  <span className="label">mail: </span>
-                  <span className="value">{todo.userTaken.email}</span>
-                  <br />
-                  <span className="label">tel: </span>
-                  <span className="value">{todo.userTaken.phone}</span>
-                  <br />
-                  <span className="label">Alter: </span>
-                  <span className="value">
-                    {calculateAge(todo.userTaken.dateOfBirth)}
-                  </span>
-                  <br />
-                  <span className="label"> BringITS: </span>
-                  <span className="value">{todo.userTaken.bringIts}</span>
-                </div>
-              )}
+                    <span className="label">angenommen von </span>
+                    <span className="value">{todo.userTaken.username}</span>
+                    <br />
+                    <span className="label">Name: </span>
+                    <span className="value">
+                      {todo.userTaken.firstName} {todo.userTaken.lastName}
+                    </span>
+                    <br />
+                    <span className="label">Plz, Ort: </span>
+                    <span className="value">
+                      {todo.userTaken.address.postalCode}
+                      {", "}
+                      {todo.userTaken.address.city}
+                    </span>
+                    <br />
+                    <span className="label">Strasse, Nr: </span>
+                    <span className="value">
+                      {todo.userTaken.address.streetNumber}
+                    </span>
+                    <br />
+                    <span className="label">mail: </span>
+                    <span className="value">{todo.userTaken.email}</span>
+                    <br />
+                    <span className="label">tel: </span>
+                    <span className="value">{todo.userTaken.phone}</span>
+                    <br />
+                    <span className="label">Alter: </span>
+                    <span className="value">
+                      {calculateAge(todo.userTaken.dateOfBirth)}
+                    </span>
+                    <br />
+                    <span className="label"> BringITS: </span>
+                    <span className="value">{todo.userTaken.bringIts}</span>
+                  </div>
+                )}
             </div>
             {activeTab === "acceptedTodos" && todo.status === "In Arbeit" && (
               <div className="todo-actions">
@@ -558,15 +566,15 @@ const TodoListTemplate = ({
                         </button>
                       </>
                     )}
-                    {todo.status === "In Arbeit" && (
-                      <button
-                        onClick={() => handleMyTodoCompleted(todo)}
-                        className="action-btn"
-                      >
-                        Erledigt
-                      </button>
-                    )}
                   </>
+                )}
+                {todo.status === "In Arbeit" && (
+                  <button
+                    onClick={() => handleMyTodoCompleted(todo)}
+                    className="action-btn"
+                  >
+                    Erledigt
+                  </button>
                 )}
               </div>
             )}
