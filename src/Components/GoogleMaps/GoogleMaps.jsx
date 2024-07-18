@@ -14,7 +14,7 @@ import ShowPinsOfAcceptedTodos from "./ShowPinsOfAcceptedTodos";
 const googleMapsAPIKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const mapsId = import.meta.env.VITE_MAPS_ID;
 
-const GoogleMaps = ({ openTodos, acceptedTodos }) => {
+const GoogleMaps = ({ openTodos, acceptedTodos, handleShowTodoExpanded }) => {
   const [longitude, setLongitude] = useState(null);
   const [latitude, setLatitude] = useState(null);
 
@@ -54,8 +54,14 @@ const GoogleMaps = ({ openTodos, acceptedTodos }) => {
               options={{}}
             >
               <CenterLocationPin latitude={latitude} longitude={longitude} />
-              <ShowPinsOfOpenTodos openTodos={openTodos} />
-              <ShowPinsOfAcceptedTodos acceptedTodos={acceptedTodos} />
+              <ShowPinsOfOpenTodos
+                openTodos={openTodos}
+                handleShowTodoExpanded={handleShowTodoExpanded}
+              />
+              <ShowPinsOfAcceptedTodos
+                acceptedTodos={acceptedTodos}
+                handleShowTodoExpanded={handleShowTodoExpanded}
+              />
             </Map>
           ) : (
             <p>Loading...</p>
@@ -73,12 +79,4 @@ export default GoogleMaps;
 <APIProvider />
  - needs to wrap everything, 
  - it loads all of the different libraries combined with our API KEY
-
-
-
-
-
-
-
-
 */

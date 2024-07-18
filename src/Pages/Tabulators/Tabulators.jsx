@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, Component } from "react";
+import React, { useEffect, useState, Component } from "react";
 import { useRecoilState } from "recoil";
 import "./Tabulators.css";
 
@@ -13,9 +13,6 @@ import AcceptedTodos from "../../Components/Todo/AcceptedTodos";
 import { bringItsState } from "../../state/bringItsState";
 import TodoOrganizer from "../../Components/Todo/TodoOrganizer";
 
-const googleMapsAPIKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-const mapsId = import.meta.env.VITE_MAPS_ID;
-
 const Tabulators = () => {
   const [key, setKey] = useState("map");
   const [expandedTodo, setExpandedTodo] = useState(null);
@@ -26,196 +23,42 @@ const Tabulators = () => {
   const [myTodos, setMyTodos] = useState([]);
   const [originalMyTodos, setOriginalMyTodos] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [currentUser, setCurrentUser] = useState(null); // Initialize with null
+  const [currentUser, setCurrentUser] = useState(null);
+  const [
+    tabChangeByHandleShowTodoExpanded,
+    setTabChangeByHandleShowTodoExpanded,
+  ] = useState(false);
 
   const token = localStorage.getItem("token");
   const userId = parseInt(localStorage.getItem("userId"), 10);
   const [bringIts, setBringIts] = useRecoilState(bringItsState);
 
-  // ?? SCROLL-STICKY TRYOUT until 14.7.
-  // const tabBarRef = useRef(null);
-  // const [scroll, setScroll] = useState(false);
+  const googleMapsAPIKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+  const mapsId = import.meta.env.VITE_MAPS_ID;
 
   // fetch todos onChange of activeKey according to specific key.
   useEffect(() => {
-    if (key === "map") {
-      fetchOpenTodos();
-      fetchAcceptedTodos();
-    }
-    if (key === "myTodos") {
-      fetchMyTodos();
-    }
-    if (key === "openTodos") {
-      fetchOpenTodos();
-    }
-    if (key === "acceptedTodos") {
-      fetchAcceptedTodos();
+    if (!tabChangeByHandleShowTodoExpanded) {
+      if (key === "map") {
+        fetchOpenTodos();
+        fetchAcceptedTodos();
+      }
+      if (key === "myTodos") {
+        fetchMyTodos();
+      }
+      if (key === "openTodos") {
+        fetchOpenTodos();
+      }
+      if (key === "acceptedTodos") {
+        fetchAcceptedTodos();
+      }
+    } else {
+      // Reset the flag after handling the tab change
+      setTabChangeByHandleShowTodoExpanded(false);
     }
   }, [key]);
 
-  // fetch MyTodos
-  const fetchMyTodos = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:8081/api/todo/offeredByUser/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setOriginalMyTodos(data); // Store the original myTodos for correct DropDown
-        setMyTodos(data); // Set the current myTodos
-        fetchCurrentUser();
-      } else {
-        console.error("Failed to fetch MyTodos");
-        console.log(response);
-        setErrorMessage("Failed to fetch MyTodos");
-      }
-    } catch (error) {
-      console.error("Error fetching MyTodos:", error);
-    }
-  };
-
-  // fetch OpenTodos -> not expired, Status: "Offen":
-  const fetchOpenTodos = async () => {
-    try {
-      const response = await fetch("http://localhost:8081/api/todo", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.ok) {
-        const data = await response.json();
-        // Filter todos based on userId -> remove todos by this user
-        const todos = data.filter((todo) => todo.userOffered.userId !== userId);
-        setOriginalOpenTodos(todos);
-
-        // Fetch distances for the todos
-        const distances = await fetchDistances(todos);
-
-        // Combine the todos with their distances
-        const todosWithDistances = todos.map((todo) => {
-          const distanceData = distances.find((d) => d.todoId === todo.todoId);
-
-          return {
-            ...todo,
-            distance: distanceData ? distanceData.distance : null,
-          };
-        });
-
-        setOpenTodos(todosWithDistances);
-        fetchCurrentUser();
-      } else {
-        console.error("Failed to fetch OpenTodos");
-        console.log("response: " + response);
-        setErrorMessage("Failed to fetch OpenTodos");
-      }
-    } catch (error) {
-      console.error("Error fetching OpenTodos: ", error);
-      setErrorMessage("Error fetching OpenTodos");
-    }
-  };
-
-  // fetch OpenTodos by City:
-  const fetchOpenTodosByCity = async (city) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8081/api/todo/city/${city}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (response.ok) {
-        const data = await response.json();
-        // Filter todos based on userId -> remove todos by this user
-        const todos = data.filter((todo) => todo.userOffered.userId !== userId);
-        setOpenTodos(todos);
-      } else {
-        console.error("Failed to fetch OpenTodosByCity " + city);
-        console.log("response: " + response);
-        setErrorMessage("Failed to fetch OpenTodosBy City " + city);
-      }
-    } catch (error) {
-      console.error("Error fetching OpenTOdosByCity: ", error);
-      setErrorMessage("Error fetching OpenTOdodsByCity ", city);
-    }
-  };
-
-  // fetch OpenTodos by PostalCode:
-  const fetchOpenTodosByPostalCode = async (postalCode) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8081/api/todo/postcode/${postalCode}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (response.ok) {
-        const data = await response.json();
-        // Filter todos based on userId -> remove todos by this user
-        const todos = data.filter((todo) => todo.userOffered.userId !== userId);
-        setOpenTodos(todos);
-      } else {
-        console.error("Failed to fetch OpenTodosByCity " + postalCode);
-        console.log("response: " + response);
-        setErrorMessage("Failed to fetch OpenTodosBy City " + postalCode);
-      }
-    } catch (error) {
-      console.error("Error fetching OpenTOdosByCity: ", error);
-      setErrorMessage("Error fetching OpenTOdodsByCity ", postalCode);
-    }
-  };
-
-  // fetch AcceptedTodos (by User Taken):
-  const fetchAcceptedTodos = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:8081/api/todo/takenByUser/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (response.ok) {
-        const data = await response.json();
-        // Filter todos based on userId -> remove todos by this user
-        const todos = data.filter((todo) => todo.userOffered.userId !== userId);
-        setOriginalAcceptedTodos(todos); // Store the original acceptedTodos
-
-        // Fetch distances for the todos
-        const distances = await fetchDistances(todos);
-
-        // Combine the todos with their distances
-        const todosWithDistances = todos.map((todo) => {
-          const distanceData = distances.find((d) => d.todoId === todo.todoId);
-
-          return {
-            ...todo,
-            distance: distanceData ? distanceData.distance : null,
-          };
-        });
-
-        setAcceptedTodos(todosWithDistances);
-        fetchCurrentUser();
-      } else {
-        console.error("Failed to fetch AcceptedTodos");
-        setErrorMessage("Failed to fetch AcceptedTodos");
-      }
-    } catch (error) {
-      console.error("Error fetching AcceptedTodos: ", error);
-      setErrorMessage("Error fetching AcceptedTodos");
-    }
-  };
-
-  // fetch current user:
+  // fetch current user (async version)
   const fetchCurrentUser = async () => {
     try {
       const response = await fetch(
@@ -252,9 +95,199 @@ const Tabulators = () => {
   // call fetchCurrentUser on componentMount so that bringIts in Navbar are displayed:
   useEffect(() => {
     fetchCurrentUser();
-
     // handleStickyTabs();
   }, []);
+
+  // useEffect to fetch OpenTodos and AcceptedTodos when currentUser changes
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     fetchOpenTodos();
+  //     fetchAcceptedTodos();
+  //   }
+  // }, [currentUser]);
+
+  // fetch MyTodos
+  const fetchMyTodos = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8081/api/todo/offeredByUser/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setOriginalMyTodos(data); // Store the original myTodos for correct DropDown
+        setMyTodos(data); // Set the current myTodos
+        fetchCurrentUser();
+        setErrorMessage(""); // Clear any previous error message
+      } else {
+        console.error("Failed to fetch MyTodos");
+        console.log(response);
+        setErrorMessage("Failed to fetch MyTodos");
+      }
+    } catch (error) {
+      console.error("Error fetching MyTodos:", error);
+    }
+  };
+
+  // fetch OpenTodos -> not expired, Status: "Offen":
+  const fetchOpenTodos = async () => {
+    try {
+      // Check if currentUser is defined
+      if (currentUser) {
+        console.warn(
+          "Current user is not defined. OpenTodos will not be fetched."
+        );
+        return;
+      }
+
+      const response = await fetch("http://localhost:8081/api/todo", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        // Filter todos based on userId -> remove todos by this user
+        const todos = data.filter((todo) => todo.userOffered.userId !== userId);
+        setOriginalOpenTodos(todos);
+
+        // Fetch distances for the todos
+        const distances = await fetchDistances(todos);
+
+        // Combine the todos with their distances
+        const todosWithDistances = todos.map((todo) => {
+          const distanceData = distances.find((d) => d.todoId === todo.todoId);
+
+          return {
+            ...todo,
+            distance: distanceData ? distanceData.distance : null,
+          };
+        });
+
+        setOpenTodos(todosWithDistances);
+        setErrorMessage(""); // Clear any previous error message
+        fetchCurrentUser();
+      } else {
+        console.error("Failed to fetch OpenTodos");
+        console.log("response: " + response);
+        setErrorMessage("Failed to fetch OpenTodos");
+      }
+    } catch (error) {
+      console.error("Error fetching OpenTodos: ", error);
+      setErrorMessage("Error fetching OpenTodos");
+    }
+  };
+
+  // fetch OpenTodos by City:
+  const fetchOpenTodosByCity = async (city) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8081/api/todo/city/${city}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        // Filter todos based on userId -> remove todos by this user
+        const todos = data.filter((todo) => todo.userOffered.userId !== userId);
+        setOpenTodos(todos);
+      } else {
+        console.error("Failed to fetch OpenTodos by City " + city);
+        console.log("response: " + response);
+        setErrorMessage("Failed to fetch OpenTodos by City " + city);
+      }
+    } catch (error) {
+      console.error("Error fetching OpenTodosByCity: ", error);
+      setErrorMessage("Error fetching OpenTodosByCity ", city);
+    }
+  };
+
+  // fetch OpenTodos by PostalCode:
+  const fetchOpenTodosByPostalCode = async (postalCode) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8081/api/todo/postcode/${postalCode}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        // Filter todos based on userId -> remove todos by this user
+        const todos = data.filter((todo) => todo.userOffered.userId !== userId);
+        setOpenTodos(todos);
+      } else {
+        console.error("Failed to fetch OpenTodos by PostalCode " + postalCode);
+        console.log("response: " + response);
+        setErrorMessage(
+          "Failed to fetch OpenTodos by PostalCode " + postalCode
+        );
+      }
+    } catch (error) {
+      console.error("Error fetching OpenTodosByPostalCode: ", error);
+      setErrorMessage("Error fetching OpenTodosByPostalCode ", postalCode);
+    }
+  };
+
+  // fetch AcceptedTodos (by User Taken):
+  const fetchAcceptedTodos = async () => {
+    // Check if currentUser is defined
+    if (!currentUser) {
+      console.warn(
+        "Current user is not defined. AcceptedTodos will not be fetched."
+      );
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:8081/api/todo/takenByUser/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        // Filter todos based on userId -> remove todos by this user
+        const todos = data.filter((todo) => todo.userOffered.userId !== userId);
+        setOriginalAcceptedTodos(todos); // Store the original acceptedTodos
+
+        // Fetch distances for the todos
+        const distances = await fetchDistances(todos);
+
+        // Combine the todos with their distances
+        const todosWithDistances = todos.map((todo) => {
+          const distanceData = distances.find((d) => d.todoId === todo.todoId);
+
+          return {
+            ...todo,
+            distance: distanceData ? distanceData.distance : null,
+          };
+        });
+
+        setAcceptedTodos(todosWithDistances);
+        setErrorMessage(""); // Clear any previous error message
+        fetchCurrentUser();
+      } else {
+        console.error("Failed to fetch AcceptedTodos");
+        setErrorMessage("Failed to fetch AcceptedTodos");
+      }
+    } catch (error) {
+      console.error("Error fetching AcceptedTodos: ", error);
+      setErrorMessage("Error fetching AcceptedTodos");
+    }
+  };
 
   // handle Sort MyTodos:
   const handleSortMyTodos = (type, order) => {
@@ -426,7 +459,52 @@ const Tabulators = () => {
     });
   };
 
-  // populate todos with userAge:
+  // handle show todo expanded in openTodos
+  const handleShowTodoExpanded = async (todoId, TodoStatus) => {
+    setTabChangeByHandleShowTodoExpanded(true);
+
+    // filter the searched todo and the rest:
+    let filteredTodo;
+    let residueTodos;
+    if (TodoStatus === "Offen") {
+      filteredTodo = originalOpenTodos.filter((todo) => todo.todoId === todoId);
+      residueTodos = originalOpenTodos.filter((todo) => todo.todoId !== todoId);
+    } else {
+      filteredTodo = originalAcceptedTodos.filter(
+        (todo) => todo.todoId === todoId
+      );
+      residueTodos = originalAcceptedTodos.filter(
+        (todo) => todo.todoId !== todoId
+      );
+    }
+
+    // sort todos (1. filteredTodo, 2. residueTodos):
+    const sortedTodos = [...filteredTodo, ...residueTodos];
+
+    // add distances to sortedTodos
+    const distances = await fetchDistances(sortedTodos);
+
+    // Combine the sortedTodos with their distances
+    const todosWithDistances = sortedTodos.map((todo) => {
+      const distanceData = distances.find((d) => d.todoId === todo.todoId); // find only works with promises (async function)!
+
+      return {
+        ...todo,
+        distance: distanceData ? distanceData.distance : null,
+      };
+    });
+
+    // expand TodoListTemplate
+    setExpandedTodo(todoId);
+
+    if (TodoStatus === "Offen") {
+      setOpenTodos(todosWithDistances);
+      setKey("openTodos");
+    } else {
+      setAcceptedTodos(todosWithDistances);
+      setKey("acceptedTodos");
+    }
+  };
 
   return (
     <>
@@ -442,6 +520,7 @@ const Tabulators = () => {
               <GoogleMaps
                 openTodos={originalOpenTodos}
                 acceptedTodos={originalAcceptedTodos}
+                handleShowTodoExpanded={handleShowTodoExpanded}
               />
             </div>
           </Tab>
@@ -536,50 +615,7 @@ const Tabulators = () => {
   );
 };
 
-// Function to fetch distances from Google-Matrix-API -> request results in Cors-Error
-/*
-const fetchDistances = async (todos) => {
-  const destinations = todos.map((todo) => `
-  ${todo.userOffered.address.streetNumber} 
-  ${todo.userOffered.address.postalCode} 
-  ${todo.userOffered.address.city}`);
-
-  const origin =  `
-  ${currentUser.user.address.streetNumber} 
-  ${currentUser.user.address.postalCode} 
-  ${currentUser.user.address.city}`
-
-  const destinationStr = destinations.join('|');
-
-  // const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destinationStr)}&key=${GOOGLE_MAPS_API_KEY}`;
-  const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${destinationStr}&key=${GOOGLE_MAPS_API_KEY}`;
-
-  try {
-    // const response = await fetch(url);
-    const response = await axios.get(url);
-    const data = await response.json();
-
-    console.log("XXX catch data: ", data);
-    if (data.status === "ok") {
-      const distances = data.rows[0].elements.map((element, index) => ({
-        todoId: todos[index].id,
-        distances: element.distance.value, // distance in meters
-      }));
-      return distances;
-    } else {
-      console.error("Error fetching distances: ", data.error_message);
-      return [];
-    }
-  } catch (error) {
-    console.error("Error fetching distances: ", error);
-    return [];
-  }
-};
-
-  */
-
 // ?? VERS until 14.7. incl. SCROLL-STICKY TRYOUT
-
 /*
   return (
     <>

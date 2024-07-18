@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Pin, AdvancedMarker, InfoWindow } from "@vis.gl/react-google-maps";
 const token = localStorage.getItem("token");
 
-const ShowPinsOfAcceptedTodos = ({ acceptedTodos }) => {
+const ShowPinsOfAcceptedTodos = ({ acceptedTodos, handleShowTodoExpanded }) => {
   const [selectedPin, setSelectedPin] = useState(null);
   const [coordinatesTodos, setCoordinatesTodos] = useState([]);
   const userId = parseInt(localStorage.getItem("userId"), 10);
@@ -103,7 +103,14 @@ const ShowPinsOfAcceptedTodos = ({ acceptedTodos }) => {
             User: {selectedPin.userOffered.username}
           </p>
           <p className="pin-description">Woher: {selectedPin.location}</p>
-          <button className="btn-description">▶️ Todo</button>
+          <button
+            className="btn-description"
+            onClick={() =>
+              handleShowTodoExpanded(selectedPin.todoId, selectedPin.status)
+            }
+          >
+            ▶️ Todo
+          </button>
         </InfoWindow>
       )}
     </>
