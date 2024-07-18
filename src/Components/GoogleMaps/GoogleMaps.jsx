@@ -6,8 +6,9 @@ import "./GoogleMaps.css";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
 
 import CenterLocationPin from "./CenterLocationPin";
-import ShowPinsOfOpenTodos from "./ShowPinsOfOpenTodos";
-import ShowPinsOfAcceptedTodos from "./ShowPinsOfAcceptedTodos";
+import ShowPinsOfOpenTodos from "./GoogleMaps_old/ShowPinsOfOpenTodos";
+import ShowPinsOfAcceptedTodos from "./GoogleMaps_old/ShowPinsOfAcceptedTodos";
+import ShowTodoPins from "./ShowTodoPins";
 
 // const googleMapsAPIKey = "AIzaSyBacQv7qzQpvVYWkP9woi9FHEMJrFBN3Jk";
 // const mapsId = "df621f6bd5a413fd";
@@ -54,17 +55,26 @@ const GoogleMaps = ({ openTodos, acceptedTodos, handleShowTodoExpanded }) => {
               options={{}}
             >
               <CenterLocationPin latitude={latitude} longitude={longitude} />
-              <ShowPinsOfOpenTodos
+              <ShowTodoPins
+                todos={openTodos}
+                handleShowTodoExpanded={handleShowTodoExpanded}
+              />
+              <ShowTodoPins
+                todos={acceptedTodos}
+                handleShowTodoExpanded={handleShowTodoExpanded}
+              />
+
+              {/* <ShowPinsOfOpenTodos
                 openTodos={openTodos}
                 handleShowTodoExpanded={handleShowTodoExpanded}
               />
               <ShowPinsOfAcceptedTodos
                 acceptedTodos={acceptedTodos}
                 handleShowTodoExpanded={handleShowTodoExpanded}
-              />
+              /> */}
             </Map>
           ) : (
-            <p>Loading...</p>
+            <p>Loading Map...</p>
           )}
         </div>
       </APIProvider>

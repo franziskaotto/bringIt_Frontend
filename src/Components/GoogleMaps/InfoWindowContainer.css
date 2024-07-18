@@ -1,0 +1,67 @@
+.info-window {
+  margin: 2px 5px;
+}
+
+.pin-description {
+  color: #3084a5;
+  font-style: italic;
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 5px;
+}
+
+.user-description {
+  color: #3084a5;
+  font-style: italic;
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+.user-offered {
+  color: #303030;
+  font-size: 12px;
+  margin-left: 2px;
+}
+
+.todo-id {
+  color: #303030;
+  margin-left: 2px;
+  margin-right: 12px;
+  font-size: 12px;
+}
+
+.title-description {
+  color: #3084a5;
+  font-style: italic;
+  font-size: 12px;
+  margin: 10px 0px;
+}
+
+.title {
+  font-size: 20px;
+  font-style: normal;
+  color: #303030;
+}
+
+.todo-details,
+.todo-location {
+  color: #303030;
+  font-style: normal;
+  font-size: 12px;
+  margin-left: 7px;
+}
+
+.btn-container {
+  text-align: center;
+}
+
+.btn-description {
+  border-radius: 7px;
+  margin-top: 10px;
+}
+
+.btn-description:hover {
+  background-color: #bbb;
+}

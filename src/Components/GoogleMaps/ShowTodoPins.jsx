@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Pin, AdvancedMarker, InfoWindow } from "@vis.gl/react-google-maps";
+import InfoWindowContainer from "./InfoWindowContainer";
 const token = localStorage.getItem("token");
 
-const ShowPinsOfOpenTodos = ({ openTodos, handleShowTodoExpanded }) => {
+const ShowTodoPins = ({ todos, handleShowTodoExpanded }) => {
   const [selectedPin, setSelectedPin] = useState(null);
   const [coordinatesTodos, setCoordinatesTodos] = useState([]);
 
@@ -59,10 +60,11 @@ const ShowPinsOfOpenTodos = ({ openTodos, handleShowTodoExpanded }) => {
   };
 
   useEffect(() => {
-    if (openTodos && openTodos.length > 0) {
-      extractAddressesFromTodo(openTodos);
+    if (todos && todos.length > 0) {
+      extractAddressesFromTodo(todos);
+      setSelectedPin(null);
     }
-  }, [openTodos]);
+  }, [todos]);
 
   return (
     <>
@@ -75,40 +77,32 @@ const ShowPinsOfOpenTodos = ({ openTodos, handleShowTodoExpanded }) => {
             lng: address.userOffered.address.lng,
           }}
         >
-          <Pin
-            background={"red"} // can also use image
-            borderColor={"black"}
-            glyphColor={"maroon"} //dot in the middle
-          ></Pin>
+          {todos[0].status === "Offen" && (
+            <Pin
+              background={"red"} // can also use image
+              borderColor={"black"}
+              glyphColor={"maroon"} //dot in the middle
+            ></Pin>
+          )}
+          {todos[0].status === "In Arbeit" && (
+            <Pin
+              background={"yellow"} // can also use image
+              borderColor={"black"}
+              glyphColor={"#755100"} //dot in the middle
+              //
+            ></Pin>
+          )}
         </AdvancedMarker>
       ))}
       {selectedPin && (
-        <InfoWindow
-          position={{
-            lat: selectedPin.userOffered.address.lat,
-            lng: selectedPin.userOffered.address.lng,
-          }}
-          onCloseClick={() => setSelectedPin(null)}
-        >
-          <p className="pin-description">Todo ID: {selectedPin.todoId}</p>
-          <p className="pin-description">Titel: {selectedPin.title}</p>
-          <p className="pin-description">Details: {selectedPin.description}</p>
-          <p className="pin-description">
-            User: {selectedPin.userOffered.username}
-          </p>
-          <p className="pin-description">Woher: {selectedPin.location}</p>
-          <button
-            className="btn-description"
-            onClick={() =>
-              handleShowTodoExpanded(selectedPin.todoId, selectedPin.status)
-            }
-          >
-            ▶️ Todo
-          </button>
-        </InfoWindow>
+        <InfoWindowContainer
+          selectedPin={selectedPin}
+          setSelectedPin={setSelectedPin}
+          handleShowTodoExpanded={handleShowTodoExpanded}
+        />
       )}
     </>
   );
 };
 
-export default ShowPinsOfOpenTodos;
+export default ShowTodoPins;

@@ -39,18 +39,14 @@ const Tabulators = () => {
   // fetch todos onChange of activeKey according to specific key.
   useEffect(() => {
     if (!tabChangeByHandleShowTodoExpanded) {
-      if (key === "map") {
+      if (key === "map" || key === "openTodos") {
         fetchOpenTodos();
+      }
+      if (key === "map" || key === "acceptedTodos") {
         fetchAcceptedTodos();
       }
       if (key === "myTodos") {
         fetchMyTodos();
-      }
-      if (key === "openTodos") {
-        fetchOpenTodos();
-      }
-      if (key === "acceptedTodos") {
-        fetchAcceptedTodos();
       }
     } else {
       // Reset the flag after handling the tab change
@@ -71,9 +67,8 @@ const Tabulators = () => {
       );
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetched user data: ", data); // Log the fetched data
         setCurrentUser(data);
-        setBringIts(data.user.bringIts); // Properly call the setter function
+        setBringIts(data.user.bringIts);
       } else {
         console.error("Failed to fetch User");
         console.log("response: " + response);
@@ -136,14 +131,6 @@ const Tabulators = () => {
   // fetch OpenTodos -> not expired, Status: "Offen":
   const fetchOpenTodos = async () => {
     try {
-      // Check if currentUser is defined
-      if (currentUser) {
-        console.warn(
-          "Current user is not defined. OpenTodos will not be fetched."
-        );
-        return;
-      }
-
       const response = await fetch("http://localhost:8081/api/todo", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -240,14 +227,6 @@ const Tabulators = () => {
 
   // fetch AcceptedTodos (by User Taken):
   const fetchAcceptedTodos = async () => {
-    // Check if currentUser is defined
-    if (!currentUser) {
-      console.warn(
-        "Current user is not defined. AcceptedTodos will not be fetched."
-      );
-      return;
-    }
-
     try {
       const response = await fetch(
         `http://localhost:8081/api/todo/takenByUser/${userId}`,
@@ -419,10 +398,10 @@ const Tabulators = () => {
   };
 
   // Function to fetch distances from Google-Matrix-API (version with DistanceMatrixServic)
-  const fetchDistances = (todos) => {
+  const fetchDistances = async (todos) => {
     return new Promise((resolve, reject) => {
       if (!currentUser) {
-        reject("Current user is not defined");
+        reject("Inside fetchDistances - Current user is not defined");
         return;
       }
 

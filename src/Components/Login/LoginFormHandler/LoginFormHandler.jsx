@@ -20,7 +20,6 @@ const LoginFormHandler = ({ setIsLoggedIn }) => {
   };
 
   const handleLogin = async (e) => {
-    console.log("Inside handleLogin");
     e.preventDefault();
     const authoHeader = btoa(credentials.username + ":" + credentials.password);
 

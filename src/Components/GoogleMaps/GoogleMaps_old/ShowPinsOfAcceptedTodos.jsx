@@ -62,7 +62,6 @@ const ShowPinsOfAcceptedTodos = ({ acceptedTodos, handleShowTodoExpanded }) => {
 
   useEffect(() => {
     if (acceptedTodos && acceptedTodos.length > 0) {
-      console.log("Processing acceptedTodos prop:", acceptedTodos);
       extractAddressesFromTodo(acceptedTodos);
     }
   }, [acceptedTodos]);
