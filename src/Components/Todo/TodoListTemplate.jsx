@@ -223,6 +223,20 @@ const TodoListTemplate = ({
     return age;
   };
 
+  // Helper function format distance for display
+  const formatDistance = (distance) => {
+    const switchUnit = 1000;
+    let displayDistance = null;
+    if (distance < 1000) {
+      displayDistance = distance + " m";
+      return displayDistance;
+    } else {
+      let roundedDistance = (distance / 1000).toFixed(2);
+      displayDistance = roundedDistance + " km";
+      return displayDistance;
+    }
+  };
+
   // get border-color by status
   const getBorderColorByStatus = (todoStatus) => {
     if (todoStatus === "Offen") {
@@ -466,7 +480,7 @@ const TodoListTemplate = ({
                   <span className="value">{todo.userOffered.bringIts}</span>
                   <br />
                   <span className="label"> Entfernung zu home: </span>
-                  <span className="value">{todo.distance / 1000} km</span>
+                  <span className="value">{formatDistance(todo.distance)}</span>
                 </div>
               )}
 

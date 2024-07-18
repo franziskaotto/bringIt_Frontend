@@ -9,10 +9,10 @@ import CenterLocationPin from "./CenterLocationPin";
 import ShowPinsOfOpenTodos from "./ShowPinsOfOpenTodos";
 import ShowPinsOfAcceptedTodos from "./ShowPinsOfAcceptedTodos";
 
-const googleMapsAPIKey = "AIzaSyBacQv7qzQpvVYWkP9woi9FHEMJrFBN3Jk";
-const mapsId = "df621f6bd5a413fd";
-// const googleMapsAPIKey = process.env.NEXT_GOOGLE_MAPS_KEY;
-// const mapsId = process.env.NEXT_MAPS_ID;
+// const googleMapsAPIKey = "AIzaSyBacQv7qzQpvVYWkP9woi9FHEMJrFBN3Jk";
+// const mapsId = "df621f6bd5a413fd";
+const googleMapsAPIKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+const mapsId = import.meta.env.VITE_MAPS_ID;
 
 const GoogleMaps = ({ openTodos, acceptedTodos }) => {
   const [longitude, setLongitude] = useState(null);

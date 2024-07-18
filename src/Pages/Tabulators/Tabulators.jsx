@@ -13,11 +13,8 @@ import AcceptedTodos from "../../Components/Todo/AcceptedTodos";
 import { bringItsState } from "../../state/bringItsState";
 import TodoOrganizer from "../../Components/Todo/TodoOrganizer";
 
-//const googleMapsAPIKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-//const mapsId = import.meta.env.VITE_MAPS_ID;
-
-//console.log("Google Maps API Key: ", googleMapsAPIKey); // Check if the API key is correctly logged
-//console.log("Maps ID: ", mapsId);
+const googleMapsAPIKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+const mapsId = import.meta.env.VITE_MAPS_ID;
 
 const Tabulators = () => {
   const [key, setKey] = useState("map");
@@ -34,9 +31,6 @@ const Tabulators = () => {
   const token = localStorage.getItem("token");
   const userId = parseInt(localStorage.getItem("userId"), 10);
   const [bringIts, setBringIts] = useRecoilState(bringItsState);
-
-  const GOOGLE_MAPS_API_KEY = "AIzaSyBacQv7qzQpvVYWkP9woi9FHEMJrFBN3Jk";
-  const MAPS_ID = "df621f6bd5a413fd";
 
   // ?? SCROLL-STICKY TRYOUT until 14.7.
   // const tabBarRef = useRef(null);

@@ -14,6 +14,9 @@ const SettingsPage = () => {
         <li>
           Auswahl, welche Inhalte in TodoListTemplates angezeigt werden sollen
         </li>
+        <li>
+          Auswahl der EntryLocation in der Map: Standort oder eigene HomeAdresse
+        </li>
       </ul>
     </div>
   );

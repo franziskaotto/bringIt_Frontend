@@ -96,8 +96,8 @@ const ShowPinsOfOpenTodos = ({ openTodos }) => {
           <p className="pin-description">
             User: {selectedPin.userOffered.username}
           </p>
-          <p className="pin-description">Wo? {selectedPin.location}</p>
-          <button className="btn-description">-> Todo</button>
+          <p className="pin-description">Woher: {selectedPin.location}</p>
+          <button className="btn-description">▶️ Todo</button>
         </InfoWindow>
       )}
     </>
