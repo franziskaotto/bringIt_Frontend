@@ -13,8 +13,8 @@
   border: 2px solid #eef1f8;
 
   /* REMOVED 14.7. */
-  /* position: relative;
-  margin-top: 40px; */
+  position: relative;
+  margin-top: 30px;
 
   /* ADDED 14.7. */
   position: absolute;

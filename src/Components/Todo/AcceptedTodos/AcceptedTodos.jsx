@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../Todos.css";
 import TodoListTemplate from "../TodoListTemplate";
 
@@ -16,6 +16,9 @@ const AcceptedTodos = ({
   const userId = parseInt(localStorage.getItem("userId"), 10);
   // 10 ensures that the string is interpreted as a decimal number.
 
+  // Declare the useRef
+  const firstTodoRef = useRef(null);
+
   // fetch todos on component mount = not necessary
   // because fetch is activated with useExxect on eventKey-change
   // useEffect(() => {
@@ -31,6 +34,13 @@ const AcceptedTodos = ({
 
   const sortedTodos = todos;
 
+  // scroll to first Item in the List
+  useEffect(() => {
+    if (todos.length > 0) {
+      firstTodoRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [todos]);
+
   return (
     <div className="my-todos">
       {sortedTodos.length === 0 ? (
@@ -39,7 +49,7 @@ const AcceptedTodos = ({
         <ul>
           {sortedTodos
             // .filter((todo) => todo.userOffered.userId !== userId)
-            .map((todo) => (
+            .map((todo, index) => (
               <TodoListTemplate
                 key={todo.todoId}
                 todo={todo}
@@ -50,6 +60,7 @@ const AcceptedTodos = ({
                 fetchOpenTodos={fetchOpenTodos}
                 fetchAcceptedTodos={fetchAcceptedTodos}
                 setErrorMessage={setErrorMessage}
+                ref={index === 0 ? firstTodoRef : null}
               />
             ))}
         </ul>

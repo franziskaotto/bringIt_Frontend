@@ -292,12 +292,12 @@ const TodoListTemplate = forwardRef(
     return (
       <>
         <li
+          ref={ref}
           key={todo.todoId}
           className={`todo-item 
         ${expandedTodo === todo.todoId ? "expanded" : "collapsed"}
         ${getBorderColorByStatus(todo.status)}
       `}
-          // ref={ref}
         >
           <div
             className="tooltip-area-top"

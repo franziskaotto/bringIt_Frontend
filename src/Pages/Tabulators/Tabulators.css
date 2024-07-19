@@ -120,6 +120,11 @@
   overflow-y: auto;
 }
 
+.create-todo-container {
+  height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
 /* VERSION UNTIL 14.7. 
 
 .content-tabulators {

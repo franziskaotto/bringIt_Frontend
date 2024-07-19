@@ -494,7 +494,12 @@ const Tabulators = () => {
           onSelect={(k) => setKey(k)}
           className="mb-3"
         >
-          <Tab eventKey="map" title="Map" className="map-tab">
+          <Tab
+            eventKey="map"
+            title="Map"
+            className="map-tab"
+            style={{ marginTop: "140px" }}
+          >
             <div className="map-and-filter-container">
               <GoogleMaps
                 openTodos={originalOpenTodos}
@@ -508,7 +513,7 @@ const Tabulators = () => {
             title="Todo erstellen"
             className="tab-panel"
           >
-            <div className="content-container">
+            <div className="create-todo-container">
               <CreateTodo />
             </div>
           </Tab>
@@ -521,7 +526,7 @@ const Tabulators = () => {
                 filterByStatus={handleFilterStatusMyTodos}
               />
             </div>
-            <div className="content-container">
+            <div className="content-container" style={{ marginTop: "130px" }}>
               <MyTodos
                 activeTab={key}
                 setExpandedTodo={setExpandedTodo}
@@ -545,7 +550,7 @@ const Tabulators = () => {
                 activeTab={key}
               />
             </div>
-            <div className="content-container">
+            <div className="content-container" style={{ marginTop: "130px" }}>
               <OpenTodos
                 activeTab={key}
                 setExpandedTodo={setExpandedTodo}
@@ -574,7 +579,7 @@ const Tabulators = () => {
                 filterByStatus={handleFilterStatusAcceptedTodos}
               />
             </div>
-            <div className="content-container">
+            <div className="content-container" style={{ marginTop: "130px" }}>
               <AcceptedTodos
                 activeTab={key}
                 setExpandedTodo={setExpandedTodo}
